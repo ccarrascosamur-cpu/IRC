@@ -13,8 +13,12 @@
       "Cargo": "Pastero"
     },
     {
-      "Nombre": "Nuevo integrante",
-      "Cargo": "Cargo"
+      "Nombre": "Avila Jaime",
+      "Cargo": "Tesorero"
+    },
+    {
+      "Nombre": "Jaimito Avila",
+      "Cargo": "Director"
     }
   ]
 }
