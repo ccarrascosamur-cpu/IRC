@@ -1,24 +1,17 @@
 {
   "historia": {
-    "Titulo": "Historia del Club",
-    "Bajada": "Una historia construida con disciplina, companerismo y amor por el rugby.",
-    "Contenido": "Ingles Rugby Club nace como un espacio de encuentro para jugadores, familias y amigos del rugby. Con el paso de las temporadas, el club fue consolidando su identidad dentro y fuera de la cancha, fortaleciendo su comunidad y su compromiso con la formacion deportiva.",
-    "ImagenURL": "https://s3.us-east-2.amazonaws.com/img2.eltipografo.cl/media/2019/07/rugby-750x397.jpg",
-    "LinkURL": "",
-    "ImagenAlt": ""
+    "Titulo": "",
+    "Bajada": "",
+    "Contenido": ""
   },
   "directorio": [
     {
-      "Nombre": "Nombre Apellido",
-      "Cargo": "Presidente"
+      "Nombre": "Jaime Avila",
+      "Cargo": "Pastero"
     },
     {
-      "Nombre": "Nombre Apellido",
-      "Cargo": "Vicepresidente"
-    },
-    {
-      "Nombre": "Nombre Apellido",
-      "Cargo": "Tesorero"
+      "Nombre": "Nuevo integrante",
+      "Cargo": "Cargo"
     }
   ]
 }
