@@ -1,39 +1,21 @@
 /**
  * Cloudflare Worker — OAuth Proxy para Decap CMS + GitHub
  * 
- * Este Worker recibe el code de GitHub OAuth y lo intercambia por un access_token,
- * permitiendo que Decap CMS use GitHub como backend sin Netlify Identity.
- * 
- * Variables de entorno necesarias:
- *   GITHUB_CLIENT_ID
- *   GITHUB_CLIENT_SECRET
+ * Flujo:
+ * 1. Decap CMS abre popup a /auth
+ * 2. Worker redirige a GitHub OAuth
+ * 3. GitHub redirige de vuelta a /auth?code=XXX
+ * 4. Worker intercambia code por token
+ * 5. Worker devuelve HTML que postea el token a Decap CMS
  */
-
-const ALLOWED_ORIGIN = null; // Cambiar por tu dominio si querés restringir: "https://tu-dominio.com"
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const path = url.pathname;
 
-    // CORS preflight
-    if (request.method === 'OPTIONS') {
-      return new Response(null, {
-        status: 204,
-        headers: corsHeaders(ALLOWED_ORIGIN),
-      });
-    }
-
-    // Endpoint: /auth — callback de GitHub OAuth
     if (path === '/auth') {
       return handleAuth(request, env);
-    }
-
-    // Endpoint: /success — recibe token del popup y lo devuelve
-    if (path === '/success') {
-      return new Response(successHtml(), {
-        headers: { 'Content-Type': 'text/html; charset=utf-8' },
-      });
     }
 
     return new Response('Not found', { status: 404 });
@@ -44,17 +26,23 @@ async function handleAuth(request, env) {
   const url = new URL(request.url);
   const code = url.searchParams.get('code');
 
-  if (!code) {
-    return jsonResponse({ error: 'Missing code parameter' }, 400);
-  }
-
   const clientId = env.GITHUB_CLIENT_ID;
   const clientSecret = env.GITHUB_CLIENT_SECRET;
 
   if (!clientId || !clientSecret) {
-    return jsonResponse({ error: 'Server misconfigured: missing credentials' }, 500);
+    return htmlResponse(errorHtml('Server misconfigured: missing credentials'));
   }
 
+  // Paso 1: No hay code → redirigir a GitHub OAuth
+  if (!code) {
+    const githubAuthUrl = new URL('https://github.com/login/oauth/authorize');
+    githubAuthUrl.searchParams.set('client_id', clientId);
+    githubAuthUrl.searchParams.set('redirect_uri', url.origin + '/auth');
+    githubAuthUrl.searchParams.set('scope', 'repo');
+    return Response.redirect(githubAuthUrl.toString(), 302);
+  }
+
+  // Paso 2: Hay code → intercambiar por token
   try {
     const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
       method: 'POST',
@@ -72,36 +60,24 @@ async function handleAuth(request, env) {
     const tokenData = await tokenRes.json();
 
     if (tokenData.error) {
-      return jsonResponse({ error: tokenData.error_description || tokenData.error }, 400);
+      return htmlResponse(errorHtml(tokenData.error_description || tokenData.error));
     }
 
-    // Redirigir a /success con el token en el hash
-    return Response.redirect(`${url.origin}/success#${tokenData.access_token}`, 302);
+    // Decap CMS espera recibir el token via postMessage desde el popup
+    return htmlResponse(successHtml(tokenData.access_token));
 
   } catch (err) {
-    return jsonResponse({ error: err.message }, 500);
+    return htmlResponse(errorHtml(err.message));
   }
 }
 
-function jsonResponse(data, status = 200) {
-  return new Response(JSON.stringify(data, null, 2), {
-    status,
-    headers: {
-      'Content-Type': 'application/json',
-      ...corsHeaders(ALLOWED_ORIGIN),
-    },
+function htmlResponse(html) {
+  return new Response(html, {
+    headers: { 'Content-Type': 'text/html; charset=utf-8' },
   });
 }
 
-function corsHeaders(origin) {
-  return {
-    'Access-Control-Allow-Origin': origin || '*',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  };
-}
-
-function successHtml() {
+function successHtml(token) {
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -120,9 +96,42 @@ function successHtml() {
     <p>Cerrá esta ventana para volver al panel de admin.</p>
   </div>
   <script>
-    // Decap CMS espera que el popup rediriga a una URL con el token en el hash
-    // El CMS lee window.location.hash desde el popup
+    (function() {
+      var token = "${token}";
+      if (window.opener) {
+        window.opener.postMessage({
+          type: "authorization:github:success",
+          payload: { provider: "github", token: token }
+        }, "*");
+      }
+      setTimeout(function() {
+        window.close();
+      }, 1000);
+    })();
   </script>
+</body>
+</html>`;
+}
+
+function errorHtml(message) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Error de autenticación</title>
+  <style>
+    body { font-family: system-ui, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #f5f5f5; }
+    .box { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); text-align: center; }
+    h1 { font-size: 1.25rem; margin: 0 0 .5rem; color: #842021; }
+    p { color: #666; margin: 0; }
+    code { background: #f0f0f0; padding: .25rem .5rem; border-radius: 4px; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>❌ Error de autenticación</h1>
+    <p><code>${message.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></p>
+  </div>
 </body>
 </html>`;
 }
