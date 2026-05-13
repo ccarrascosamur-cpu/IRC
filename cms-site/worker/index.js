@@ -87,22 +87,27 @@ function successHtml(token) {
 <body>
   <div class="box">
     <h1>✅ Autenticación exitosa</h1>
-    <p>Cerrá esta ventana para volver al panel de admin.</p>
+    <p>Cerrá esta ventana manualmente para volver al panel.</p>
   </div>
   <script>
     (function() {
       var token = "${token}";
-      var origin = window.location.origin;
-      if (window.opener) {
-        // Formato compatible con Decap CMS (ambos formatos por si acaso)
-        window.opener.postMessage({ type: "authorizing:github", token: token }, "*");
-        window.opener.postMessage({ type: "authorization:github:success", payload: { provider: "github", token: token } }, "*");
+      var sent = false;
+      function send() {
+        if (sent) return;
+        if (window.opener) {
+          window.opener.postMessage({ type: "authorizing:github", token: token }, "*");
+          window.opener.postMessage({ type: "authorization:github:success", payload: { provider: "github", token: token } }, "*");
+          sent = true;
+        }
       }
-      // Fallback: algunas versiones de Decap CMS leen el hash
+      // Intentar enviar inmediatamente y repetidamente
+      send();
+      setTimeout(send, 500);
+      setTimeout(send, 1000);
+      setTimeout(send, 1500);
+      // Fallback hash
       window.location.hash = "access_token=" + token + "&token_type=bearer";
-      setTimeout(function() {
-        window.close();
-      }, 2500);
     })();
   </script>
 </body>
