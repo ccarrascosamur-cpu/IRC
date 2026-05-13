@@ -9,16 +9,16 @@
   },
   "directorio": [
     {
-      "Nombre": "Jaime Avila",
-      "Cargo": "Pastero"
+      "Nombre": "Santiago Iglesias ",
+      "Cargo": "Presidente"
     },
     {
-      "Nombre": "Avila Jaime",
+      "Nombre": "Sergio Cuevas ",
       "Cargo": "Tesorero"
     },
     {
-      "Nombre": "Jaimito Avila",
-      "Cargo": "Director"
+      "Nombre": "Diego Cuevas ",
+      "Cargo": "Secretario"
     }
   ]
 }
