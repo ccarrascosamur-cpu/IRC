@@ -65,15 +65,25 @@ function showEditor() {
 
 /* ─── Carga de datos (desde Worker que lee GitHub) ───────────────── */
 async function loadLocalData() {
-  const files = ['fixture', 'posiciones', 'noticias', 'stats', 'config'];
+  const files = ['fixture', 'posiciones', 'noticias', 'stats', 'config', 'jugadores', 'galeria'];
   for (const key of files) {
     try {
       const res = await fetch(`/api/data/${key}.json`);
       const raw = await res.json();
-      state.data[key] = Array.isArray(raw) ? raw : (raw[key] || raw);
+      if (key === 'jugadores') {
+        state.data.jugadores = raw.jugadores || [];
+        state.data.headCoach = raw.headCoach || { Nombre: '', Cargo: 'Head Coach' };
+      } else {
+        state.data[key] = Array.isArray(raw) ? raw : (raw[key] || raw);
+      }
     } catch (e) {
       console.warn(`No se pudo cargar ${key}.json`, e);
-      state.data[key] = key === 'config' ? {} : (key === 'stats' ? [{}] : []);
+      if (key === 'jugadores') {
+        state.data.jugadores = [];
+        state.data.headCoach = { Nombre: '', Cargo: 'Head Coach' };
+      } else {
+        state.data[key] = key === 'config' ? {} : (key === 'stats' ? [{}] : []);
+      }
     }
   }
 }
@@ -237,6 +247,79 @@ function renderStats() {
   container.appendChild(createField('Empates', item.Empates, 'Empates', 'number'));
 }
 
+function renderPlantel() {
+  const headCoachForm = document.getElementById('headCoachForm');
+  const jugadoresList = document.getElementById('jugadoresList');
+  const coach = state.data.headCoach || { Nombre: '', Cargo: 'Head Coach' };
+
+  headCoachForm.innerHTML = '';
+  headCoachForm.appendChild(createField('Nombre', coach.Nombre || '', 'Nombre'));
+  headCoachForm.appendChild(createField('Cargo', coach.Cargo || 'Head Coach', 'Cargo'));
+
+  jugadoresList.innerHTML = '';
+  (state.data.jugadores || []).forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'item-card';
+    card.innerHTML = `
+      <h4>#${item.Numero || idx + 1} — ${item.Nombre || 'Sin nombre'}</h4>
+      <div class="form-grid">
+        ${createField('Nombre', item.Nombre, 'Nombre').outerHTML}
+        ${createField('Número', item.Numero, 'Numero', 'number').outerHTML}
+        ${createField('Posición', item.Posicion, 'Posicion').outerHTML}
+        ${createField('Color', item.Color, 'Color').outerHTML}
+      </div>
+      <div class="actions"><button class="btn btn-danger delete-btn">🗑 Eliminar</button></div>
+    `;
+    card.querySelector('.delete-btn').addEventListener('click', () => {
+      state.data.jugadores.splice(idx, 1);
+      renderPlantel();
+    });
+    jugadoresList.appendChild(card);
+  });
+}
+
+document.getElementById('addJugadorBtn').addEventListener('click', () => {
+  state.data.jugadores.push({
+    Nombre: 'Nuevo jugador',
+    Numero: (state.data.jugadores?.length || 0) + 1,
+    Posicion: '',
+    Color: '#842021'
+  });
+  renderPlantel();
+});
+
+function renderGaleria() {
+  const list = document.getElementById('galeriaList');
+  list.innerHTML = '';
+  (state.data.galeria || []).forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'item-card';
+    card.innerHTML = `
+      <h4>${item.Label || `Imagen #${idx + 1}`}</h4>
+      <div class="form-grid">
+        ${createField('Imagen URL', item.ImagenURL, 'ImagenURL').outerHTML}
+        ${createField('Texto', item.Label, 'Label').outerHTML}
+        ${createField('LayoutClass', item.LayoutClass, 'LayoutClass').outerHTML}
+      </div>
+      <div class="actions"><button class="btn btn-danger delete-btn">🗑 Eliminar</button></div>
+    `;
+    card.querySelector('.delete-btn').addEventListener('click', () => {
+      state.data.galeria.splice(idx, 1);
+      renderGaleria();
+    });
+    list.appendChild(card);
+  });
+}
+
+document.getElementById('addGaleriaBtn').addEventListener('click', () => {
+  state.data.galeria.push({
+    ImagenURL: '',
+    Label: '',
+    LayoutClass: ''
+  });
+  renderGaleria();
+});
+
 function renderConfig() {
   const container = document.getElementById('configForm');
   container.innerHTML = '';
@@ -256,12 +339,20 @@ function collectData() {
   state.data.fixture = Array.from(document.querySelectorAll('#fixtureList .item-card')).map(getCardData);
   state.data.posiciones = Array.from(document.querySelectorAll('#posicionesList .item-card')).map(getCardData);
   state.data.noticias = Array.from(document.querySelectorAll('#noticiasList .item-card')).map(getCardData);
+  state.data.jugadores = Array.from(document.querySelectorAll('#jugadoresList .item-card')).map(getCardData);
+  state.data.galeria = Array.from(document.querySelectorAll('#galeriaList .item-card')).map(getCardData);
 
   const statsObj = {};
   document.querySelectorAll('#statsForm [data-key]').forEach(el => {
     statsObj[el.dataset.key] = el.type === 'number' ? Number(el.value) : el.value;
   });
   state.data.stats = [statsObj];
+
+  const headCoachObj = {};
+  document.querySelectorAll('#headCoachForm [data-key]').forEach(el => {
+    headCoachObj[el.dataset.key] = el.value;
+  });
+  state.data.headCoach = headCoachObj;
 
   const configObj = {};
   document.querySelectorAll('#configForm [data-key]').forEach(el => {
@@ -272,8 +363,16 @@ function collectData() {
 
 /* ─── Guardar via Worker API ─────────────────────────────────────── */
 async function saveFile(key) {
-  const wrapper = {};
-  wrapper[key] = state.data[key];
+  let wrapper;
+  if (key === 'jugadores') {
+    wrapper = {
+      jugadores: state.data.jugadores || [],
+      headCoach: state.data.headCoach || { Nombre: '', Cargo: 'Head Coach' }
+    };
+  } else {
+    wrapper = {};
+    wrapper[key] = state.data[key];
+  }
   const content = JSON.stringify(wrapper, null, 2);
 
   const res = await fetch('/api/save', {
@@ -297,7 +396,7 @@ async function saveAll() {
   els.saveAllBtn.disabled = true;
 
   try {
-    for (const key of ['fixture', 'posiciones', 'noticias', 'stats', 'config']) {
+    for (const key of ['fixture', 'posiciones', 'noticias', 'stats', 'jugadores', 'galeria', 'config']) {
       console.log('[Admin] Guardando:', key);
       await saveFile(key);
       console.log('[Admin] OK:', key);
@@ -320,6 +419,8 @@ async function initEditor() {
   renderPosiciones();
   renderNoticias();
   renderStats();
+  renderPlantel();
+  renderGaleria();
   renderConfig();
   els.saveAllBtn.addEventListener('click', saveAll);
   els.logoutBtn.addEventListener('click', logout);

@@ -92,6 +92,44 @@ collections:
               - { label: "Derrotas", name: "Derrotas", widget: "number", value_type: "int", min: 0 }
               - { label: "Empates", name: "Empates", widget: "number", value_type: "int", min: 0 }
 
+  - name: "jugadores"
+    label: "Plantel"
+    files:
+      - label: "Plantel y Head Coach"
+        name: "jugadores"
+        file: "cms-site/data/jugadores.json"
+        fields:
+          - label: "Head Coach"
+            name: "headCoach"
+            widget: "object"
+            fields:
+              - { label: "Nombre", name: "Nombre", widget: "string" }
+              - { label: "Cargo", name: "Cargo", widget: "string", default: "Head Coach" }
+          - label: "Jugadores"
+            name: "jugadores"
+            widget: "list"
+            fields:
+              - { label: "Nombre", name: "Nombre", widget: "string" }
+              - { label: "Número", name: "Numero", widget: "number", value_type: "int", min: 0 }
+              - { label: "Posición", name: "Posicion", widget: "string" }
+              - { label: "Color", name: "Color", widget: "string", default: "#842021" }
+
+  - name: "galeria"
+    label: "Galería"
+    files:
+      - label: "Galería de Imágenes"
+        name: "galeria"
+        file: "cms-site/data/galeria.json"
+        fields:
+          - label: "Imágenes"
+            name: "galeria"
+            widget: "list"
+            summary: "{{fields.Label}}"
+            fields:
+              - { label: "Imagen URL", name: "ImagenURL", widget: "string", hint: "Acepta links externos o de Google Drive en formato directo." }
+              - { label: "Texto", name: "Label", widget: "string", required: false }
+              - { label: "LayoutClass", name: "LayoutClass", widget: "select", required: false, options: ["", "gi-tall", "gi-wide"] }
+
   - name: "config"
     label: "Configuración"
     files:

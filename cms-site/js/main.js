@@ -50,7 +50,9 @@ async function loadData() {
     fixture: 'api/data/fixture.json',
     stats: 'api/data/stats.json',
     noticias: 'api/data/noticias.json',
-    config: 'api/data/config.json'
+    config: 'api/data/config.json',
+    jugadores: 'api/data/jugadores.json',
+    galeria: 'api/data/galeria.json'
   };
 
   const data = {};
@@ -60,11 +62,21 @@ async function loadData() {
         const res = await fetch(path);
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const raw = await res.json();
-        // Decap CMS guarda objetos { key: [...] }; también soportamos arrays planos
-        data[key] = Array.isArray(raw) ? raw : (raw[key] || raw);
+        if (key === 'jugadores') {
+          data.jugadores = raw.jugadores || [];
+          data.headCoach = raw.headCoach || null;
+        } else {
+          // Decap CMS guarda objetos { key: [...] }; también soportamos arrays planos
+          data[key] = Array.isArray(raw) ? raw : (raw[key] || raw);
+        }
       } catch (err) {
         console.warn(`[IRC] No se pudo cargar ${path}:`, err.message);
-        data[key] = key === 'stats' ? [DEFAULT_STATS] : (key === 'config' ? {} : []);
+        if (key === 'jugadores') {
+          data.jugadores = [];
+          data.headCoach = null;
+        } else {
+          data[key] = key === 'stats' ? [DEFAULT_STATS] : (key === 'config' ? {} : []);
+        }
       }
     })
   );
@@ -79,6 +91,8 @@ function renderAll(data) {
   renderPosiciones(data);
   renderFixture(data);
   renderNoticias(data);
+  renderPlantel(data);
+  renderGaleria(data);
 }
 
 /* ─── Render Stats ───────────────────────────────────────────────── */
@@ -352,6 +366,77 @@ function renderNoticias(data) {
 
   loading.style.display = 'none';
   grid.style.display = 'grid';
+
+  grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
+}
+
+/* ─── Render Plantel ─────────────────────────────────────────────── */
+function renderPlantel(data) {
+  const grid = document.getElementById('plantelGrid');
+  if (!grid) return;
+
+  const jugadores = data?.jugadores || [];
+  const headCoach = data?.headCoach;
+  grid.innerHTML = '';
+
+  if (headCoach?.Nombre) {
+    const coachCard = document.createElement('article');
+    coachCard.className = 'player-card reveal';
+    coachCard.style.setProperty('--av-color', '#c49b00');
+    coachCard.innerHTML = `
+      <div class="player-avatar">HC</div>
+      <div class="player-num">${headCoach.Cargo || 'Head Coach'}</div>
+      <div class="player-info">
+        <div class="player-name">${headCoach.Nombre}</div>
+        <div class="player-pos">${headCoach.Cargo || 'Head Coach'}</div>
+      </div>
+    `;
+    grid.appendChild(coachCard);
+  }
+
+  jugadores.forEach((player) => {
+    const initials = String(player.Nombre || '?')
+      .split(' ')
+      .filter(Boolean)
+      .slice(0, 2)
+      .map(part => part[0])
+      .join('')
+      .toUpperCase();
+
+    const card = document.createElement('article');
+    card.className = 'player-card reveal';
+    card.style.setProperty('--av-color', player.Color || '#842021');
+    card.innerHTML = `
+      <div class="player-avatar">${initials || '?'}</div>
+      <div class="player-num">#${player.Numero ?? ''}</div>
+      <div class="player-info">
+        <div class="player-name">${player.Nombre || 'Sin nombre'}</div>
+        <div class="player-pos">${player.Posicion || ''}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
+}
+
+/* ─── Render Galería ─────────────────────────────────────────────── */
+function renderGaleria(data) {
+  const grid = document.getElementById('galeriaGrid');
+  if (!grid) return;
+
+  const galeria = data?.galeria || [];
+  grid.innerHTML = '';
+
+  galeria.forEach((item) => {
+    const figure = document.createElement('figure');
+    figure.className = `gallery-item reveal ${item.LayoutClass || ''}`.trim();
+    figure.style.backgroundImage = `url('${item.ImagenURL || ''}')`;
+    figure.innerHTML = item.Label
+      ? `<figcaption class="gallery-label">${item.Label}</figcaption>`
+      : '';
+    grid.appendChild(figure);
+  });
 
   grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
 }

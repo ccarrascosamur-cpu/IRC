@@ -38,6 +38,8 @@
         <button class="tab-btn" data-tab="posiciones">Posiciones</button>
         <button class="tab-btn" data-tab="noticias">Noticias</button>
         <button class="tab-btn" data-tab="stats">Stats</button>
+        <button class="tab-btn" data-tab="plantel">Plantel</button>
+        <button class="tab-btn" data-tab="galeria">Galería</button>
         <button class="tab-btn" data-tab="config">Configuración</button>
       </div>
 
@@ -62,6 +64,21 @@
       <div id="statsPanel" class="tab-panel">
         <h3>Estadísticas</h3>
         <div id="statsForm" class="form-grid"></div>
+      </div>
+
+      <div id="plantelPanel" class="tab-panel">
+        <h3>Head Coach</h3>
+        <div id="headCoachForm" class="form-grid"></div>
+        <h3 style="margin-top:24px">Jugadores</h3>
+        <div id="jugadoresList" class="item-list"></div>
+        <button id="addJugadorBtn" class="btn btn-secondary">+ Agregar jugador</button>
+      </div>
+
+      <div id="galeriaPanel" class="tab-panel">
+        <h3>Galería de imágenes</h3>
+        <p class="hint">Usá URLs directas (Unsplash, Google Drive, etc.). Para Google Drive: cambiá <code>/file/d/ID/view</code> por <code>/uc?export=view&id=ID</code></p>
+        <div id="galeriaList" class="item-list"></div>
+        <button id="addGaleriaBtn" class="btn btn-secondary">+ Agregar imagen</button>
       </div>
 
       <div id="configPanel" class="tab-panel">
