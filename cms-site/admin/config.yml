@@ -2,7 +2,7 @@ backend:
   name: github
   repo: ccarrascosamur/IRC
   branch: main
-  base_url: https://irc-oauth-proxy.ccarrascosamur.workers.dev
+  base_url: https://irc2.ccarrascosamur.workers.dev
   auth_endpoint: /auth
 
 # Descomenta la siguiente línea para probar localmente sin deploy:
