@@ -67,13 +67,13 @@
       "Color": "#6b1a1a"
     },
     {
-      "Nombre": "Joaquin Melendez",
+      "Nombre": "Simon Jaraquemada",
       "Numero": 12,
       "Posicion": "Centro",
       "Color": "#4a1212"
     },
     {
-      "Nombre": "Simon Jaraquemada ",
+      "Nombre": "Joaquin Melendez ",
       "Numero": 13,
       "Posicion": "Centro",
       "Color": "#842021"
@@ -109,9 +109,9 @@
       "Color": "#842021"
     },
     {
-      "Nombre": "Nuevo jugador",
+      "Nombre": "Juan Rivero",
       "Numero": 19,
-      "Posicion": "",
+      "Posicion": "Ala ",
       "Color": "#842021"
     },
     {
