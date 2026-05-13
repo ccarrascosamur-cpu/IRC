@@ -10,19 +10,35 @@ const MONTHS_ES = {
   JUL:'07', AGO:'08', SEP:'09', OCT:'10', NOV:'11', DIC:'12'
 };
 
+function extractDriveFileId(value) {
+  const str = String(value || '').trim();
+  if (!str) return '';
+
+  const patterns = [
+    /drive\.google\.com\/file\/d\/([^/?#]+)/i,
+    /drive\.google\.com\/open\?id=([^&#]+)/i,
+    /drive\.google\.com\/uc\?(?:[^#]*&)?id=([^&#]+)/i,
+    /drive\.google\.com\/thumbnail\?(?:[^#]*&)?id=([^&#]+)/i,
+    /lh3\.googleusercontent\.com\/d\/([^=?&#/]+)/i
+  ];
+
+  for (const pattern of patterns) {
+    const match = str.match(pattern);
+    if (match) return match[1];
+  }
+
+  return '';
+}
+
 function normalizeImageUrl(value) {
   const str = String(value || '').trim();
   if (!str) return '';
 
-  // Accept standard Google Drive sharing URLs pasted from the CMS.
-  const driveFileMatch = str.match(/^https?:\/\/drive\.google\.com\/file\/d\/([^/]+)\//i);
-  if (driveFileMatch) {
-    return `https://drive.google.com/uc?export=view&id=${driveFileMatch[1]}`;
-  }
-
-  const driveOpenMatch = str.match(/^https?:\/\/drive\.google\.com\/open\?id=([^&]+)/i);
-  if (driveOpenMatch) {
-    return `https://drive.google.com/uc?export=view&id=${driveOpenMatch[1]}`;
+  const driveFileId = extractDriveFileId(str);
+  if (driveFileId) {
+    // `lh3.googleusercontent.com` is more reliable than the standard Drive share URL
+    // for direct image embedding in CSS background-image and <img>.
+    return `https://lh3.googleusercontent.com/d/${driveFileId}`;
   }
 
   return str;

@@ -7,6 +7,11 @@ let state = {
   isLoggedIn: sessionStorage.getItem('irc_admin_auth') === 'true'
 };
 
+const MONTHS_ES = {
+  ENE: '01', FEB: '02', MAR: '03', ABR: '04', MAY: '05', JUN: '06',
+  JUL: '07', AGO: '08', SEP: '09', OCT: '10', NOV: '11', DIC: '12'
+};
+
 const els = {
   loginSection: document.getElementById('loginSection'),
   editorSection: document.getElementById('editorSection'),
@@ -134,6 +139,18 @@ function getCardData(card) {
     else obj[key] = el.value;
   });
   return obj;
+}
+
+function fixtureSortValue(match) {
+  const year = Number(match.Ano) || 0;
+  const month = MONTHS_ES[String(match.Mes || '').toUpperCase()] || '00';
+  const day = String(Number(match.DiaNum) || 0).padStart(2, '0');
+  const time = String(match.Hora || '00:00').padEnd(5, '0').slice(0, 5);
+  return `${String(year).padStart(4, '0')}-${month}-${day}T${time}`;
+}
+
+function sortFixtureMatches(matches) {
+  return [...matches].sort((a, b) => fixtureSortValue(a).localeCompare(fixtureSortValue(b)));
 }
 
 function renderFixture() {
@@ -420,7 +437,9 @@ function renderConfig() {
 
 /* ─── Recolectar datos ───────────────────────────────────────────── */
 function collectData() {
-  state.data.fixture = Array.from(document.querySelectorAll('#fixtureList .item-card')).map(getCardData);
+  state.data.fixture = sortFixtureMatches(
+    Array.from(document.querySelectorAll('#fixtureList .item-card')).map(getCardData)
+  );
   state.data.posiciones = Array.from(document.querySelectorAll('#posicionesList .item-card')).map(getCardData);
   state.data.noticias = Array.from(document.querySelectorAll('#noticiasList .item-card')).map(getCardData);
   state.data.staff = Array.from(document.querySelectorAll('#staffList .item-card')).map(getCardData);
@@ -489,6 +508,7 @@ async function saveFile(key) {
 async function saveAll() {
   console.log('[Admin] Iniciando guardado...');
   collectData();
+  renderFixture();
   console.log('[Admin] Datos recolectados:', state.data);
   showStatus('💾 Guardando cambios...', 'info');
   els.saveAllBtn.disabled = true;
