@@ -46,11 +46,11 @@ function formatSheetDate(value) {
 /* ─── Carga de datos locales (JSON) ──────────────────────────────── */
 async function loadData() {
   const files = {
-    posiciones: 'data/posiciones.json',
-    fixture: 'data/fixture.json',
-    stats: 'data/stats.json',
-    noticias: 'data/noticias.json',
-    config: 'data/config.json'
+    posiciones: 'api/data/posiciones.json',
+    fixture: 'api/data/fixture.json',
+    stats: 'api/data/stats.json',
+    noticias: 'api/data/noticias.json',
+    config: 'api/data/config.json'
   };
 
   const data = {};

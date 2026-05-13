@@ -32,10 +32,10 @@ export default {
       return handleSave(request, env);
     }
 
-    // Archivos JSON: servir desde GitHub API (siempre actualizados, sin caché)
-    const jsonMatch = path.match(/^\/data\/(\w+)\.json$/);
-    if (jsonMatch) {
-      return serveJson(jsonMatch[1], env);
+    // Datos JSON: servir desde GitHub API (siempre actualizados, sin caché)
+    const dataMatch = path.match(/^\/api\/data\/(\w+)\.json$/);
+    if (dataMatch) {
+      return serveJson(dataMatch[1], env);
     }
 
     return env.ASSETS.fetch(request);

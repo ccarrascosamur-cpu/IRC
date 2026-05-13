@@ -68,7 +68,7 @@ async function loadLocalData() {
   const files = ['fixture', 'posiciones', 'noticias', 'stats', 'config'];
   for (const key of files) {
     try {
-      const res = await fetch(`../data/${key}.json`);
+      const res = await fetch(`/api/data/${key}.json`);
       const raw = await res.json();
       state.data[key] = Array.isArray(raw) ? raw : (raw[key] || raw);
     } catch (e) {
