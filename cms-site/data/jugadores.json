@@ -94,5 +94,17 @@
   "headCoach": {
     "Nombre": "Head Coach",
     "Cargo": "Head Coach"
-  }
+  },
+  "staff": [
+    {
+      "Nombre": "Nuevo staff",
+      "Cargo": "Kinesiologo",
+      "Color": "#c49b00"
+    },
+    {
+      "Nombre": "Nuevo staff",
+      "Cargo": "P.F",
+      "Color": "#c49b00"
+    }
+  ]
 }
