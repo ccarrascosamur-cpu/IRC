@@ -101,6 +101,30 @@
       "Numero": 17,
       "Posicion": "Hooker",
       "Color": "#842021"
+    },
+    {
+      "Nombre": "Jose Rubilar ",
+      "Numero": 18,
+      "Posicion": "Pilar ",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Nuevo jugador",
+      "Numero": 19,
+      "Posicion": "",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Clemente Mauro ",
+      "Numero": 20,
+      "Posicion": "Medio Scrum",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Matias Zuñiga",
+      "Numero": 21,
+      "Posicion": "Centro/wing",
+      "Color": "#842021"
     }
   ],
   "headCoach": {
