@@ -2,7 +2,10 @@
   "historia": {
     "Titulo": "",
     "Bajada": "",
-    "Contenido": ""
+    "Contenido": "",
+    "ImagenURL": "",
+    "LinkURL": "",
+    "ImagenAlt": ""
   },
   "directorio": [
     {
