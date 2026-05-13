@@ -1,24 +1,19 @@
 /**
- * Cloudflare Worker — OAuth Proxy para Decap CMS + GitHub
+ * Cloudflare Worker — Sitio web + OAuth Proxy para Decap CMS + GitHub
  * 
- * Flujo:
- * 1. Decap CMS abre popup a /auth
- * 2. Worker redirige a GitHub OAuth
- * 3. GitHub redirige de vuelta a /auth?code=XXX
- * 4. Worker intercambia code por token
- * 5. Worker devuelve HTML que postea el token a Decap CMS
+ * Sirve archivos estáticos del sitio y maneja autenticación en /auth
  */
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
-    const path = url.pathname;
 
-    if (path === '/auth') {
+    if (url.pathname === '/auth') {
       return handleAuth(request, env);
     }
 
-    return new Response('Not found', { status: 404 });
+    // Servir archivos estáticos (index.html, css, js, admin/, etc.)
+    return env.ASSETS.fetch(request);
   },
 };
 
@@ -33,7 +28,7 @@ async function handleAuth(request, env) {
     return htmlResponse(errorHtml('Server misconfigured: missing credentials'));
   }
 
-  // Paso 1: No hay code → redirigir a GitHub OAuth
+  // Sin code → redirigir a GitHub OAuth
   if (!code) {
     const githubAuthUrl = new URL('https://github.com/login/oauth/authorize');
     githubAuthUrl.searchParams.set('client_id', clientId);
@@ -42,7 +37,7 @@ async function handleAuth(request, env) {
     return Response.redirect(githubAuthUrl.toString(), 302);
   }
 
-  // Paso 2: Hay code → intercambiar por token
+  // Con code → intercambiar por token
   try {
     const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
       method: 'POST',
@@ -63,7 +58,6 @@ async function handleAuth(request, env) {
       return htmlResponse(errorHtml(tokenData.error_description || tokenData.error));
     }
 
-    // Decap CMS espera recibir el token via postMessage desde el popup
     return htmlResponse(successHtml(tokenData.access_token));
 
   } catch (err) {
@@ -114,6 +108,7 @@ function successHtml(token) {
 }
 
 function errorHtml(message) {
+  const safe = message.replace(/</g, '&lt;').replace(/>/g, '&gt;');
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -130,7 +125,7 @@ function errorHtml(message) {
 <body>
   <div class="box">
     <h1>❌ Error de autenticación</h1>
-    <p><code>${message.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></p>
+    <p><code>${safe}</code></p>
   </div>
 </body>
 </html>`;

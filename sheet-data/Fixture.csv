@@ -1,0 +1,15 @@
+DiaSemana,DiaNum,Mes,Ano,Hora,Localidad,Rival,IRC_Score,Rival_Score,Estado,Cancha,Direccion,EsDestacado
+SAB,11,ABR,2026,13:00,Visita,Trapiales RC,22,48,jugado,Complejo Deportivo Las Rosas,,FALSE
+SAB,25,ABR,2026,15:00,Local,Lions RC,31,33,jugado,Cancha IRC,,FALSE
+DOM,10,MAY,2026,15:00,Local,Old Navy,57,30,jugado,Cancha IRC,,FALSE
+SAB,16,MAY,2026,13:00,Visita,Mano Rugby,,,proximo,Estadio Juan Antonio Ríos,,TRUE
+SAB,30,MAY,2026,15:00,Local,Los Troncos,,,proximo,Cancha IRC,,FALSE
+SAB,13,JUN,2026,16:00,Visita,Costa del Sol,,,proximo,Costa del Sol,,FALSE
+SAB,20,JUN,2026,13:00,Local,Halcones RC,,,proximo,Cancha IRC,,FALSE
+DOM,5,JUL,2026,15:00,Local,Trapiales RC,,,proximo,Cancha IRC,,FALSE
+DOM,12,JUL,2026,00:00,Visita,Lions RC,,,proximo,Cancha Interior Parque Mahuida,,FALSE
+SAB,1,AGO,2026,16:00,Visita,Old Navy,,,proximo,Las Salinas,,FALSE
+SAB,8,AGO,2026,15:00,Local,Mano Rugby,,,proximo,Cancha IRC,,FALSE
+SAB,15,AGO,2026,00:00,Visita,Los Troncos,,,proximo,Tineo Park,,FALSE
+SAB,5,SEP,2026,15:00,Local,Costa del Sol,,,proximo,Cancha IRC,,FALSE
+SAB,12,SEP,2026,14:00,Visita,Halcones RC,,,proximo,Calle Larga,,FALSE

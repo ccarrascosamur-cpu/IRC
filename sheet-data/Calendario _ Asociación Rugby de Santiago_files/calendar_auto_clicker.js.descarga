@@ -1,0 +1,4 @@
+setInterval(function () {
+	$('.box-info .content .ml-aux > .ml-right input[name=input]:first-child').trigger($.Event('keypress', { which: 13 }));
+}, 30000);
+
