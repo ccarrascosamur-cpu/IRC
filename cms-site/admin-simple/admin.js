@@ -1,12 +1,19 @@
 /* ═══════════════════════════════════════════════════════════════════════
-   Panel de Admin IRC — Edita JSON locales y guarda via Worker API
+   Panel de Admin IRC — Con login + lectura desde GitHub via Worker
 ═══════════════════════════════════════════════════════════════════════ */
 
 let state = {
-  data: {}
+  data: {},
+  isLoggedIn: sessionStorage.getItem('irc_admin_auth') === 'true'
 };
 
 const els = {
+  loginSection: document.getElementById('loginSection'),
+  editorSection: document.getElementById('editorSection'),
+  passwordInput: document.getElementById('passwordInput'),
+  loginBtn: document.getElementById('loginBtn'),
+  loginError: document.getElementById('loginError'),
+  logoutBtn: document.getElementById('logoutBtn'),
   status: document.getElementById('status'),
   saveAllBtn: document.getElementById('saveAllBtn'),
   tabs: document.querySelectorAll('.tab-btn'),
@@ -20,11 +27,43 @@ function showStatus(msg, type = 'info') {
   els.status.classList.remove('hidden');
 }
 
-function hideStatus() {
-  els.status.classList.add('hidden');
+/* ─── Login ──────────────────────────────────────────────────────── */
+async function login() {
+  const password = els.passwordInput.value.trim();
+  if (!password) return;
+
+  try {
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password })
+    });
+    const data = await res.json();
+    if (data.success) {
+      sessionStorage.setItem('irc_admin_auth', 'true');
+      state.isLoggedIn = true;
+      showEditor();
+    } else {
+      els.loginError.textContent = data.error || 'Error de autenticación';
+    }
+  } catch (err) {
+    els.loginError.textContent = 'Error de conexión';
+  }
 }
 
-/* ─── Carga de datos locales ─────────────────────────────────────── */
+function logout() {
+  sessionStorage.removeItem('irc_admin_auth');
+  state.isLoggedIn = false;
+  location.reload();
+}
+
+function showEditor() {
+  els.loginSection.classList.add('hidden');
+  els.editorSection.classList.remove('hidden');
+  initEditor();
+}
+
+/* ─── Carga de datos (desde Worker que lee GitHub) ───────────────── */
 async function loadLocalData() {
   const files = ['fixture', 'posiciones', 'noticias', 'stats', 'config'];
   for (const key of files) {
@@ -56,13 +95,11 @@ function createField(label, value, key, type = 'text') {
   div.className = 'field';
   const inputType = type === 'boolean' ? 'checkbox' : (type === 'number' ? 'number' : 'text');
   const checked = type === 'boolean' && value ? 'checked' : '';
+  const valAttr = type === 'boolean' ? '' : `value="${String(value).replace(/"/g, '&quot;')}"`;
   const inputHtml = type === 'boolean'
     ? `<input type="checkbox" data-key="${key}" ${checked} style="width:auto">`
-    : `<input type="${inputType}" data-key="${key}" value="${String(value).replace(/"/g, '&quot;')}" class="input">`;
-  div.innerHTML = `
-    <label>${label}</label>
-    ${inputHtml}
-  `;
+    : `<input type="${inputType}" data-key="${key}" ${valAttr} class="input">`;
+  div.innerHTML = `<label>${label}</label>${inputHtml}`;
   return div;
 }
 
@@ -77,15 +114,12 @@ function getCardData(card) {
   return obj;
 }
 
-/* Fixture */
 function renderFixture() {
   const list = document.getElementById('fixtureList');
   list.innerHTML = '';
-  const items = state.data.fixture || [];
-  items.forEach((item, idx) => {
+  (state.data.fixture || []).forEach((item, idx) => {
     const card = document.createElement('div');
     card.className = 'item-card';
-    card.dataset.index = idx;
     card.innerHTML = `
       <h4>Partido #${idx + 1}: ${item.Rival || 'Sin rival'}</h4>
       <div class="form-grid">
@@ -103,12 +137,10 @@ function renderFixture() {
         ${createField('Dirección', item.Direccion, 'Direccion').outerHTML}
         ${createField('Destacado', item.EsDestacado, 'EsDestacado', 'boolean').outerHTML}
       </div>
-      <div class="actions">
-        <button class="btn btn-danger delete-btn">🗑 Eliminar</button>
-      </div>
+      <div class="actions"><button class="btn btn-danger delete-btn">🗑 Eliminar</button></div>
     `;
     card.querySelector('.delete-btn').addEventListener('click', () => {
-      items.splice(idx, 1);
+      state.data.fixture.splice(idx, 1);
       renderFixture();
     });
     list.appendChild(card);
@@ -124,15 +156,12 @@ document.getElementById('addFixtureBtn').addEventListener('click', () => {
   renderFixture();
 });
 
-/* Posiciones */
 function renderPosiciones() {
   const list = document.getElementById('posicionesList');
   list.innerHTML = '';
-  const items = state.data.posiciones || [];
-  items.forEach((item, idx) => {
+  (state.data.posiciones || []).forEach((item, idx) => {
     const card = document.createElement('div');
     card.className = 'item-card';
-    card.dataset.index = idx;
     card.innerHTML = `
       <h4>#${item.Posicion || idx + 1} — ${item.Equipo || 'Sin nombre'}</h4>
       <div class="form-grid">
@@ -147,12 +176,10 @@ function renderPosiciones() {
         ${createField('Dif', item.Dif, 'Dif', 'number').outerHTML}
         ${createField('Pts', item.Pts, 'Pts', 'number').outerHTML}
       </div>
-      <div class="actions">
-        <button class="btn btn-danger delete-btn">🗑 Eliminar</button>
-      </div>
+      <div class="actions"><button class="btn btn-danger delete-btn">🗑 Eliminar</button></div>
     `;
     card.querySelector('.delete-btn').addEventListener('click', () => {
-      items.splice(idx, 1);
+      state.data.posiciones.splice(idx, 1);
       renderPosiciones();
     });
     list.appendChild(card);
@@ -167,15 +194,12 @@ document.getElementById('addPosicionBtn').addEventListener('click', () => {
   renderPosiciones();
 });
 
-/* Noticias */
 function renderNoticias() {
   const list = document.getElementById('noticiasList');
   list.innerHTML = '';
-  const items = state.data.noticias || [];
-  items.forEach((item, idx) => {
+  (state.data.noticias || []).forEach((item, idx) => {
     const card = document.createElement('div');
     card.className = 'item-card';
-    card.dataset.index = idx;
     card.innerHTML = `
       <h4>${item.Titulo || 'Sin título'}</h4>
       <div class="form-grid">
@@ -186,12 +210,10 @@ function renderNoticias() {
         ${createField('Link', item.Link, 'Link').outerHTML}
         ${createField('Destacada', item.Destacada, 'Destacada', 'boolean').outerHTML}
       </div>
-      <div class="actions">
-        <button class="btn btn-danger delete-btn">🗑 Eliminar</button>
-      </div>
+      <div class="actions"><button class="btn btn-danger delete-btn">🗑 Eliminar</button></div>
     `;
     card.querySelector('.delete-btn').addEventListener('click', () => {
-      items.splice(idx, 1);
+      state.data.noticias.splice(idx, 1);
       renderNoticias();
     });
     list.appendChild(card);
@@ -206,7 +228,6 @@ document.getElementById('addNoticiaBtn').addEventListener('click', () => {
   renderNoticias();
 });
 
-/* Stats */
 function renderStats() {
   const container = document.getElementById('statsForm');
   container.innerHTML = '';
@@ -216,61 +237,44 @@ function renderStats() {
   container.appendChild(createField('Empates', item.Empates, 'Empates', 'number'));
 }
 
-/* Config */
 function renderConfig() {
   const container = document.getElementById('configForm');
   container.innerHTML = '';
   const item = state.data.config || {};
-  const fields = [
-    ['whatsapp_num', 'WhatsApp'],
-    ['email', 'Email'],
-    ['direccion', 'Dirección'],
-    ['entrenamiento_dias', 'Días entrenamiento'],
-    ['entrenamiento_horario', 'Horario entrenamiento'],
-    ['cancha_nombre', 'Nombre cancha'],
-    ['maps_url', 'URL Google Maps'],
-    ['cal_summary', 'Calendario título'],
-    ['cal_description', 'Calendario descripción']
-  ];
-  fields.forEach(([key, label]) => {
+  [
+    ['whatsapp_num', 'WhatsApp'], ['email', 'Email'], ['direccion', 'Dirección'],
+    ['entrenamiento_dias', 'Días entrenamiento'], ['entrenamiento_horario', 'Horario entrenamiento'],
+    ['cancha_nombre', 'Nombre cancha'], ['maps_url', 'URL Google Maps'],
+    ['cal_summary', 'Calendario título'], ['cal_description', 'Calendario descripción']
+  ].forEach(([key, label]) => {
     container.appendChild(createField(label, item[key] || '', key));
   });
 }
 
-/* ─── Recolectar datos de los formularios ────────────────────────── */
+/* ─── Recolectar datos ───────────────────────────────────────────── */
 function collectData() {
-  const fixtureCards = document.querySelectorAll('#fixtureList .item-card');
-  state.data.fixture = Array.from(fixtureCards).map(card => getCardData(card));
+  state.data.fixture = Array.from(document.querySelectorAll('#fixtureList .item-card')).map(getCardData);
+  state.data.posiciones = Array.from(document.querySelectorAll('#posicionesList .item-card')).map(getCardData);
+  state.data.noticias = Array.from(document.querySelectorAll('#noticiasList .item-card')).map(getCardData);
 
-  const posCards = document.querySelectorAll('#posicionesList .item-card');
-  state.data.posiciones = Array.from(posCards).map(card => getCardData(card));
-
-  const newsCards = document.querySelectorAll('#noticiasList .item-card');
-  state.data.noticias = Array.from(newsCards).map(card => getCardData(card));
-
-  const statsInputs = document.querySelectorAll('#statsForm [data-key]');
   const statsObj = {};
-  statsInputs.forEach(el => statsObj[el.dataset.key] = el.type === 'number' ? Number(el.value) : el.value);
+  document.querySelectorAll('#statsForm [data-key]').forEach(el => {
+    statsObj[el.dataset.key] = el.type === 'number' ? Number(el.value) : el.value;
+  });
   state.data.stats = [statsObj];
 
-  const configInputs = document.querySelectorAll('#configForm [data-key]');
   const configObj = {};
-  configInputs.forEach(el => configObj[el.dataset.key] = el.value);
+  document.querySelectorAll('#configForm [data-key]').forEach(el => {
+    configObj[el.dataset.key] = el.value;
+  });
   state.data.config = configObj;
 }
 
 /* ─── Guardar via Worker API ─────────────────────────────────────── */
 async function saveFile(key) {
-  let content;
-  if (key === 'stats' || key === 'config') {
-    const wrapper = {};
-    wrapper[key] = state.data[key];
-    content = JSON.stringify(wrapper, null, 2);
-  } else {
-    const wrapper = {};
-    wrapper[key] = state.data[key];
-    content = JSON.stringify(wrapper, null, 2);
-  }
+  const wrapper = {};
+  wrapper[key] = state.data[key];
+  const content = JSON.stringify(wrapper, null, 2);
 
   const res = await fetch('/api/save', {
     method: 'POST',
@@ -286,15 +290,20 @@ async function saveFile(key) {
 }
 
 async function saveAll() {
+  console.log('[Admin] Iniciando guardado...');
   collectData();
+  console.log('[Admin] Datos recolectados:', state.data);
   showStatus('💾 Guardando cambios...', 'info');
   els.saveAllBtn.disabled = true;
 
   try {
     for (const key of ['fixture', 'posiciones', 'noticias', 'stats', 'config']) {
+      console.log('[Admin] Guardando:', key);
       await saveFile(key);
+      console.log('[Admin] OK:', key);
     }
-    showStatus('✅ Cambios guardados correctamente. El sitio se redeployará en unos segundos.', 'success');
+    showStatus('✅ Cambios guardados. Recargando...', 'success');
+    setTimeout(() => location.reload(), 1500);
   } catch (err) {
     showStatus('❌ Error: ' + err.message, 'error');
     console.error(err);
@@ -304,7 +313,7 @@ async function saveAll() {
 }
 
 /* ─── Inicialización ─────────────────────────────────────────────── */
-async function init() {
+async function initEditor() {
   renderTabs();
   await loadLocalData();
   renderFixture();
@@ -313,6 +322,15 @@ async function init() {
   renderStats();
   renderConfig();
   els.saveAllBtn.addEventListener('click', saveAll);
+  els.logoutBtn.addEventListener('click', logout);
 }
 
-init();
+// Inicio
+if (state.isLoggedIn) {
+  showEditor();
+} else {
+  els.loginBtn.addEventListener('click', login);
+  els.passwordInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') login();
+  });
+}

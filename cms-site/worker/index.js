@@ -1,19 +1,20 @@
 /**
- * Cloudflare Worker — Sitio web + API de guardado para panel de admin
+ * Cloudflare Worker — Sitio web + API de guardado + Login
  * 
- * Sirve archivos estáticos del sitio y expone /api/save para guardar datos.
+ * Los archivos JSON se sirven directamente desde GitHub raw para que
+ * siempre reflejen los últimos cambios.
  */
 
 const REPO = 'ccarrascosamur-cpu/IRC';
 const BRANCH = 'main';
 const DATA_PATH = 'cms-site/data';
+const RAW_BASE = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${DATA_PATH}`;
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const path = url.pathname;
 
-    // CORS preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, {
         status: 204,
@@ -25,15 +26,51 @@ export default {
       });
     }
 
+    // Endpoint: login
+    if (path === '/api/login' && request.method === 'POST') {
+      return handleLogin(request, env);
+    }
+
     // Endpoint: guardar datos
     if (path === '/api/save' && request.method === 'POST') {
       return handleSave(request, env);
     }
 
-    // Servir archivos estáticos
+    // Archivos JSON: servir desde GitHub raw (siempre actualizados)
+    const jsonMatch = path.match(/^\/data\/(\w+)\.json$/);
+    if (jsonMatch) {
+      return serveJson(jsonMatch[1]);
+    }
+
+    // Todo lo demás: assets estáticos
     return env.ASSETS.fetch(request);
   },
 };
+
+async function serveJson(key) {
+  const res = await fetch(`${RAW_BASE}/${key}.json`, {
+    cf: { cacheTtl: 5 } // Cache de solo 5 segundos en el edge
+  });
+  if (!res.ok) {
+    return new Response('Not found', { status: 404 });
+  }
+  const body = await res.text();
+  return new Response(body, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Access-Control-Allow-Origin': '*',
+    },
+  });
+}
+
+async function handleLogin(request, env) {
+  const { password } = await request.json().catch(() => ({}));
+  if (password === env.ADMIN_PASSWORD) {
+    return jsonResponse({ success: true, token: 'authenticated' });
+  }
+  return jsonResponse({ error: 'Contraseña incorrecta' }, 401);
+}
 
 async function handleSave(request, env) {
   const token = env.GITHUB_TOKEN;
@@ -56,7 +93,6 @@ async function handleSave(request, env) {
   const filePath = `${DATA_PATH}/${key}.json`;
 
   try {
-    // Obtener SHA actual del archivo
     const shaRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}?ref=${BRANCH}`, {
       headers: {
         'Authorization': `token ${token}`,
@@ -72,7 +108,6 @@ async function handleSave(request, env) {
 
     const shaData = await shaRes.json();
 
-    // Guardar archivo
     const saveRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`, {
       method: 'PUT',
       headers: {

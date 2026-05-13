@@ -13,9 +13,22 @@
   </header>
 
   <main class="admin-container">
-    <section id="editorSection" class="editor-section">
+    <!-- Login -->
+    <section id="loginSection" class="login-section">
+      <h2>🔐 Acceso restringido</h2>
+      <p>Ingresá la contraseña para acceder al panel de administración.</p>
+      <div class="form-group">
+        <input type="password" id="passwordInput" placeholder="Contraseña" class="input">
+        <button id="loginBtn" class="btn btn-primary">Entrar</button>
+      </div>
+      <p id="loginError" class="hint" style="color:#c0392b"></p>
+    </section>
+
+    <!-- Editor -->
+    <section id="editorSection" class="editor-section hidden">
       <div class="toolbar">
         <h2>Editar datos</h2>
+        <button id="logoutBtn" class="btn btn-secondary">Cerrar sesión</button>
         <button id="saveAllBtn" class="btn btn-primary">💾 Guardar todos los cambios</button>
       </div>
       <div id="status" class="status hidden"></div>
