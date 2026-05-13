@@ -1,33 +1,33 @@
 {
   "galeria": [
     {
-      "ImagenURL": "https://www.rugbychile.cl/wp-content/uploads/2018/07/29064696_1401335966638607_1035477083796867736_o.jpg",
-      "Label": "🏆 Final del Torneo",
+      "ImagenURL": "https://drive.google.com/file/d/1qWrCKSzUhqhj9iYRKnogNf4FUUhbrGra/view?usp=sharing",
+      "Label": "",
       "LayoutClass": "gi-tall"
     },
     {
-      "ImagenURL": "https://images.unsplash.com/photo-1521537634581-0dced2fee2ef?w=600&auto=format&fit=crop&q=80",
-      "Label": "💪 Entrenamiento",
+      "ImagenURL": "https://drive.google.com/file/d/1ouN5DkRbj8Z3nkCOv1bYowYYvGwNJNKx/view?usp=sharing",
+      "Label": "",
       "LayoutClass": ""
     },
     {
       "ImagenURL": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&auto=format&fit=crop&q=80",
-      "Label": "🏉 Partido en Casa",
+      "Label": "",
       "LayoutClass": ""
     },
     {
-      "ImagenURL": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1000&auto=format&fit=crop&q=80",
-      "Label": "🤝 Equipo Unido",
+      "ImagenURL": "https://drive.google.com/file/d/1Fz5_GvIz1-O6oHznTFvgDD-D5Fht3Jjg/view?usp=sharing",
+      "Label": "",
       "LayoutClass": "gi-wide"
     },
     {
-      "ImagenURL": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop&q=80",
-      "Label": "⚡ Momento Épico",
+      "ImagenURL": "https://drive.google.com/file/d/1n-pqVjr4tOmiEZEycNYGLpuddKXMqoLs/view?usp=sharing",
+      "Label": "",
       "LayoutClass": ""
     },
     {
-      "ImagenURL": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=600&auto=format&fit=crop&q=80",
-      "Label": "🌟 Celebración",
+      "ImagenURL": "https://drive.google.com/file/d/1JCxl7a4uqwT3dZBVI2cJQxbOpEqbLkhD/view?usp=sharing",
+      "Label": "",
       "LayoutClass": ""
     }
   ]
