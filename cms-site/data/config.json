@@ -1,11 +1,13 @@
 {
-  "whatsapp_num": "56900000000",
-  "email": "contacto@inglesrugbyclub.com",
-  "direccion": "Cancha IRC",
-  "entrenamiento_dias": "Martes y Jueves",
-  "entrenamiento_horario": "20:00 h",
-  "cancha_nombre": "Cancha IRC",
-  "maps_url": "https://maps.google.com",
-  "cal_summary": "Ingles Rugby Club vs",
-  "cal_description": "Partido de rugby amateur. ¡Vamos IRC!"
+  "config": {
+    "whatsapp_num": "56900000000",
+    "email": "contacto@inglesrugbyclub.com",
+    "direccion": "Cancha IRC",
+    "entrenamiento_dias": "Martes y Jueves",
+    "entrenamiento_horario": "20:00 h",
+    "cancha_nombre": "Cancha IRC",
+    "maps_url": "https://maps.google.com",
+    "cal_summary": "Ingles Rugby Club vs",
+    "cal_description": "Partido de rugby amateur. ¡Vamos IRC!"
+  }
 }
