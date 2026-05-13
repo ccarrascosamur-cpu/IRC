@@ -92,15 +92,17 @@ function successHtml(token) {
   <script>
     (function() {
       var token = "${token}";
+      var origin = window.location.origin;
       if (window.opener) {
-        window.opener.postMessage({
-          type: "authorization:github:success",
-          payload: { provider: "github", token: token }
-        }, "*");
+        // Formato compatible con Decap CMS (ambos formatos por si acaso)
+        window.opener.postMessage({ type: "authorizing:github", token: token }, "*");
+        window.opener.postMessage({ type: "authorization:github:success", payload: { provider: "github", token: token } }, "*");
       }
+      // Fallback: algunas versiones de Decap CMS leen el hash
+      window.location.hash = "access_token=" + token + "&token_type=bearer";
       setTimeout(function() {
         window.close();
-      }, 1000);
+      }, 2500);
     })();
   </script>
 </body>
