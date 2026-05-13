@@ -1,5 +1,9 @@
 {
   "stats": [
-    { "Victorias": 1, "Derrotas": 2, "Empates": 0 }
+    {
+      "Victorias": 3,
+      "Derrotas": 2,
+      "Empates": 0
+    }
   ]
 }
