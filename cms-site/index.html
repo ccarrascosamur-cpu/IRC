@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ingles Rugby Club — IRC</title>
+    <meta
+      name="description"
+      content="Ingles Rugby Club — IRC. Fixture, plantel, tabla de posiciones, noticias y más. ¡Únete al equipo!"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  </head>
+  <body>
+    <!-- ═══ NAVBAR ═══════════════════════════════════════════════════════ -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-inner">
+        <a href="#hero" class="nav-logo">
+          <img src="img/logo.png" alt="IRC Logo" class="nav-logo-img" />
+          <span class="logo-name">Ingles Rugby Club</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#proximo">Próximo</a></li>
+          <li><a href="#posiciones">Posiciones</a></li>
+          <li><a href="#fixture">Fixture</a></li>
+          <li><a href="#noticias">Noticias</a></li>
+          <li><a href="#plantel">Plantel</a></li>
+          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#unete" class="nav-cta">Únete</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Menú">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ═══ HERO ══════════════════════════════════════════════════════════ -->
+    <section id="hero" class="hero">
+      <div class="hero-bg">
+        <div class="hero-pattern"></div>
+        <div class="hero-overlay"></div>
+      </div>
+      <div class="hero-content reveal">
+        <div class="hero-tag">TEMPORADA 2026</div>
+        <div class="hero-logo-wrap">
+          <img src="img/logo.png" alt="IRC" class="hero-logo-img" />
+        </div>
+        <h1 class="hero-title">
+          <span class="hero-title-line">INGLES</span>
+          <span class="hero-title-line accent">RUGBY</span>
+          <span class="hero-title-line">CLUB</span>
+        </h1>
+        <p class="hero-tagline">Pasión · Esfuerzo · Familia</p>
+        <div class="hero-stats" id="heroStats">
+          <div class="hero-stat">
+            <span class="hero-stat-num" data-target="0" id="statVictorias"
+              >0</span
+            >
+            <span class="hero-stat-label">Victorias</span>
+          </div>
+          <div class="hero-stat-sep"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-num" data-target="0" id="statDerrotas"
+              >0</span
+            >
+            <span class="hero-stat-label">Derrotas</span>
+          </div>
+          <div class="hero-stat-sep"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-num" data-target="0" id="statEmpates"
+              >0</span
+            >
+            <span class="hero-stat-label">Empates</span>
+          </div>
+        </div>
+        <div class="hero-ctas">
+          <a href="#fixture" class="btn btn-outline">VER FIXTURE</a>
+          <a href="#unete" class="btn btn-primary">ÚNETE AL EQUIPO →</a>
+        </div>
+      </div>
+      <div class="hero-rugby-shape">
+        <svg
+          viewBox="0 0 200 120"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <ellipse
+            cx="100"
+            cy="60"
+            rx="96"
+            ry="56"
+            stroke="currentColor"
+            stroke-width="2"
+            opacity="0.15"
+          />
+          <line
+            x1="100"
+            y1="4"
+            x2="100"
+            y2="116"
+            stroke="currentColor"
+            stroke-width="1.5"
+            opacity="0.12"
+          />
+          <path
+            d="M 65 40 Q 100 30 135 40"
+            stroke="currentColor"
+            stroke-width="1.5"
+            fill="none"
+            opacity="0.12"
+          />
+          <path
+            d="M 55 60 Q 100 48 145 60"
+            stroke="currentColor"
+            stroke-width="1.5"
+            fill="none"
+            opacity="0.12"
+          />
+          <path
+            d="M 65 80 Q 100 70 135 80"
+            stroke="currentColor"
+            stroke-width="1.5"
+            fill="none"
+            opacity="0.12"
+          />
+        </svg>
+      </div>
+      <a href="#proximo" class="hero-scroll-hint" aria-label="Scroll">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M12 5v14M5 12l7 7 7-7"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
+    </section>
+
+    <!-- ═══ PRÓXIMO PARTIDO ═══════════════════════════════════════════════ -->
+    <section id="proximo" class="proximo">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">EN JUEGO</span>
+          <h2 class="section-title">Próximo Partido</h2>
+        </div>
+        <div class="match-featured reveal" id="proximoPartido">
+          <!-- Contenido dinámico desde Google Sheets -->
+          <div class="match-date-banner">
+            <span class="match-day" id="proxDiaSemana">SAB</span>
+            <span class="match-num" id="proxDiaNum">16</span>
+            <span class="match-month" id="proxMes">MAYO 2026</span>
+          </div>
+          <div class="match-teams">
+            <div class="match-team match-team--home">
+              <div class="team-badge home-badge">
+                <img
+                  src="img/logo.png"
+                  alt="IRC"
+                  style="width: 44px; height: 44px; object-fit: contain"
+                />
+              </div>
+              <span class="team-name">Ingles RC</span>
+              <span class="team-tag">LOCAL</span>
+            </div>
+            <div class="match-vs">
+              <span class="vs-text">VS</span>
+              <span class="match-time" id="proxHora">13:00 h</span>
+            </div>
+            <div class="match-team match-team--away">
+              <div class="team-badge away-badge" id="proxRivalBadge">MR</div>
+              <span class="team-name" id="proxRival">Mano Rugby</span>
+              <span class="team-tag" id="proxLocalidad">VISITANTE</span>
+            </div>
+          </div>
+          <div class="match-info">
+            <div class="match-info-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  fill="currentColor"
+                />
+                <circle cx="12" cy="9" r="2.5" fill="white" opacity=".7" />
+              </svg>
+              <span id="proxCancha">Estadio Juan Antonio Ríos</span>
+            </div>
+            <div class="match-info-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+                <path
+                  d="M12 6v6l4 2"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <span id="proxInfoExtra">13:00 h — Entrada libre y gratuita</span>
+            </div>
+          </div>
+          <div class="match-actions">
+            <a
+              href="https://maps.google.com"
+              target="_blank"
+              class="btn btn-ghost"
+              id="proxMapsLink"
+              >📍 Cómo Llegar</a
+            >
+            <a href="#" class="btn btn-primary-sm" id="addCalBtn"
+              >📅 Agregar al Calendario</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TABLA DE POSICIONES ═══════════════════════════════════════════ -->
+    <section id="posiciones" class="posiciones">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">TORNEO 2026</span>
+          <h2 class="section-title">Tabla de Posiciones</h2>
+        </div>
+        <div class="standings-wrapper reveal" id="standingsWrapper">
+          <div class="standings-loading" id="standingsLoading">
+            <div class="spinner"></div>
+            <p>Cargando tabla de posiciones...</p>
+          </div>
+          <div
+            class="standings-table-container"
+            id="standingsTable"
+            style="display: none"
+          >
+            <table class="standings-table">
+              <thead>
+                <tr>
+                  <th class="col-pos">#</th>
+                  <th class="col-team">Equipo</th>
+                  <th class="col-num">PJ</th>
+                  <th class="col-num">PG</th>
+                  <th class="col-num">PE</th>
+                  <th class="col-num">PP</th>
+                  <th class="col-num hide-mobile">PF</th>
+                  <th class="col-num">Dif</th>
+                  <th class="col-pts">Pts</th>
+                </tr>
+              </thead>
+              <tbody id="standingsBody">
+                <!-- Dinámico -->
+              </tbody>
+            </table>
+          </div>
+          <div
+            class="standings-error"
+            id="standingsError"
+            style="display: none"
+          >
+            <p>No se pudo cargar la tabla de posiciones.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ FIXTURE ════════════════════════════════════════════════════════ -->
+    <section id="fixture" class="fixture">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">TEMPORADA 2026</span>
+          <h2 class="section-title">Fixture Completo</h2>
+        </div>
+        <div class="fixture-tabs reveal">
+          <button class="tab-btn active" data-tab="todos">Todos</button>
+          <button class="tab-btn" data-tab="local">Local</button>
+          <button class="tab-btn" data-tab="visita">Visita</button>
+        </div>
+        <div class="fixture-loading" id="fixtureLoading">
+          <div class="spinner"></div>
+          <p>Cargando fixture...</p>
+        </div>
+        <div class="fixture-grid" id="fixtureGrid" style="display: none">
+          <!-- Dinámico desde Google Sheets -->
+        </div>
+        <div class="fixture-error" id="fixtureError" style="display: none">
+          <p>No se pudo cargar el fixture.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ NOTICIAS ══════════════════════════════════════════════════════ -->
+    <section id="noticias" class="noticias">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">NOVEDADES</span>
+          <h2 class="section-title">Últimas Noticias</h2>
+        </div>
+        <div class="news-loading" id="newsLoading">
+          <div class="spinner"></div>
+          <p>Cargando noticias...</p>
+        </div>
+        <div class="news-grid" id="newsGrid" style="display: none">
+          <!-- Dinámico desde Google Sheets -->
+        </div>
+        <div class="news-error" id="newsError" style="display: none">
+          <p>No se pudieron cargar las noticias.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ PLANTEL ════════════════════════════════════════════════════════ -->
+    <section id="plantel" class="plantel">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">TEMPORADA 2026</span>
+          <h2 class="section-title">Nuestro Plantel</h2>
+        </div>
+        <div class="players-grid">
+          <div class="player-card reveal" style="--delay: 0.05s">
+            <div class="player-avatar" style="--av-color: #842021">J</div>
+            <div class="player-num">#1</div>
+            <div class="player-info">
+              <span class="player-name">Juan Torres</span>
+              <span class="player-pos">Pilar</span>
+            </div>
+          </div>
+
+          <div class="player-card reveal" style="--delay: 0.1s">
+            <div class="player-avatar" style="--av-color: #5e1617">D</div>
+            <div class="player-num">#2</div>
+            <div class="player-info">
+              <span class="player-name">Diego Ramos</span>
+              <span class="player-pos">Hooker</span>
+            </div>
+          </div>
+
+          <div class="player-card reveal" style="--delay: 0.15s">
+            <div class="player-avatar" style="--av-color: #3a0e0e">M</div>
+            <div class="player-num">#3</div>
+            <div class="player-info">
+              <span class="player-name">Marcos Giménez</span>
+              <span class="player-pos">Pilar</span>
+            </div>
+          </div>
+
+          <div class="player-card reveal" style="--delay: 0.2s">
+            <div class="player-avatar" style="--av-color: #842021">M</div>
+            <div class="player-num">#4</div>
+            <div class="player-info">
+              <span class="player-name">Matías Herrera</span>
+              <span class="player-pos">2da Línea</span>
+            </div>
+          </div>
+
+          <div class="player-card reveal" style="--delay: 0.25s">
+            <div class="player-avatar" style="--av-color: #6b1a1a">S</div>
+            <div class="player-num">#5</div>
+            <div class="player-info">
+              <span class="player-name">Sebastián Vega</span>
+              <span class="player-pos">2da Línea</span>
+            </div>
+          </div>
+
+          <div class="player-card reveal" style="--delay: 0.3s">
+            <div class="player-avatar" style="--av-color: #4a1212">P</div>
+            <div class="player-num">#6</div>
+            <div class="player-info">
+              <span class="player-name">Pablo Castro</span>
+              <span class="player-pos">Ala</span>
+            </div>
+          </div>
+
+          <div class="player-card reveal" style="--delay: 0.35s">
+            <div class="player-avatar" style="--av-color: #842021">N</div>
+            <div class="player-num">#7</div>
+            <div class="player-info">
+              <span class="player-name">Nicolás Medina</span>
+              <span class="player-pos">Ala</span>
+            </div>
+          </div>
+
+          <div class="player-card reveal" style="--delay: 0.4s">
+            <div class="player-avatar" style="--av-color: #5e1617">R</div>
+            <div class="player-num">#8</div>
+            <div class="player-info">
+              <span class="player-name">Rodrigo López</span>
+              <span class="player-pos">Número 8</span>
+            </div>
+          </div>
+
+          <div class="player-card reveal" style="--delay: 0.45s">
+            <div class="player-avatar" style="--av-color: #3a0e0e">F</div>
+            <div class="player-num">#9</div>
+            <div class="player-info">
+              <span class="player-name">Facundo Silva</span>
+              <span class="player-pos">Medio Scrum</span>
+            </div>
+          </div>
+
+          <div class="player-card reveal" style="--delay: 0.5s">
+            <div class="player-avatar" style="--av-color: #842021">L</div>
+            <div class="player-num">#10</div>
+            <div class="player-info">
+              <span class="player-name">Luciano Pérez</span>
+              <span class="player-pos">Apertura</span>
+            </div>
+          </div>
+
+          <div class="player-card reveal" style="--delay: 0.55s">
+            <div class="player-avatar" style="--av-color: #6b1a1a">T</div>
+            <div class="player-num">#11</div>
+            <div class="player-info">
+              <span class="player-name">Tomás Fernández</span>
+              <span class="player-pos">Wing</span>
+            </div>
+          </div>
+
+          <div class="player-card reveal" style="--delay: 0.6s">
+            <div class="player-avatar" style="--av-color: #4a1212">A</div>
+            <div class="player-num">#12</div>
+            <div class="player-info">
+              <span class="player-name">Agustín Romero</span>
+              <span class="player-pos">Centro</span>
+            </div>
+          </div>
+
+          <div class="player-card reveal" style="--delay: 0.65s">
+            <div class="player-avatar" style="--av-color: #842021">F</div>
+            <div class="player-num">#13</div>
+            <div class="player-info">
+              <span class="player-name">Federico Gómez</span>
+              <span class="player-pos">Centro</span>
+            </div>
+          </div>
+
+          <div class="player-card reveal" style="--delay: 0.7s">
+            <div class="player-avatar" style="--av-color: #5e1617">A</div>
+            <div class="player-num">#14</div>
+            <div class="player-info">
+              <span class="player-name">Andrés Beltrán</span>
+              <span class="player-pos">Wing</span>
+            </div>
+          </div>
+
+          <div class="player-card reveal" style="--delay: 0.75s">
+            <div class="player-avatar" style="--av-color: #3a0e0e">E</div>
+            <div class="player-num">#15</div>
+            <div class="player-info">
+              <span class="player-name">Emiliano Ruiz</span>
+              <span class="player-pos">Full Back</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ GALERÍA ════════════════════════════════════════════════════════ -->
+    <section id="galeria" class="galeria">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">MOMENTOS</span>
+          <h2 class="section-title">Galería</h2>
+        </div>
+        <div class="gallery-grid reveal">
+          <!-- Unsplash: rugby match action -->
+          <div
+            class="gallery-item gi-tall"
+            style="
+              background-image:
+                linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.15)),
+                url(&quot;https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&auto=format&fit=crop&q=80&quot;);
+            "
+          >
+            <div class="gallery-label">🏆 Final del Torneo</div>
+          </div>
+
+          <!-- Unsplash: team training -->
+          <div
+            class="gallery-item"
+            style="
+              background-image:
+                linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.15)),
+                url(&quot;https://images.unsplash.com/photo-1521537634581-0dced2fee2ef?w=600&auto=format&fit=crop&q=80&quot;);
+            "
+          >
+            <div class="gallery-label">💪 Entrenamiento</div>
+          </div>
+
+          <!-- Unsplash: rugby scrum -->
+          <div
+            class="gallery-item"
+            style="
+              background-image:
+                linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.15)),
+                url(&quot;https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&auto=format&fit=crop&q=80&quot;);
+            "
+          >
+            <div class="gallery-label">🏉 Partido en Casa</div>
+          </div>
+
+          <!-- Unsplash: team celebration / huddle -->
+          <div
+            class="gallery-item gi-wide"
+            style="
+              background-image:
+                linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.15)),
+                url(&quot;https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1000&auto=format&fit=crop&q=80&quot;);
+            "
+          >
+            <div class="gallery-label">🤝 Equipo Unido</div>
+          </div>
+
+          <!-- Unsplash: rugby tackle -->
+          <div
+            class="gallery-item"
+            style="
+              background-image:
+                linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.15)),
+                url(&quot;https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop&q=80&quot;);
+            "
+          >
+            <div class="gallery-label">⚡ Momento Épico</div>
+          </div>
+
+          <!-- Unsplash: sports celebration -->
+          <div
+            class="gallery-item"
+            style="
+              background-image:
+                linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.15)),
+                url(&quot;https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=600&auto=format&fit=crop&q=80&quot;);
+            "
+          >
+            <div class="gallery-label">🌟 Celebración</div>
+          </div>
+        </div>
+        <p class="gallery-note reveal">
+          ¿Quieres ver tus fotos aquí? Envía tus imágenes al equipo y las
+          publicamos.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══ ÚNETE ══════════════════════════════════════════════════════════ -->
+    <section id="unete" class="unete">
+      <div class="unete-bg"></div>
+      <div class="container">
+        <div class="unete-content reveal">
+          <div class="unete-text">
+            <span class="section-tag tag-light">ÚNETE</span>
+            <h2 class="unete-title">¿Quieres jugar al rugby?</h2>
+            <p class="unete-desc">
+              Todos los niveles son bienvenidos. No hace falta experiencia
+              previa — solo ganas y compromiso.
+            </p>
+            <ul class="unete-details">
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                  <path
+                    d="M12 6v6l4 2"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Entrenamientos: Martes y Jueves · 20:00 h
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                    fill="currentColor"
+                  />
+                </svg>
+                Campo de Juego: Av. San Martín 1240
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                  <circle
+                    cx="9"
+                    cy="7"
+                    r="4"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                  <path
+                    d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                </svg>
+                Todas las categorías — desde principiantes
+              </li>
+            </ul>
+          </div>
+          <div class="unete-cta">
+            <a
+              href="https://wa.me/5491100000000?text=Hola!%20Me%20interesa%20unirme%20al%20Ingles%20Rugby%20Club"
+              target="_blank"
+              class="btn-whatsapp"
+              id="btnWhatsapp"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+                />
+              </svg>
+              Escríbenos por WhatsApp
+            </a>
+            <a
+              href="mailto:contacto@inglesrugbyclub.com"
+              class="btn-email"
+              id="btnEmail"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+                <polyline
+                  points="22,6 12,13 2,6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+              </svg>
+              contacto@inglesrugbyclub.com
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SPONSORS ═══════════════════════════════════════════════════════ -->
+    <section class="sponsors">
+      <div class="container">
+        <div class="sponsors-header reveal">
+          <span class="sponsors-label">NOS APOYAN</span>
+        </div>
+        <div class="sponsors-row reveal">
+          <div class="sponsor-logo">SPONSOR A</div>
+          <div class="sponsor-logo">SPONSOR B</div>
+          <div class="sponsor-logo">SPONSOR C</div>
+          <div class="sponsor-logo">SPONSOR D</div>
+          <div class="sponsor-logo">SPONSOR E</div>
+        </div>
+        <p class="sponsor-note reveal">
+          ¿Quieres auspiciar al club?
+          <a href="mailto:contacto@inglesrugbyclub.com">Contáctanos →</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══ FOOTER ══════════════════════════════════════════════════════════ -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <img src="img/logo.png" alt="IRC Logo" class="footer-logo-img" />
+              <span>Ingles Rugby Club</span>
+            </div>
+            <p class="footer-tagline">
+              Club de Rugby Amateur fundado con pasión, esfuerzo y espíritu de
+              equipo.
+            </p>
+            <div class="footer-social">
+              <a href="#" aria-label="Instagram" class="social-link">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                  />
+                </svg>
+              </a>
+              <a href="#" aria-label="Facebook" class="social-link">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4 class="footer-col-title">Navegación</h4>
+            <ul class="footer-links">
+              <li><a href="#proximo">Próximo Partido</a></li>
+              <li><a href="#posiciones">Posiciones</a></li>
+              <li><a href="#fixture">Fixture</a></li>
+              <li><a href="#noticias">Noticias</a></li>
+              <li><a href="#plantel">Plantel</a></li>
+              <li><a href="#galeria">Galería</a></li>
+              <li><a href="#unete">Únete al Equipo</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4 class="footer-col-title">Contacto</h4>
+            <ul class="footer-links">
+              <li>
+                <a href="mailto:contacto@inglesrugbyclub.com" id="footerEmail"
+                  >contacto@inglesrugbyclub.com</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://wa.me/5491100000000"
+                  target="_blank"
+                  id="footerWhatsapp"
+                  >WhatsApp</a
+                >
+              </li>
+              <li id="footerDireccion">Av. San Martín 1240</li>
+              <li>Martes y Jueves · 20:00 h</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>© 2026 Ingles Rugby Club — IRC · Todos los derechos reservados</p>
+          <p class="footer-credit">IRC</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ═══ WHATSAPP FLOAT ════════════════════════════════════════════════ -->
+    <a
+      href="https://wa.me/5491100000000?text=Hola!%20Me%20interesa%20el%20Ingles%20Rugby%20Club"
+      target="_blank"
+      class="whatsapp-float"
+      aria-label="Contactar por WhatsApp"
+      id="whatsappFloat"
+    >
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+        />
+      </svg>
+      <span class="wa-tooltip">¡Escríbenos!</span>
+    </a>
+
+    <script src="js/main.js?v=3"></script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "noticias": [
+    {
+      "Fecha": "10/05/2026",
+      "Titulo": "Preparación intensa para la Fecha 4",
+      "Resumen": "El equipo se prepara para enfrentar a Mano Rugby este sábado. Entrenamientos enfocados en el scrum y la defensa durante toda la semana.",
+      "ImagenURL": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600",
+      "Link": "#",
+      "Destacada": true
+    },
+    {
+      "Fecha": "28/04/2026",
+      "Titulo": "Empate agónico contra Lions RC",
+      "Resumen": "24-24 en un partido de ida y vuelta. El try del final nos dejó con un punto valioso en casa.",
+      "ImagenURL": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600",
+      "Link": "#",
+      "Destacada": false
+    },
+    {
+      "Fecha": "18/04/2026",
+      "Titulo": "Dura derrota ante Trapiales RC",
+      "Resumen": "Caímos 48-22 en el debut. A levantar la cabeza y seguir trabajando para la próxima fecha.",
+      "ImagenURL": "https://images.unsplash.com/photo-1521537634581-0dced2fee2ef?w=600",
+      "Link": "#",
+      "Destacada": false
+    }
+  ]
+}

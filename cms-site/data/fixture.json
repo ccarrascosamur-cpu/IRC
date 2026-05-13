@@ -1,0 +1,18 @@
+{
+  "fixture": [
+    { "DiaSemana": "SAB", "DiaNum": 11, "Mes": "ABR", "Ano": 2026, "Hora": "13:00", "Localidad": "Visita", "Rival": "Trapiales RC", "IRC_Score": "22", "Rival_Score": "48", "Estado": "jugado", "Cancha": "Complejo Deportivo Las Rosas", "Direccion": "", "EsDestacado": false },
+    { "DiaSemana": "SAB", "DiaNum": 25, "Mes": "ABR", "Ano": 2026, "Hora": "15:00", "Localidad": "Local", "Rival": "Lions RC", "IRC_Score": "31", "Rival_Score": "33", "Estado": "jugado", "Cancha": "Cancha IRC", "Direccion": "", "EsDestacado": false },
+    { "DiaSemana": "DOM", "DiaNum": 10, "Mes": "MAY", "Ano": 2026, "Hora": "15:00", "Localidad": "Local", "Rival": "Old Navy", "IRC_Score": "57", "Rival_Score": "30", "Estado": "jugado", "Cancha": "Cancha IRC", "Direccion": "", "EsDestacado": false },
+    { "DiaSemana": "SAB", "DiaNum": 16, "Mes": "MAY", "Ano": 2026, "Hora": "13:00", "Localidad": "Visita", "Rival": "Mano Rugby", "IRC_Score": "", "Rival_Score": "", "Estado": "proximo", "Cancha": "Estadio Juan Antonio Ríos", "Direccion": "", "EsDestacado": true },
+    { "DiaSemana": "SAB", "DiaNum": 30, "Mes": "MAY", "Ano": 2026, "Hora": "15:00", "Localidad": "Local", "Rival": "Los Troncos", "IRC_Score": "", "Rival_Score": "", "Estado": "proximo", "Cancha": "Cancha IRC", "Direccion": "", "EsDestacado": false },
+    { "DiaSemana": "SAB", "DiaNum": 13, "Mes": "JUN", "Ano": 2026, "Hora": "16:00", "Localidad": "Visita", "Rival": "Costa del Sol", "IRC_Score": "", "Rival_Score": "", "Estado": "proximo", "Cancha": "Costa del Sol", "Direccion": "", "EsDestacado": false },
+    { "DiaSemana": "SAB", "DiaNum": 20, "Mes": "JUN", "Ano": 2026, "Hora": "13:00", "Localidad": "Local", "Rival": "Halcones RC", "IRC_Score": "", "Rival_Score": "", "Estado": "proximo", "Cancha": "Cancha IRC", "Direccion": "", "EsDestacado": false },
+    { "DiaSemana": "DOM", "DiaNum": 5, "Mes": "JUL", "Ano": 2026, "Hora": "15:00", "Localidad": "Local", "Rival": "Trapiales RC", "IRC_Score": "", "Rival_Score": "", "Estado": "proximo", "Cancha": "Cancha IRC", "Direccion": "", "EsDestacado": false },
+    { "DiaSemana": "DOM", "DiaNum": 12, "Mes": "JUL", "Ano": 2026, "Hora": "00:00", "Localidad": "Visita", "Rival": "Lions RC", "IRC_Score": "", "Rival_Score": "", "Estado": "proximo", "Cancha": "Cancha Interior Parque Mahuida", "Direccion": "", "EsDestacado": false },
+    { "DiaSemana": "SAB", "DiaNum": 1, "Mes": "AGO", "Ano": 2026, "Hora": "16:00", "Localidad": "Visita", "Rival": "Old Navy", "IRC_Score": "", "Rival_Score": "", "Estado": "proximo", "Cancha": "Las Salinas", "Direccion": "", "EsDestacado": false },
+    { "DiaSemana": "SAB", "DiaNum": 8, "Mes": "AGO", "Ano": 2026, "Hora": "15:00", "Localidad": "Local", "Rival": "Mano Rugby", "IRC_Score": "", "Rival_Score": "", "Estado": "proximo", "Cancha": "Cancha IRC", "Direccion": "", "EsDestacado": false },
+    { "DiaSemana": "SAB", "DiaNum": 15, "Mes": "AGO", "Ano": 2026, "Hora": "00:00", "Localidad": "Visita", "Rival": "Los Troncos", "IRC_Score": "", "Rival_Score": "", "Estado": "proximo", "Cancha": "Tineo Park", "Direccion": "", "EsDestacado": false },
+    { "DiaSemana": "SAB", "DiaNum": 5, "Mes": "SEP", "Ano": 2026, "Hora": "15:00", "Localidad": "Local", "Rival": "Costa del Sol", "IRC_Score": "", "Rival_Score": "", "Estado": "proximo", "Cancha": "Cancha IRC", "Direccion": "", "EsDestacado": false },
+    { "DiaSemana": "SAB", "DiaNum": 12, "Mes": "SEP", "Ano": 2026, "Hora": "14:00", "Localidad": "Visita", "Rival": "Halcones RC", "IRC_Score": "", "Rival_Score": "", "Estado": "proximo", "Cancha": "Calle Larga", "Direccion": "", "EsDestacado": false }
+  ]
+}

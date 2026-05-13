@@ -1,0 +1,10 @@
+name = "irc-oauth-proxy"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# Variables de entorno (usá wrangler secret put para ocultarlas)
+# wrangler secret put GITHUB_CLIENT_ID
+# wrangler secret put GITHUB_CLIENT_SECRET
+
+[vars]
+# No pongas secrets acá; usá wrangler secret put
