@@ -1,14 +1,12 @@
 /**
  * Cloudflare Worker — Sitio web + API de guardado + Login
  * 
- * Los archivos JSON se sirven directamente desde GitHub raw para que
- * siempre reflejen los últimos cambios.
+ * Lee y escribe datos directamente en GitHub via API para evitar caché.
  */
 
 const REPO = 'ccarrascosamur-cpu/IRC';
 const BRANCH = 'main';
 const DATA_PATH = 'cms-site/data';
-const RAW_BASE = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${DATA_PATH}`;
 
 export default {
   async fetch(request, env, ctx) {
@@ -26,42 +24,58 @@ export default {
       });
     }
 
-    // Endpoint: login
     if (path === '/api/login' && request.method === 'POST') {
       return handleLogin(request, env);
     }
 
-    // Endpoint: guardar datos
     if (path === '/api/save' && request.method === 'POST') {
       return handleSave(request, env);
     }
 
-    // Archivos JSON: servir desde GitHub raw (siempre actualizados)
+    // Archivos JSON: servir desde GitHub API (siempre actualizados, sin caché)
     const jsonMatch = path.match(/^\/data\/(\w+)\.json$/);
     if (jsonMatch) {
-      return serveJson(jsonMatch[1]);
+      return serveJson(jsonMatch[1], env);
     }
 
-    // Todo lo demás: assets estáticos
     return env.ASSETS.fetch(request);
   },
 };
 
-async function serveJson(key) {
-  const res = await fetch(`${RAW_BASE}/${key}.json`, {
-    cf: { cacheTtl: 5 } // Cache de solo 5 segundos en el edge
-  });
-  if (!res.ok) {
-    return new Response('Not found', { status: 404 });
+async function serveJson(key, env) {
+  const token = env.GITHUB_TOKEN;
+  const filePath = `${DATA_PATH}/${key}.json`;
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}?ref=${BRANCH}`, {
+      headers: {
+        ...(token ? { 'Authorization': `token ${token}` } : {}),
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'IRC-Worker'
+      },
+      cf: { cacheTtl: 0 }
+    });
+    if (!res.ok) return new Response('Not found', { status: 404 });
+    const data = await res.json();
+    const content = fromBase64(data.content);
+    return new Response(content, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
+  } catch (e) {
+    return new Response('Error: ' + e.message, { status: 500 });
   }
-  const body = await res.text();
-  return new Response(body, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
-      'Access-Control-Allow-Origin': '*',
-    },
-  });
+}
+
+function fromBase64(str) {
+  const binary = atob(str.replace(/\s/g, ''));
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return new TextDecoder().decode(bytes);
 }
 
 async function handleLogin(request, env) {
@@ -124,9 +138,9 @@ async function handleSave(request, env) {
       })
     });
 
+    const saveData = await saveRes.json().catch(() => ({}));
     if (!saveRes.ok) {
-      const err = await saveRes.json().catch(() => ({}));
-      return jsonResponse({ error: err.message || `GitHub save error: ${saveRes.status}` }, 400);
+      return jsonResponse({ error: saveData.message || `GitHub save error: ${saveRes.status}` }, 400);
     }
 
     return jsonResponse({ success: true, message: `${key} guardado correctamente` });
