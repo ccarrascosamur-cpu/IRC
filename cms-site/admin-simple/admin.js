@@ -65,7 +65,7 @@ function showEditor() {
 
 /* ─── Carga de datos (desde Worker que lee GitHub) ───────────────── */
 async function loadLocalData() {
-  const files = ['fixture', 'posiciones', 'noticias', 'stats', 'config', 'jugadores', 'galeria'];
+  const files = ['fixture', 'posiciones', 'noticias', 'stats', 'config', 'jugadores', 'galeria', 'institucion'];
   for (const key of files) {
     try {
       const res = await fetch(`/api/data/${key}.json`);
@@ -73,6 +73,10 @@ async function loadLocalData() {
       if (key === 'jugadores') {
         state.data.jugadores = raw.jugadores || [];
         state.data.headCoach = raw.headCoach || { Nombre: '', Cargo: 'Head Coach' };
+        state.data.staff = raw.staff || [];
+      } else if (key === 'institucion') {
+        state.data.historia = raw.historia || { Titulo: '', Bajada: '', Contenido: '' };
+        state.data.directorio = raw.directorio || [];
       } else {
         state.data[key] = Array.isArray(raw) ? raw : (raw[key] || raw);
       }
@@ -81,6 +85,10 @@ async function loadLocalData() {
       if (key === 'jugadores') {
         state.data.jugadores = [];
         state.data.headCoach = { Nombre: '', Cargo: 'Head Coach' };
+        state.data.staff = [];
+      } else if (key === 'institucion') {
+        state.data.historia = { Titulo: '', Bajada: '', Contenido: '' };
+        state.data.directorio = [];
       } else {
         state.data[key] = key === 'config' ? {} : (key === 'stats' ? [{}] : []);
       }
@@ -103,6 +111,10 @@ function renderTabs() {
 function createField(label, value, key, type = 'text') {
   const div = document.createElement('div');
   div.className = 'field';
+  if (type === 'textarea') {
+    div.innerHTML = `<label>${label}</label><textarea data-key="${key}" class="input" rows="5">${String(value || '')}</textarea>`;
+    return div;
+  }
   const inputType = type === 'boolean' ? 'checkbox' : (type === 'number' ? 'number' : 'text');
   const checked = type === 'boolean' && value ? 'checked' : '';
   const valAttr = type === 'boolean' ? '' : `value="${String(value).replace(/"/g, '&quot;')}"`;
@@ -249,12 +261,33 @@ function renderStats() {
 
 function renderPlantel() {
   const headCoachForm = document.getElementById('headCoachForm');
+  const staffList = document.getElementById('staffList');
   const jugadoresList = document.getElementById('jugadoresList');
   const coach = state.data.headCoach || { Nombre: '', Cargo: 'Head Coach' };
 
   headCoachForm.innerHTML = '';
-  headCoachForm.appendChild(createField('Nombre', coach.Nombre || '', 'Nombre'));
-  headCoachForm.appendChild(createField('Cargo', coach.Cargo || 'Head Coach', 'Cargo'));
+  headCoachForm.appendChild(createField('Head Coach: nombre', coach.Nombre || '', 'Nombre'));
+  headCoachForm.appendChild(createField('Head Coach: cargo', coach.Cargo || 'Head Coach', 'Cargo'));
+
+  staffList.innerHTML = '';
+  (state.data.staff || []).forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'item-card';
+    card.innerHTML = `
+      <h4>${item.Cargo || `Staff #${idx + 1}`}</h4>
+      <div class="form-grid">
+        ${createField('Nombre', item.Nombre, 'Nombre').outerHTML}
+        ${createField('Cargo', item.Cargo, 'Cargo').outerHTML}
+        ${createField('Color', item.Color, 'Color').outerHTML}
+      </div>
+      <div class="actions"><button class="btn btn-danger delete-btn">🗑 Eliminar</button></div>
+    `;
+    card.querySelector('.delete-btn').addEventListener('click', () => {
+      state.data.staff.splice(idx, 1);
+      renderPlantel();
+    });
+    staffList.appendChild(card);
+  });
 
   jugadoresList.innerHTML = '';
   (state.data.jugadores || []).forEach((item, idx) => {
@@ -277,6 +310,15 @@ function renderPlantel() {
     jugadoresList.appendChild(card);
   });
 }
+
+document.getElementById('addStaffBtn').addEventListener('click', () => {
+  state.data.staff.push({
+    Nombre: 'Nuevo staff',
+    Cargo: 'Cargo',
+    Color: '#c49b00'
+  });
+  renderPlantel();
+});
 
 document.getElementById('addJugadorBtn').addEventListener('click', () => {
   state.data.jugadores.push({
@@ -320,6 +362,44 @@ document.getElementById('addGaleriaBtn').addEventListener('click', () => {
   renderGaleria();
 });
 
+function renderInstitucion() {
+  const historiaForm = document.getElementById('historiaForm');
+  const directorioList = document.getElementById('directorioList');
+  const historia = state.data.historia || { Titulo: '', Bajada: '', Contenido: '' };
+
+  historiaForm.innerHTML = '';
+  historiaForm.appendChild(createField('Título', historia.Titulo || '', 'Titulo'));
+  historiaForm.appendChild(createField('Bajada', historia.Bajada || '', 'Bajada', 'textarea'));
+  historiaForm.appendChild(createField('Contenido', historia.Contenido || '', 'Contenido', 'textarea'));
+
+  directorioList.innerHTML = '';
+  (state.data.directorio || []).forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'item-card';
+    card.innerHTML = `
+      <h4>${item.Cargo || `Miembro #${idx + 1}`}</h4>
+      <div class="form-grid">
+        ${createField('Nombre', item.Nombre, 'Nombre').outerHTML}
+        ${createField('Cargo', item.Cargo, 'Cargo').outerHTML}
+      </div>
+      <div class="actions"><button class="btn btn-danger delete-btn">🗑 Eliminar</button></div>
+    `;
+    card.querySelector('.delete-btn').addEventListener('click', () => {
+      state.data.directorio.splice(idx, 1);
+      renderInstitucion();
+    });
+    directorioList.appendChild(card);
+  });
+}
+
+document.getElementById('addDirectorioBtn').addEventListener('click', () => {
+  state.data.directorio.push({
+    Nombre: 'Nuevo integrante',
+    Cargo: 'Cargo'
+  });
+  renderInstitucion();
+});
+
 function renderConfig() {
   const container = document.getElementById('configForm');
   container.innerHTML = '';
@@ -328,7 +408,8 @@ function renderConfig() {
     ['whatsapp_num', 'WhatsApp'], ['email', 'Email'], ['direccion', 'Dirección'],
     ['entrenamiento_dias', 'Días entrenamiento'], ['entrenamiento_horario', 'Horario entrenamiento'],
     ['cancha_nombre', 'Nombre cancha'], ['maps_url', 'URL Google Maps'],
-    ['cal_summary', 'Calendario título'], ['cal_description', 'Calendario descripción']
+    ['cal_summary', 'Calendario título'], ['cal_description', 'Calendario descripción'],
+    ['mensualidad_url', 'URL mensualidad'], ['mensualidad_label', 'Texto link mensualidad']
   ].forEach(([key, label]) => {
     container.appendChild(createField(label, item[key] || '', key));
   });
@@ -339,8 +420,10 @@ function collectData() {
   state.data.fixture = Array.from(document.querySelectorAll('#fixtureList .item-card')).map(getCardData);
   state.data.posiciones = Array.from(document.querySelectorAll('#posicionesList .item-card')).map(getCardData);
   state.data.noticias = Array.from(document.querySelectorAll('#noticiasList .item-card')).map(getCardData);
+  state.data.staff = Array.from(document.querySelectorAll('#staffList .item-card')).map(getCardData);
   state.data.jugadores = Array.from(document.querySelectorAll('#jugadoresList .item-card')).map(getCardData);
   state.data.galeria = Array.from(document.querySelectorAll('#galeriaList .item-card')).map(getCardData);
+  state.data.directorio = Array.from(document.querySelectorAll('#directorioList .item-card')).map(getCardData);
 
   const statsObj = {};
   document.querySelectorAll('#statsForm [data-key]').forEach(el => {
@@ -353,6 +436,12 @@ function collectData() {
     headCoachObj[el.dataset.key] = el.value;
   });
   state.data.headCoach = headCoachObj;
+
+  const historiaObj = {};
+  document.querySelectorAll('#historiaForm [data-key]').forEach(el => {
+    historiaObj[el.dataset.key] = el.value;
+  });
+  state.data.historia = historiaObj;
 
   const configObj = {};
   document.querySelectorAll('#configForm [data-key]').forEach(el => {
@@ -367,7 +456,13 @@ async function saveFile(key) {
   if (key === 'jugadores') {
     wrapper = {
       jugadores: state.data.jugadores || [],
-      headCoach: state.data.headCoach || { Nombre: '', Cargo: 'Head Coach' }
+      headCoach: state.data.headCoach || { Nombre: '', Cargo: 'Head Coach' },
+      staff: state.data.staff || []
+    };
+  } else if (key === 'institucion') {
+    wrapper = {
+      historia: state.data.historia || { Titulo: '', Bajada: '', Contenido: '' },
+      directorio: state.data.directorio || []
     };
   } else {
     wrapper = {};
@@ -396,7 +491,7 @@ async function saveAll() {
   els.saveAllBtn.disabled = true;
 
   try {
-    for (const key of ['fixture', 'posiciones', 'noticias', 'stats', 'jugadores', 'galeria', 'config']) {
+    for (const key of ['fixture', 'posiciones', 'noticias', 'stats', 'jugadores', 'galeria', 'institucion', 'config']) {
       console.log('[Admin] Guardando:', key);
       await saveFile(key);
       console.log('[Admin] OK:', key);
@@ -421,6 +516,7 @@ async function initEditor() {
   renderStats();
   renderPlantel();
   renderGaleria();
+  renderInstitucion();
   renderConfig();
   els.saveAllBtn.addEventListener('click', saveAll);
   els.logoutBtn.addEventListener('click', logout);

@@ -52,7 +52,8 @@ async function loadData() {
     noticias: 'api/data/noticias.json',
     config: 'api/data/config.json',
     jugadores: 'api/data/jugadores.json',
-    galeria: 'api/data/galeria.json'
+    galeria: 'api/data/galeria.json',
+    institucion: 'api/data/institucion.json'
   };
 
   const data = {};
@@ -65,6 +66,10 @@ async function loadData() {
         if (key === 'jugadores') {
           data.jugadores = raw.jugadores || [];
           data.headCoach = raw.headCoach || null;
+          data.staff = raw.staff || [];
+        } else if (key === 'institucion') {
+          data.historia = raw.historia || null;
+          data.directorio = raw.directorio || [];
         } else {
           // Decap CMS guarda objetos { key: [...] }; también soportamos arrays planos
           data[key] = Array.isArray(raw) ? raw : (raw[key] || raw);
@@ -74,6 +79,10 @@ async function loadData() {
         if (key === 'jugadores') {
           data.jugadores = [];
           data.headCoach = null;
+          data.staff = [];
+        } else if (key === 'institucion') {
+          data.historia = null;
+          data.directorio = [];
         } else {
           data[key] = key === 'stats' ? [DEFAULT_STATS] : (key === 'config' ? {} : []);
         }
@@ -93,6 +102,7 @@ function renderAll(data) {
   renderNoticias(data);
   renderPlantel(data);
   renderGaleria(data);
+  renderInstitucion(data);
 }
 
 /* ─── Render Stats ───────────────────────────────────────────────── */
@@ -139,10 +149,30 @@ function renderConfig(data) {
   if (footerWa) footerWa.href = waLink;
 
   const footerDir = document.getElementById('footerDireccion');
-  if (footerDir) footerDir.textContent = dir;
+  if (footerDir) {
+    footerDir.textContent = dir;
+    footerDir.href = maps;
+    footerDir.target = '_blank';
+  }
 
   const mapsLink = document.getElementById('proxMapsLink');
   if (mapsLink) mapsLink.href = maps;
+
+  const mensualidadLink = document.getElementById('footerMensualidad');
+  const mensualidadUrl = cfg.mensualidad_url || '';
+  const mensualidadLabel = cfg.mensualidad_label || 'Pagar mensualidad';
+  if (mensualidadLink) {
+    if (mensualidadUrl) {
+      mensualidadLink.href = mensualidadUrl;
+      mensualidadLink.textContent = mensualidadLabel;
+      mensualidadLink.target = '_blank';
+      mensualidadLink.style.display = '';
+    } else {
+      mensualidadLink.removeAttribute('href');
+      mensualidadLink.textContent = '';
+      mensualidadLink.style.display = 'none';
+    }
+  }
 }
 
 /* ─── Render Próximo Partido ─────────────────────────────────────── */
@@ -373,11 +403,14 @@ function renderNoticias(data) {
 /* ─── Render Plantel ─────────────────────────────────────────────── */
 function renderPlantel(data) {
   const grid = document.getElementById('plantelGrid');
-  if (!grid) return;
+  const staffGrid = document.getElementById('staffGrid');
+  if (!grid || !staffGrid) return;
 
   const jugadores = data?.jugadores || [];
   const headCoach = data?.headCoach;
+  const staff = data?.staff || [];
   grid.innerHTML = '';
+  staffGrid.innerHTML = '';
 
   if (headCoach?.Nombre) {
     const coachCard = document.createElement('article');
@@ -391,8 +424,31 @@ function renderPlantel(data) {
         <div class="player-pos">${headCoach.Cargo || 'Head Coach'}</div>
       </div>
     `;
-    grid.appendChild(coachCard);
+    staffGrid.appendChild(coachCard);
   }
+
+  staff.forEach((member) => {
+    const initials = String(member.Cargo || 'ST')
+      .split(' ')
+      .filter(Boolean)
+      .map(part => part[0])
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
+
+    const card = document.createElement('article');
+    card.className = 'player-card reveal';
+    card.style.setProperty('--av-color', member.Color || '#8d6e00');
+    card.innerHTML = `
+      <div class="player-avatar">${initials || 'ST'}</div>
+      <div class="player-num">${member.Cargo || 'Staff'}</div>
+      <div class="player-info">
+        <div class="player-name">${member.Nombre || 'Sin nombre'}</div>
+        <div class="player-pos">${member.Cargo || ''}</div>
+      </div>
+    `;
+    staffGrid.appendChild(card);
+  });
 
   jugadores.forEach((player) => {
     const initials = String(player.Nombre || '?')
@@ -417,6 +473,7 @@ function renderPlantel(data) {
     grid.appendChild(card);
   });
 
+  staffGrid.querySelectorAll('.reveal').forEach(el => io.observe(el));
   grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
 }
 
@@ -439,6 +496,52 @@ function renderGaleria(data) {
   });
 
   grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
+}
+
+/* ─── Render Institución ─────────────────────────────────────────── */
+function renderInstitucion(data) {
+  const titulo = document.getElementById('historiaTitulo');
+  const bajada = document.getElementById('historiaBajada');
+  const contenido = document.getElementById('historiaContenido');
+  const directorioList = document.getElementById('directorioList');
+  if (!titulo || !bajada || !contenido || !directorioList) return;
+
+  const historia = data?.historia || {};
+  const directorio = data?.directorio || [];
+
+  titulo.textContent = historia.Titulo || 'Historia del Club';
+  bajada.textContent = historia.Bajada || '';
+  contenido.innerHTML = '';
+
+  const paragraphs = String(historia.Contenido || '')
+    .split(/\n+/)
+    .map(item => item.trim())
+    .filter(Boolean);
+
+  if (!paragraphs.length && historia.Contenido) {
+    const p = document.createElement('p');
+    p.textContent = historia.Contenido;
+    contenido.appendChild(p);
+  } else {
+    paragraphs.forEach((text) => {
+      const p = document.createElement('p');
+      p.textContent = text;
+      contenido.appendChild(p);
+    });
+  }
+
+  directorioList.innerHTML = '';
+  directorio.forEach((member) => {
+    const item = document.createElement('div');
+    item.className = 'directorio-item reveal';
+    item.innerHTML = `
+      <div class="directorio-cargo">${member.Cargo || ''}</div>
+      <div class="directorio-nombre">${member.Nombre || 'Sin nombre'}</div>
+    `;
+    directorioList.appendChild(item);
+  });
+
+  directorioList.querySelectorAll('.reveal').forEach(el => io.observe(el));
 }
 
 

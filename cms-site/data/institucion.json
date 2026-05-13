@@ -1,0 +1,21 @@
+{
+  "historia": {
+    "Titulo": "Historia del Club",
+    "Bajada": "Una historia construida con disciplina, companerismo y amor por el rugby.",
+    "Contenido": "Ingles Rugby Club nace como un espacio de encuentro para jugadores, familias y amigos del rugby. Con el paso de las temporadas, el club fue consolidando su identidad dentro y fuera de la cancha, fortaleciendo su comunidad y su compromiso con la formacion deportiva."
+  },
+  "directorio": [
+    {
+      "Nombre": "Nombre Apellido",
+      "Cargo": "Presidente"
+    },
+    {
+      "Nombre": "Nombre Apellido",
+      "Cargo": "Vicepresidente"
+    },
+    {
+      "Nombre": "Nombre Apellido",
+      "Cargo": "Tesorero"
+    }
+  ]
+}

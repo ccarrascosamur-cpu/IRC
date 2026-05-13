@@ -325,7 +325,20 @@
           <span class="section-tag">TEMPORADA 2026</span>
           <h2 class="section-title">Nuestro Plantel</h2>
         </div>
-        <div id="plantelGrid" class="players-grid"></div>
+        <div class="plantel-subsection reveal">
+          <div class="plantel-subhead">
+            <h3>Cuerpo técnico</h3>
+            <p>Staff principal del club separado del plantel de jugadores.</p>
+          </div>
+          <div id="staffGrid" class="players-grid staff-grid"></div>
+        </div>
+        <div class="plantel-subsection reveal">
+          <div class="plantel-subhead">
+            <h3>Jugadores</h3>
+            <p>Plantel oficial de la temporada.</p>
+          </div>
+          <div id="plantelGrid" class="players-grid"></div>
+        </div>
       </div>
     </section>
 
@@ -341,6 +354,28 @@
           ¿Quieres ver tus fotos aquí? Envía tus imágenes al equipo y las
           publicamos.
         </p>
+      </div>
+    </section>
+
+    <!-- ═══ INSTITUCIÓN ════════════════════════════════════════════════════ -->
+    <section id="institucion" class="institucion">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">CLUB</span>
+          <h2 class="section-title">Historia y Directorio</h2>
+        </div>
+        <div class="institucion-grid">
+          <article class="historia-card reveal">
+            <span class="institucion-label">Historia</span>
+            <h3 id="historiaTitulo">Historia del Club</h3>
+            <p id="historiaBajada" class="historia-bajada"></p>
+            <div id="historiaContenido" class="historia-contenido"></div>
+          </article>
+          <aside class="directorio-card reveal">
+            <span class="institucion-label">Directorio</span>
+            <div id="directorioList" class="directorio-list"></div>
+          </aside>
+        </div>
       </div>
     </section>
 
@@ -521,6 +556,7 @@
               <li><a href="#noticias">Noticias</a></li>
               <li><a href="#plantel">Plantel</a></li>
               <li><a href="#galeria">Galería</a></li>
+              <li><a href="#institucion">Historia y Directorio</a></li>
               <li><a href="#unete">Únete al Equipo</a></li>
             </ul>
           </div>
@@ -541,8 +577,16 @@
                   >WhatsApp</a
                 >
               </li>
-              <li id="footerDireccion">Av. San Martín 1240</li>
+              <li>
+                <a
+                  href="https://maps.app.goo.gl/1Qsx2ALtdrNLJBKQ7"
+                  target="_blank"
+                  id="footerDireccion"
+                  >Av. San Martín 1240</a
+                >
+              </li>
               <li>Martes y Jueves · 20:00 h</li>
+              <li><a href="#" id="footerMensualidad" style="display:none"></a></li>
             </ul>
           </div>
         </div>

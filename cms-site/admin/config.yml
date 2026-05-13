@@ -105,6 +105,13 @@ collections:
             fields:
               - { label: "Nombre", name: "Nombre", widget: "string" }
               - { label: "Cargo", name: "Cargo", widget: "string", default: "Head Coach" }
+          - label: "Staff"
+            name: "staff"
+            widget: "list"
+            fields:
+              - { label: "Nombre", name: "Nombre", widget: "string" }
+              - { label: "Cargo", name: "Cargo", widget: "string" }
+              - { label: "Color", name: "Color", widget: "string", default: "#c49b00" }
           - label: "Jugadores"
             name: "jugadores"
             widget: "list"
@@ -130,6 +137,27 @@ collections:
               - { label: "Texto", name: "Label", widget: "string", required: false }
               - { label: "LayoutClass", name: "LayoutClass", widget: "select", required: false, options: ["", "gi-tall", "gi-wide"] }
 
+  - name: "institucion"
+    label: "Institución"
+    files:
+      - label: "Historia y Directorio"
+        name: "institucion"
+        file: "cms-site/data/institucion.json"
+        fields:
+          - label: "Historia"
+            name: "historia"
+            widget: "object"
+            fields:
+              - { label: "Título", name: "Titulo", widget: "string" }
+              - { label: "Bajada", name: "Bajada", widget: "text", required: false }
+              - { label: "Contenido", name: "Contenido", widget: "text" }
+          - label: "Directorio"
+            name: "directorio"
+            widget: "list"
+            fields:
+              - { label: "Nombre", name: "Nombre", widget: "string" }
+              - { label: "Cargo", name: "Cargo", widget: "string" }
+
   - name: "config"
     label: "Configuración"
     files:
@@ -146,3 +174,5 @@ collections:
           - { label: "URL Google Maps", name: "maps_url", widget: "string" }
           - { label: "Calendario: título", name: "cal_summary", widget: "string" }
           - { label: "Calendario: descripción", name: "cal_description", widget: "text" }
+          - { label: "URL pago mensualidad", name: "mensualidad_url", widget: "string", required: false }
+          - { label: "Texto link mensualidad", name: "mensualidad_label", widget: "string", required: false, default: "Pagar mensualidad" }

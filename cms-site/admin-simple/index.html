@@ -40,6 +40,7 @@
         <button class="tab-btn" data-tab="stats">Stats</button>
         <button class="tab-btn" data-tab="plantel">Plantel</button>
         <button class="tab-btn" data-tab="galeria">Galería</button>
+        <button class="tab-btn" data-tab="institucion">Institución</button>
         <button class="tab-btn" data-tab="config">Configuración</button>
       </div>
 
@@ -67,8 +68,10 @@
       </div>
 
       <div id="plantelPanel" class="tab-panel">
-        <h3>Head Coach</h3>
+        <h3>Cuerpo técnico</h3>
         <div id="headCoachForm" class="form-grid"></div>
+        <div id="staffList" class="item-list" style="margin-top:16px"></div>
+        <button id="addStaffBtn" class="btn btn-secondary">+ Agregar staff</button>
         <h3 style="margin-top:24px">Jugadores</h3>
         <div id="jugadoresList" class="item-list"></div>
         <button id="addJugadorBtn" class="btn btn-secondary">+ Agregar jugador</button>
@@ -79,6 +82,14 @@
         <p class="hint">Usá URLs directas (Unsplash, Google Drive, etc.). Para Google Drive: cambiá <code>/file/d/ID/view</code> por <code>/uc?export=view&id=ID</code></p>
         <div id="galeriaList" class="item-list"></div>
         <button id="addGaleriaBtn" class="btn btn-secondary">+ Agregar imagen</button>
+      </div>
+
+      <div id="institucionPanel" class="tab-panel">
+        <h3>Historia del club</h3>
+        <div id="historiaForm" class="form-grid"></div>
+        <h3 style="margin-top:24px">Directorio</h3>
+        <div id="directorioList" class="item-list"></div>
+        <button id="addDirectorioBtn" class="btn btn-secondary">+ Agregar miembro</button>
       </div>
 
       <div id="configPanel" class="tab-panel">

@@ -97,14 +97,14 @@
   },
   "staff": [
     {
-      "Nombre": "Nuevo staff",
+      "Nombre": "Kinesiologo",
       "Cargo": "Kinesiologo",
       "Color": "#c49b00"
     },
     {
-      "Nombre": "Nuevo staff",
-      "Cargo": "P.F",
-      "Color": "#c49b00"
+      "Nombre": "Preparador Fisico",
+      "Cargo": "Preparador Fisico",
+      "Color": "#8d6e00"
     }
   ]
 }
