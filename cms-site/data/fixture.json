@@ -31,21 +31,6 @@
       "EsDestacado": false
     },
     {
-      "DiaSemana": "DOM",
-      "DiaNum": 10,
-      "Mes": "MAY",
-      "Ano": 2026,
-      "Hora": "15:00",
-      "Localidad": "Local",
-      "Rival": "Old Navy",
-      "IRC_Score": "57",
-      "Rival_Score": "30",
-      "Estado": "jugado",
-      "Cancha": "Cancha IRC",
-      "Direccion": "",
-      "EsDestacado": false
-    },
-    {
       "DiaSemana": "SAB",
       "DiaNum": 16,
       "Mes": "MAY",
