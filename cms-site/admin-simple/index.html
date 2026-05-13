@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Ingles Rugby Club</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <h1>🏉 Panel de Admin — IRC</h1>
+    <a href="/" class="btn btn-secondary">← Volver al sitio</a>
+  </header>
+
+  <main class="admin-container">
+    <section id="loginSection" class="login-section">
+      <h2>Configurar acceso a GitHub</h2>
+      <p>Para guardar cambios necesitás un <strong>GitHub Personal Access Token</strong> con permisos de <code>repo</code>.</p>
+      <ol>
+        <li>Andá a <a href="https://github.com/settings/tokens/new" target="_blank">GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)</a></li>
+        <li>Generá un token con scope <strong>repo</strong></li>
+        <li>Pegalo acá:</li>
+      </ol>
+      <div class="form-group">
+        <input type="password" id="patInput" placeholder="ghp_xxxxxxxxxxxx" class="input">
+        <button id="savePatBtn" class="btn btn-primary">Guardar token</button>
+      </div>
+      <p class="hint">El token se guarda solo en tu navegador (localStorage).</p>
+    </section>
+
+    <section id="editorSection" class="editor-section hidden">
+      <div class="toolbar">
+        <h2>Editar datos</h2>
+        <button id="saveAllBtn" class="btn btn-primary">💾 Guardar todos los cambios</button>
+      </div>
+      <div id="status" class="status hidden"></div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="fixture">Fixture</button>
+        <button class="tab-btn" data-tab="posiciones">Posiciones</button>
+        <button class="tab-btn" data-tab="noticias">Noticias</button>
+        <button class="tab-btn" data-tab="stats">Stats</button>
+        <button class="tab-btn" data-tab="config">Configuración</button>
+      </div>
+
+      <div id="fixturePanel" class="tab-panel active">
+        <h3>Fixture</h3>
+        <div id="fixtureList" class="item-list"></div>
+        <button id="addFixtureBtn" class="btn btn-secondary">+ Agregar partido</button>
+      </div>
+
+      <div id="posicionesPanel" class="tab-panel">
+        <h3>Tabla de Posiciones</h3>
+        <div id="posicionesList" class="item-list"></div>
+        <button id="addPosicionBtn" class="btn btn-secondary">+ Agregar equipo</button>
+      </div>
+
+      <div id="noticiasPanel" class="tab-panel">
+        <h3>Noticias</h3>
+        <div id="noticiasList" class="item-list"></div>
+        <button id="addNoticiaBtn" class="btn btn-secondary">+ Agregar noticia</button>
+      </div>
+
+      <div id="statsPanel" class="tab-panel">
+        <h3>Estadísticas</h3>
+        <div id="statsForm" class="form-grid"></div>
+      </div>
+
+      <div id="configPanel" class="tab-panel">
+        <h3>Configuración</h3>
+        <div id="configForm" class="form-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>
