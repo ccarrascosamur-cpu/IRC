@@ -92,17 +92,17 @@
     }
   ],
   "headCoach": {
-    "Nombre": "Head Coach",
+    "Nombre": "Juan Perez",
     "Cargo": "Head Coach"
   },
   "staff": [
     {
-      "Nombre": "Kinesiologo",
+      "Nombre": "Peter Aquiles",
       "Cargo": "Kinesiologo",
       "Color": "#c49b00"
     },
     {
-      "Nombre": "Preparador Fisico",
+      "Nombre": "Abraham Melorto",
       "Cargo": "Preparador Fisico",
       "Color": "#8d6e00"
     }
