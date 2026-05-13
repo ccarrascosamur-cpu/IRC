@@ -1,139 +1,121 @@
 /**
- * Cloudflare Worker — Sitio web + OAuth Proxy para Decap CMS + GitHub
+ * Cloudflare Worker — Sitio web + API de guardado para panel de admin
  * 
- * Sirve archivos estáticos del sitio y maneja autenticación en /auth
+ * Sirve archivos estáticos del sitio y expone /api/save para guardar datos.
  */
+
+const REPO = 'ccarrascosamur-cpu/IRC';
+const BRANCH = 'main';
+const DATA_PATH = 'cms-site/data';
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    const path = url.pathname;
 
-    if (url.pathname === '/auth') {
-      return handleAuth(request, env);
+    // CORS preflight
+    if (request.method === 'OPTIONS') {
+      return new Response(null, {
+        status: 204,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        },
+      });
     }
 
-    // Servir archivos estáticos (index.html, css, js, admin/, etc.)
+    // Endpoint: guardar datos
+    if (path === '/api/save' && request.method === 'POST') {
+      return handleSave(request, env);
+    }
+
+    // Servir archivos estáticos
     return env.ASSETS.fetch(request);
   },
 };
 
-async function handleAuth(request, env) {
-  const url = new URL(request.url);
-  const code = url.searchParams.get('code');
-
-  const clientId = env.GITHUB_CLIENT_ID;
-  const clientSecret = env.GITHUB_CLIENT_SECRET;
-
-  if (!clientId || !clientSecret) {
-    return htmlResponse(errorHtml('Server misconfigured: missing credentials'));
+async function handleSave(request, env) {
+  const token = env.GITHUB_TOKEN;
+  if (!token) {
+    return jsonResponse({ error: 'Server misconfigured: missing GitHub token' }, 500);
   }
 
-  // Sin code → redirigir a GitHub OAuth
-  if (!code) {
-    const githubAuthUrl = new URL('https://github.com/login/oauth/authorize');
-    githubAuthUrl.searchParams.set('client_id', clientId);
-    githubAuthUrl.searchParams.set('redirect_uri', url.origin + '/auth');
-    githubAuthUrl.searchParams.set('scope', 'repo');
-    return Response.redirect(githubAuthUrl.toString(), 302);
-  }
-
-  // Con code → intercambiar por token
+  let payload;
   try {
-    const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
-      method: 'POST',
+    payload = await request.json();
+  } catch (e) {
+    return jsonResponse({ error: 'Invalid JSON' }, 400);
+  }
+
+  const { key, content } = payload;
+  if (!key || !content) {
+    return jsonResponse({ error: 'Missing key or content' }, 400);
+  }
+
+  const filePath = `${DATA_PATH}/${key}.json`;
+
+  try {
+    // Obtener SHA actual del archivo
+    const shaRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}?ref=${BRANCH}`, {
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        client_id: clientId,
-        client_secret: clientSecret,
-        code,
-      }),
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'IRC-Worker'
+      }
     });
 
-    const tokenData = await tokenRes.json();
-
-    if (tokenData.error) {
-      return htmlResponse(errorHtml(tokenData.error_description || tokenData.error));
+    if (!shaRes.ok) {
+      const err = await shaRes.json().catch(() => ({}));
+      return jsonResponse({ error: err.message || `GitHub SHA error: ${shaRes.status}` }, 400);
     }
 
-    return htmlResponse(successHtml(tokenData.access_token));
+    const shaData = await shaRes.json();
+
+    // Guardar archivo
+    const saveRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+        'User-Agent': 'IRC-Worker'
+      },
+      body: JSON.stringify({
+        message: `Actualiza ${key} desde panel de admin`,
+        content: toBase64(content),
+        sha: shaData.sha,
+        branch: BRANCH
+      })
+    });
+
+    if (!saveRes.ok) {
+      const err = await saveRes.json().catch(() => ({}));
+      return jsonResponse({ error: err.message || `GitHub save error: ${saveRes.status}` }, 400);
+    }
+
+    return jsonResponse({ success: true, message: `${key} guardado correctamente` });
 
   } catch (err) {
-    return htmlResponse(errorHtml(err.message));
+    return jsonResponse({ error: err.message }, 500);
   }
 }
 
-function htmlResponse(html) {
-  return new Response(html, {
-    headers: { 'Content-Type': 'text/html; charset=utf-8' },
+function toBase64(str) {
+  const bytes = new TextEncoder().encode(str);
+  let binary = '';
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+
+function jsonResponse(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    },
   });
-}
-
-function successHtml(token) {
-  return `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Autenticación completada</title>
-  <style>
-    body { font-family: system-ui, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #f5f5f5; }
-    .box { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); text-align: center; }
-    h1 { font-size: 1.25rem; margin: 0 0 .5rem; color: #1a1a1a; }
-    p { color: #666; margin: 0; }
-  </style>
-</head>
-<body>
-  <div class="box">
-    <h1>✅ Autenticación exitosa</h1>
-    <p>Cerrá esta ventana manualmente para volver al panel.</p>
-  </div>
-  <script>
-    (function() {
-      var token = "${token}";
-      var sent = false;
-      function send() {
-        if (sent) return;
-        if (window.opener) {
-          window.opener.postMessage({ type: "authorizing:github", token: token }, "*");
-          window.opener.postMessage({ type: "authorization:github:success", payload: { provider: "github", token: token } }, "*");
-          sent = true;
-        }
-      }
-      // Intentar enviar inmediatamente y repetidamente
-      send();
-      setTimeout(send, 500);
-      setTimeout(send, 1000);
-      setTimeout(send, 1500);
-      // Fallback hash
-      window.location.hash = "access_token=" + token + "&token_type=bearer";
-    })();
-  </script>
-</body>
-</html>`;
-}
-
-function errorHtml(message) {
-  const safe = message.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  return `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Error de autenticación</title>
-  <style>
-    body { font-family: system-ui, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #f5f5f5; }
-    .box { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); text-align: center; }
-    h1 { font-size: 1.25rem; margin: 0 0 .5rem; color: #842021; }
-    p { color: #666; margin: 0; }
-    code { background: #f0f0f0; padding: .25rem .5rem; border-radius: 4px; font-size: .9rem; }
-  </style>
-</head>
-<body>
-  <div class="box">
-    <h1>❌ Error de autenticación</h1>
-    <p><code>${safe}</code></p>
-  </div>
-</body>
-</html>`;
 }

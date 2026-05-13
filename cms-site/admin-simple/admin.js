@@ -1,37 +1,19 @@
 /* ═══════════════════════════════════════════════════════════════════════
-   Panel de Admin IRC — Edita JSON locales y commitea a GitHub
+   Panel de Admin IRC — Edita JSON locales y guarda via Worker API
 ═══════════════════════════════════════════════════════════════════════ */
 
-const REPO = 'ccarrascosamur-cpu/IRC';
-const BRANCH = 'main';
-const DATA_PATH = 'cms-site/data';
-
 let state = {
-  pat: localStorage.getItem('irc_github_pat') || '',
-  data: {},
-  shas: {}
+  data: {}
 };
 
 const els = {
-  loginSection: document.getElementById('loginSection'),
-  editorSection: document.getElementById('editorSection'),
-  patInput: document.getElementById('patInput'),
-  savePatBtn: document.getElementById('savePatBtn'),
-  saveAllBtn: document.getElementById('saveAllBtn'),
   status: document.getElementById('status'),
+  saveAllBtn: document.getElementById('saveAllBtn'),
   tabs: document.querySelectorAll('.tab-btn'),
   panels: document.querySelectorAll('.tab-panel')
 };
 
 /* ─── Utilidades ─────────────────────────────────────────────────── */
-function toBase64(str) {
-  return btoa(unescape(encodeURIComponent(str)));
-}
-
-function fromBase64(str) {
-  return decodeURIComponent(escape(atob(str)));
-}
-
 function showStatus(msg, type = 'info') {
   els.status.textContent = msg;
   els.status.className = `status ${type}`;
@@ -40,23 +22,6 @@ function showStatus(msg, type = 'info') {
 
 function hideStatus() {
   els.status.classList.add('hidden');
-}
-
-async function githubFetch(path, opts = {}) {
-  const res = await fetch(`https://api.github.com${path}`, {
-    ...opts,
-    headers: {
-      'Authorization': `token ${state.pat}`,
-      'Accept': 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json',
-      ...(opts.headers || {})
-    }
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.message || `HTTP ${res.status}`);
-  }
-  return res.json();
 }
 
 /* ─── Carga de datos locales ─────────────────────────────────────── */
@@ -274,39 +239,28 @@ function renderConfig() {
 
 /* ─── Recolectar datos de los formularios ────────────────────────── */
 function collectData() {
-  // Fixture
   const fixtureCards = document.querySelectorAll('#fixtureList .item-card');
   state.data.fixture = Array.from(fixtureCards).map(card => getCardData(card));
 
-  // Posiciones
   const posCards = document.querySelectorAll('#posicionesList .item-card');
   state.data.posiciones = Array.from(posCards).map(card => getCardData(card));
 
-  // Noticias
   const newsCards = document.querySelectorAll('#noticiasList .item-card');
   state.data.noticias = Array.from(newsCards).map(card => getCardData(card));
 
-  // Stats
   const statsInputs = document.querySelectorAll('#statsForm [data-key]');
   const statsObj = {};
   statsInputs.forEach(el => statsObj[el.dataset.key] = el.type === 'number' ? Number(el.value) : el.value);
   state.data.stats = [statsObj];
 
-  // Config
   const configInputs = document.querySelectorAll('#configForm [data-key]');
   const configObj = {};
   configInputs.forEach(el => configObj[el.dataset.key] = el.value);
   state.data.config = configObj;
 }
 
-/* ─── Guardar en GitHub ──────────────────────────────────────────── */
-async function getSha(path) {
-  const data = await githubFetch(`/repos/${REPO}/contents/${path}?ref=${BRANCH}`);
-  return data.sha;
-}
-
+/* ─── Guardar via Worker API ─────────────────────────────────────── */
 async function saveFile(key) {
-  const path = `${DATA_PATH}/${key}.json`;
   let content;
   if (key === 'stats' || key === 'config') {
     const wrapper = {};
@@ -318,16 +272,17 @@ async function saveFile(key) {
     content = JSON.stringify(wrapper, null, 2);
   }
 
-  const sha = state.shas[key] || await getSha(path);
-  await githubFetch(`/repos/${REPO}/contents/${path}`, {
-    method: 'PUT',
-    body: JSON.stringify({
-      message: `Actualiza ${key} desde panel de admin`,
-      content: toBase64(content),
-      sha,
-      branch: BRANCH
-    })
+  const res = await fetch('/api/save', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ key, content })
   });
+
+  const data = await res.json();
+  if (!res.ok || data.error) {
+    throw new Error(data.error || `HTTP ${res.status}`);
+  }
+  return data;
 }
 
 async function saveAll() {
@@ -352,32 +307,11 @@ async function saveAll() {
 async function init() {
   renderTabs();
   await loadLocalData();
-
-  if (state.pat) {
-    els.patInput.value = state.pat;
-    els.loginSection.classList.add('hidden');
-    els.editorSection.classList.remove('hidden');
-    renderFixture();
-    renderPosiciones();
-    renderNoticias();
-    renderStats();
-    renderConfig();
-  }
-
-  els.savePatBtn.addEventListener('click', () => {
-    const pat = els.patInput.value.trim();
-    if (!pat) return;
-    localStorage.setItem('irc_github_pat', pat);
-    state.pat = pat;
-    els.loginSection.classList.add('hidden');
-    els.editorSection.classList.remove('hidden');
-    renderFixture();
-    renderPosiciones();
-    renderNoticias();
-    renderStats();
-    renderConfig();
-  });
-
+  renderFixture();
+  renderPosiciones();
+  renderNoticias();
+  renderStats();
+  renderConfig();
   els.saveAllBtn.addEventListener('click', saveAll);
 }
 

@@ -13,22 +13,7 @@
   </header>
 
   <main class="admin-container">
-    <section id="loginSection" class="login-section">
-      <h2>Configurar acceso a GitHub</h2>
-      <p>Para guardar cambios necesitás un <strong>GitHub Personal Access Token</strong> con permisos de <code>repo</code>.</p>
-      <ol>
-        <li>Andá a <a href="https://github.com/settings/tokens/new" target="_blank">GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)</a></li>
-        <li>Generá un token con scope <strong>repo</strong></li>
-        <li>Pegalo acá:</li>
-      </ol>
-      <div class="form-group">
-        <input type="password" id="patInput" placeholder="ghp_xxxxxxxxxxxx" class="input">
-        <button id="savePatBtn" class="btn btn-primary">Guardar token</button>
-      </div>
-      <p class="hint">El token se guarda solo en tu navegador (localStorage).</p>
-    </section>
-
-    <section id="editorSection" class="editor-section hidden">
+    <section id="editorSection" class="editor-section">
       <div class="toolbar">
         <h2>Editar datos</h2>
         <button id="saveAllBtn" class="btn btn-primary">💾 Guardar todos los cambios</button>
