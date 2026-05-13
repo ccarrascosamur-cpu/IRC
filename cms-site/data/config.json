@@ -6,10 +6,10 @@
     "entrenamiento_dias": "Martes y Jueves",
     "entrenamiento_horario": "20:00 h",
     "cancha_nombre": "Cancha IRC",
-    "maps_url": "https://maps.app.goo.gl/1Qsx2ALtdrNLJBKQ7",
+    "maps_url": "https://maps.google.com",
     "cal_summary": "Ingles Rugby Club vs",
     "cal_description": "Partido de rugby amateur. ¡Vamos IRC!",
     "mensualidad_url": "",
-    "mensualidad_label": "Pagar mensualidad"
+    "mensualidad_label": ""
   }
 }
