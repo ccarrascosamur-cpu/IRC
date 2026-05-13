@@ -89,20 +89,32 @@
       "Numero": 15,
       "Posicion": "Full Back",
       "Color": "#3a0e0e"
+    },
+    {
+      "Nombre": "Nuevo jugador",
+      "Numero": 16,
+      "Posicion": "",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Jose Rubilar ",
+      "Numero": 17,
+      "Posicion": "pilar ",
+      "Color": "#842021"
     }
   ],
   "headCoach": {
-    "Nombre": "Head Coach",
+    "Nombre": "Guiillermo Ramos ",
     "Cargo": "Head Coach"
   },
   "staff": [
     {
-      "Nombre": "Nuevo staff",
-      "Cargo": "Kinesiologo",
+      "Nombre": "Francisca Martinez ",
+      "Cargo": "Kinesiologa",
       "Color": "#c49b00"
     },
     {
-      "Nombre": "Nuevo staff",
+      "Nombre": "Clemente Mauro",
       "Cargo": "P.F",
       "Color": "#c49b00"
     }
