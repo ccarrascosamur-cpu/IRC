@@ -121,9 +121,21 @@
       "Color": "#842021"
     },
     {
-      "Nombre": "Matias Zuñiga",
+      "Nombre": "Julian Orueta",
       "Numero": 21,
-      "Posicion": "Centro/wing",
+      "Posicion": "Ala",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Matias Zuñiga",
+      "Numero": 22,
+      "Posicion": "Centro/Wing",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Santiago Iglesias",
+      "Numero": 23,
+      "Posicion": "Fly/medio scrum",
       "Color": "#842021"
     }
   ],
