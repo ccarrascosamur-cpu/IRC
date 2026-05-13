@@ -133,7 +133,7 @@ collections:
             widget: "list"
             summary: "{{fields.Label}}"
             fields:
-              - { label: "Imagen URL", name: "ImagenURL", widget: "string", hint: "Acepta links externos o de Google Drive en formato directo." }
+              - { label: "Imagen URL", name: "ImagenURL", widget: "string", hint: "Acepta links externos o links compartidos normales de Google Drive." }
               - { label: "Texto", name: "Label", widget: "string", required: false }
               - { label: "LayoutClass", name: "LayoutClass", widget: "select", required: false, options: ["", "gi-tall", "gi-wide"] }
 
@@ -151,6 +151,9 @@ collections:
               - { label: "Título", name: "Titulo", widget: "string" }
               - { label: "Bajada", name: "Bajada", widget: "text", required: false }
               - { label: "Contenido", name: "Contenido", widget: "text" }
+              - { label: "Foto oficial URL", name: "ImagenURL", widget: "string", required: false, hint: "Acepta link directo o link compartido normal de Google Drive." }
+              - { label: "Foto oficial link", name: "LinkURL", widget: "string", required: false }
+              - { label: "Foto oficial alt", name: "ImagenAlt", widget: "string", required: false, default: "Foto oficial del club" }
           - label: "Directorio"
             name: "directorio"
             widget: "list"

@@ -75,7 +75,7 @@ async function loadLocalData() {
         state.data.headCoach = raw.headCoach || { Nombre: '', Cargo: 'Head Coach' };
         state.data.staff = raw.staff || [];
       } else if (key === 'institucion') {
-        state.data.historia = raw.historia || { Titulo: '', Bajada: '', Contenido: '' };
+        state.data.historia = raw.historia || { Titulo: '', Bajada: '', Contenido: '', ImagenURL: '', LinkURL: '', ImagenAlt: '' };
         state.data.directorio = raw.directorio || [];
       } else {
         state.data[key] = Array.isArray(raw) ? raw : (raw[key] || raw);
@@ -87,7 +87,7 @@ async function loadLocalData() {
         state.data.headCoach = { Nombre: '', Cargo: 'Head Coach' };
         state.data.staff = [];
       } else if (key === 'institucion') {
-        state.data.historia = { Titulo: '', Bajada: '', Contenido: '' };
+        state.data.historia = { Titulo: '', Bajada: '', Contenido: '', ImagenURL: '', LinkURL: '', ImagenAlt: '' };
         state.data.directorio = [];
       } else {
         state.data[key] = key === 'config' ? {} : (key === 'stats' ? [{}] : []);
@@ -365,12 +365,15 @@ document.getElementById('addGaleriaBtn').addEventListener('click', () => {
 function renderInstitucion() {
   const historiaForm = document.getElementById('historiaForm');
   const directorioList = document.getElementById('directorioList');
-  const historia = state.data.historia || { Titulo: '', Bajada: '', Contenido: '' };
+  const historia = state.data.historia || { Titulo: '', Bajada: '', Contenido: '', ImagenURL: '', LinkURL: '', ImagenAlt: '' };
 
   historiaForm.innerHTML = '';
   historiaForm.appendChild(createField('Título', historia.Titulo || '', 'Titulo'));
   historiaForm.appendChild(createField('Bajada', historia.Bajada || '', 'Bajada', 'textarea'));
   historiaForm.appendChild(createField('Contenido', historia.Contenido || '', 'Contenido', 'textarea'));
+  historiaForm.appendChild(createField('Foto oficial URL', historia.ImagenURL || '', 'ImagenURL'));
+  historiaForm.appendChild(createField('Foto oficial link', historia.LinkURL || '', 'LinkURL'));
+  historiaForm.appendChild(createField('Foto oficial alt', historia.ImagenAlt || '', 'ImagenAlt'));
 
   directorioList.innerHTML = '';
   (state.data.directorio || []).forEach((item, idx) => {
@@ -461,7 +464,7 @@ async function saveFile(key) {
     };
   } else if (key === 'institucion') {
     wrapper = {
-      historia: state.data.historia || { Titulo: '', Bajada: '', Contenido: '' },
+      historia: state.data.historia || { Titulo: '', Bajada: '', Contenido: '', ImagenURL: '', LinkURL: '', ImagenAlt: '' },
       directorio: state.data.directorio || []
     };
   } else {

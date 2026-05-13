@@ -10,6 +10,24 @@ const MONTHS_ES = {
   JUL:'07', AGO:'08', SEP:'09', OCT:'10', NOV:'11', DIC:'12'
 };
 
+function normalizeImageUrl(value) {
+  const str = String(value || '').trim();
+  if (!str) return '';
+
+  // Accept standard Google Drive sharing URLs pasted from the CMS.
+  const driveFileMatch = str.match(/^https?:\/\/drive\.google\.com\/file\/d\/([^/]+)\//i);
+  if (driveFileMatch) {
+    return `https://drive.google.com/uc?export=view&id=${driveFileMatch[1]}`;
+  }
+
+  const driveOpenMatch = str.match(/^https?:\/\/drive\.google\.com\/open\?id=([^&]+)/i);
+  if (driveOpenMatch) {
+    return `https://drive.google.com/uc?export=view&id=${driveOpenMatch[1]}`;
+  }
+
+  return str;
+}
+
 /* ─── Helpers: formatear fechas/horas ────────────────────────────── */
 function formatSheetTime(value) {
   if (!value) return '15:30';
@@ -153,6 +171,13 @@ function renderConfig(data) {
     footerDir.textContent = dir;
     footerDir.href = maps;
     footerDir.target = '_blank';
+  }
+
+  const uneteCanchaLink = document.getElementById('uneteCanchaLink');
+  if (uneteCanchaLink) {
+    uneteCanchaLink.href = maps;
+    uneteCanchaLink.textContent = `Campo de Juego: ${cfg.cancha_nombre || dir}`;
+    uneteCanchaLink.target = '_blank';
   }
 
   const mapsLink = document.getElementById('proxMapsLink');
@@ -372,7 +397,7 @@ function renderNoticias(data) {
     const fecha = formatSheetDate(n.Fecha || n.fecha || '');
     const titulo = n.Titulo || n.titulo || 'Sin título';
     const resumen = n.Resumen || n.resumen || '';
-    const imagen = n.ImagenURL || n.imagenURL || n.imagenurl || n.ImagenUrl || '';
+    const imagen = normalizeImageUrl(n.ImagenURL || n.imagenURL || n.imagenurl || n.ImagenUrl || '');
     const link = n.Link || n.link || '#';
     const destacada = n.Destacada === true || n.Destacada === 'TRUE';
 
@@ -413,15 +438,20 @@ function renderPlantel(data) {
   staffGrid.innerHTML = '';
 
   if (headCoach?.Nombre) {
+    const coachTitle = headCoach.Nombre && headCoach.Nombre !== headCoach.Cargo
+      ? headCoach.Nombre
+      : (headCoach.Cargo || 'Head Coach');
+    const coachSubtitle = headCoach.Nombre && headCoach.Nombre !== headCoach.Cargo
+      ? (headCoach.Cargo || 'Head Coach')
+      : '';
     const coachCard = document.createElement('article');
     coachCard.className = 'player-card reveal';
     coachCard.style.setProperty('--av-color', '#c49b00');
     coachCard.innerHTML = `
       <div class="player-avatar">HC</div>
-      <div class="player-num">${headCoach.Cargo || 'Head Coach'}</div>
       <div class="player-info">
-        <div class="player-name">${headCoach.Nombre}</div>
-        <div class="player-pos">${headCoach.Cargo || 'Head Coach'}</div>
+        <div class="player-name">${coachTitle}</div>
+        ${coachSubtitle ? `<div class="player-pos">${coachSubtitle}</div>` : ''}
       </div>
     `;
     staffGrid.appendChild(coachCard);
@@ -435,16 +465,21 @@ function renderPlantel(data) {
       .join('')
       .slice(0, 2)
       .toUpperCase();
+    const staffTitle = member.Nombre && member.Nombre !== member.Cargo
+      ? member.Nombre
+      : (member.Cargo || 'Staff');
+    const staffSubtitle = member.Nombre && member.Nombre !== member.Cargo
+      ? (member.Cargo || '')
+      : '';
 
     const card = document.createElement('article');
     card.className = 'player-card reveal';
     card.style.setProperty('--av-color', member.Color || '#8d6e00');
     card.innerHTML = `
       <div class="player-avatar">${initials || 'ST'}</div>
-      <div class="player-num">${member.Cargo || 'Staff'}</div>
       <div class="player-info">
-        <div class="player-name">${member.Nombre || 'Sin nombre'}</div>
-        <div class="player-pos">${member.Cargo || ''}</div>
+        <div class="player-name">${staffTitle}</div>
+        ${staffSubtitle ? `<div class="player-pos">${staffSubtitle}</div>` : ''}
       </div>
     `;
     staffGrid.appendChild(card);
@@ -488,7 +523,7 @@ function renderGaleria(data) {
   galeria.forEach((item) => {
     const figure = document.createElement('figure');
     figure.className = `gallery-item reveal ${item.LayoutClass || ''}`.trim();
-    figure.style.backgroundImage = `url('${item.ImagenURL || ''}')`;
+    figure.style.backgroundImage = `url('${normalizeImageUrl(item.ImagenURL || '')}')`;
     figure.innerHTML = item.Label
       ? `<figcaption class="gallery-label">${item.Label}</figcaption>`
       : '';
@@ -503,8 +538,10 @@ function renderInstitucion(data) {
   const titulo = document.getElementById('historiaTitulo');
   const bajada = document.getElementById('historiaBajada');
   const contenido = document.getElementById('historiaContenido');
+  const historiaFoto = document.getElementById('historiaFoto');
+  const historiaFotoLink = document.getElementById('historiaFotoLink');
   const directorioList = document.getElementById('directorioList');
-  if (!titulo || !bajada || !contenido || !directorioList) return;
+  if (!titulo || !bajada || !contenido || !directorioList || !historiaFoto || !historiaFotoLink) return;
 
   const historia = data?.historia || {};
   const directorio = data?.directorio || [];
@@ -512,6 +549,17 @@ function renderInstitucion(data) {
   titulo.textContent = historia.Titulo || 'Historia del Club';
   bajada.textContent = historia.Bajada || '';
   contenido.innerHTML = '';
+  if (historia.ImagenURL) {
+    const historiaImageUrl = normalizeImageUrl(historia.ImagenURL);
+    historiaFoto.src = historiaImageUrl;
+    historiaFoto.alt = historia.ImagenAlt || 'Foto oficial del club';
+    historiaFotoLink.href = historia.LinkURL || historiaImageUrl;
+    historiaFotoLink.style.display = '';
+  } else {
+    historiaFoto.removeAttribute('src');
+    historiaFotoLink.removeAttribute('href');
+    historiaFotoLink.style.display = 'none';
+  }
 
   const paragraphs = String(historia.Contenido || '')
     .split(/\n+/)
