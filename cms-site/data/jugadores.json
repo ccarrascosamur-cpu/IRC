@@ -137,6 +137,108 @@
       "Numero": 23,
       "Posicion": "Fly/medio scrum",
       "Color": "#842021"
+    },
+    {
+      "Nombre": "Ismael Quintana ",
+      "Numero": 24,
+      "Posicion": "Pilar",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Benjamin Castillo",
+      "Numero": 25,
+      "Posicion": "Hooker/pilar",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Francisco Barrera",
+      "Numero": 26,
+      "Posicion": "Pilar",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Alvaro Castillo ",
+      "Numero": 27,
+      "Posicion": "Segunda Linea ",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Joaquin Angulo",
+      "Numero": 28,
+      "Posicion": "Segunda Linea",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Felipe Aguayo",
+      "Numero": 29,
+      "Posicion": "Ala",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Martin Arraño ",
+      "Numero": 30,
+      "Posicion": "Tercera linea/Segunda Linea",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Joaquin Camacho ",
+      "Numero": 31,
+      "Posicion": "No 8",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Yeferson Aguilar ",
+      "Numero": 32,
+      "Posicion": "Medio Scrum",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Nicolas Guitart ",
+      "Numero": 33,
+      "Posicion": "Fly ",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Cristopher Tapia ",
+      "Numero": 34,
+      "Posicion": "Wing",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Cristobal Tello",
+      "Numero": 35,
+      "Posicion": "Primer Centro ",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Yerko Schuffenegher ",
+      "Numero": 36,
+      "Posicion": "segundo centro ",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Vicente Nuñez",
+      "Numero": 37,
+      "Posicion": "wing ",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Nicolas Guelfenbein",
+      "Numero": 38,
+      "Posicion": "Full Back",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Dante Millan",
+      "Numero": 39,
+      "Posicion": "Pilar/Hooker",
+      "Color": "#842021"
+    },
+    {
+      "Nombre": "Agustin Perez ",
+      "Numero": 40,
+      "Posicion": "Hooker/Tercera Linea",
+      "Color": "#842021"
     }
   ],
   "headCoach": {
