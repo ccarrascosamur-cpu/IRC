@@ -367,18 +367,21 @@
   ],
   "headCoach": {
     "Nombre": "Guillermo Ramos ",
-    "Cargo": "Head Coach"
+    "Cargo": "Head Coach",
+    "FotoURL": ""
   },
   "staff": [
     {
       "Nombre": "Francisca Martinez ",
       "Cargo": "Kinesiologa",
-      "Color": "#c49b00"
+      "Color": "#c49b00",
+      "FotoURL": "undefined"
     },
     {
       "Nombre": "Clemente Mauro",
       "Cargo": "P.F",
-      "Color": "#c49b00"
+      "Color": "#c49b00",
+      "FotoURL": "undefined"
     }
   ]
 }
