@@ -32,6 +32,23 @@ function showStatus(msg, type = 'info') {
   els.status.classList.remove('hidden');
 }
 
+function normalizeImageUrl(value) {
+  const str = String(value || '').trim();
+  if (!str) return '';
+  const patterns = [
+    /drive\.google\.com\/file\/d\/([^/?#]+)/i,
+    /drive\.google\.com\/open\?id=([^&#]+)/i,
+    /drive\.google\.com\/uc\?(?:[^#]*&)?id=([^&#]+)/i,
+    /drive\.google\.com\/thumbnail\?(?:[^#]*&)?id=([^&#]+)/i,
+    /lh3\.googleusercontent\.com\/d\/([^=?&#/]+)/i
+  ];
+  for (const pattern of patterns) {
+    const match = str.match(pattern);
+    if (match) return `https://lh3.googleusercontent.com/d/${match[1]}`;
+  }
+  return str;
+}
+
 /* ─── Login ──────────────────────────────────────────────────────── */
 async function login() {
   const password = els.passwordInput.value.trim();
