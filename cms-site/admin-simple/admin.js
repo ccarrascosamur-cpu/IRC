@@ -502,13 +502,20 @@ function renderSponsors() {
   });
 }
 
-document.getElementById('addSponsorBtn').addEventListener('click', () => {
-  state.data.sponsors.push({
-    Nombre: 'Nuevo sponsor',
-    ImagenURL: ''
+const addSponsorBtn = document.getElementById('addSponsorBtn');
+if (addSponsorBtn && !addSponsorBtn.dataset.hasListener) {
+  addSponsorBtn.dataset.hasListener = 'true';
+  addSponsorBtn.addEventListener('click', () => {
+    console.log('[Admin] Agregando sponsor. Antes:', state.data.sponsors?.length);
+    state.data.sponsors = state.data.sponsors || [];
+    state.data.sponsors.push({
+      Nombre: 'Nuevo sponsor',
+      ImagenURL: ''
+    });
+    console.log('[Admin] Después:', state.data.sponsors?.length);
+    renderSponsors();
   });
-  renderSponsors();
-});
+}
 
 function renderConfig() {
   const container = document.getElementById('configForm');
