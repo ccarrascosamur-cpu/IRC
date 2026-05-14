@@ -4,20 +4,109 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin — Ingles Rugby Club</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <link rel="stylesheet" href="admin.css?v=6">
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on('init', user => {
-        if (!user) {
-          window.netlifyIdentity.on('login', () => {
-            document.location.href = '/admin/';
-          });
-        }
-      });
-    }
-  </script>
+  <header class="admin-header">
+    <h1>🏉 Panel de Admin — IRC</h1>
+    <a href="/" class="btn btn-secondary">← Volver al sitio</a>
+  </header>
+
+  <main class="admin-container">
+    <!-- Login -->
+    <section id="loginSection" class="login-section">
+      <h2>🔐 Acceso restringido</h2>
+      <p>Ingresá la contraseña para acceder al panel de administración.</p>
+      <div class="form-group">
+        <input type="password" id="passwordInput" placeholder="Contraseña" class="input">
+        <button id="loginBtn" class="btn btn-primary">Entrar</button>
+      </div>
+      <p id="loginError" class="hint" style="color:#c0392b"></p>
+    </section>
+
+    <!-- Editor -->
+    <section id="editorSection" class="editor-section hidden">
+      <div class="toolbar">
+        <h2>Editar datos</h2>
+        <button id="logoutBtn" class="btn btn-secondary">Cerrar sesión</button>
+        <button id="saveAllBtn" class="btn btn-primary">💾 Guardar todos los cambios</button>
+      </div>
+      <div id="status" class="status hidden"></div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="fixture">Fixture</button>
+        <button class="tab-btn" data-tab="posiciones">Posiciones</button>
+        <button class="tab-btn" data-tab="noticias">Noticias</button>
+        <button class="tab-btn" data-tab="stats">Stats</button>
+        <button class="tab-btn" data-tab="plantel">Plantel</button>
+        <button class="tab-btn" data-tab="galeria">Galería</button>
+        <button class="tab-btn" data-tab="institucion">Institución</button>
+        <button class="tab-btn" data-tab="sponsors">Sponsors</button>
+        <button class="tab-btn" data-tab="config">Configuración</button>
+      </div>
+
+      <div id="fixturePanel" class="tab-panel active">
+        <h3>Fixture</h3>
+        <div id="fixtureList" class="item-list"></div>
+        <button id="addFixtureBtn" class="btn btn-secondary">+ Agregar partido</button>
+      </div>
+
+      <div id="posicionesPanel" class="tab-panel">
+        <h3>Tabla de Posiciones</h3>
+        <div id="posicionesList" class="item-list"></div>
+        <button id="addPosicionBtn" class="btn btn-secondary">+ Agregar equipo</button>
+      </div>
+
+      <div id="noticiasPanel" class="tab-panel">
+        <h3>Noticias</h3>
+        <div id="noticiasList" class="item-list"></div>
+        <button id="addNoticiaBtn" class="btn btn-secondary">+ Agregar noticia</button>
+      </div>
+
+      <div id="statsPanel" class="tab-panel">
+        <h3>Estadísticas</h3>
+        <div id="statsForm" class="form-grid"></div>
+      </div>
+
+      <div id="plantelPanel" class="tab-panel">
+        <h3>Cuerpo técnico</h3>
+        <div id="headCoachForm" class="form-grid"></div>
+        <div id="staffList" class="item-list" style="margin-top:16px"></div>
+        <button id="addStaffBtn" class="btn btn-secondary">+ Agregar staff</button>
+        <h3 style="margin-top:24px">Jugadores</h3>
+        <div id="jugadoresList" class="item-list"></div>
+        <button id="addJugadorBtn" class="btn btn-secondary">+ Agregar jugador</button>
+      </div>
+
+      <div id="galeriaPanel" class="tab-panel">
+        <h3>Galería de imágenes</h3>
+        <p class="hint">Podés pegar URLs normales de imagen o links compartidos de Google Drive. El sitio convierte automáticamente los links de Drive al formato correcto.</p>
+        <div id="galeriaList" class="item-list"></div>
+        <button id="addGaleriaBtn" class="btn btn-secondary">+ Agregar imagen</button>
+      </div>
+
+      <div id="institucionPanel" class="tab-panel">
+        <h3>Historia del club</h3>
+        <div id="historiaForm" class="form-grid"></div>
+        <h3 style="margin-top:24px">Directorio</h3>
+        <div id="directorioList" class="item-list"></div>
+        <button id="addDirectorioBtn" class="btn btn-secondary">+ Agregar miembro</button>
+      </div>
+
+      <div id="sponsorsPanel" class="tab-panel">
+        <h3>Sponsors</h3>
+        <p class="hint">Agregá los sponsors del club. Podés usar URLs de imagen directas o links de Google Drive.</p>
+        <div id="sponsorsList" class="item-list"></div>
+        <button id="addSponsorBtn" class="btn btn-secondary">+ Agregar sponsor</button>
+      </div>
+
+      <div id="configPanel" class="tab-panel">
+        <h3>Configuración</h3>
+        <div id="configForm" class="form-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="admin.js?v=6"></script>
 </body>
 </html>
