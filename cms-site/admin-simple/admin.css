@@ -96,6 +96,16 @@ body {
 
 .hint { color: #888; font-size: .85rem; margin-top: .5rem; }
 
+.img-preview-wrap { margin-top: .25rem; }
+.img-preview {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: var(--radius);
+  border: 1px solid #e0e0e0;
+  object-fit: cover;
+  display: block;
+}
+
 .toolbar {
   display: flex;
   justify-content: space-between;

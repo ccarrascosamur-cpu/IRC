@@ -239,6 +239,8 @@ function renderNoticias() {
   (state.data.noticias || []).forEach((item, idx) => {
     const card = document.createElement('div');
     card.className = 'item-card';
+    const previewUrl = normalizeImageUrl(item.ImagenURL || '');
+    const isFolder = String(item.ImagenURL || '').includes('/folders/');
     card.innerHTML = `
       <h4>${item.Titulo || 'Sin título'}</h4>
       <div class="form-grid">
@@ -246,12 +248,31 @@ function renderNoticias() {
         ${createField('Título', item.Titulo, 'Titulo').outerHTML}
         ${createField('Resumen', item.Resumen, 'Resumen').outerHTML}
         ${createField('Imagen URL', item.ImagenURL, 'ImagenURL').outerHTML}
+        <div class="img-preview-wrap" style="grid-column:1/-1">
+          ${isFolder ? '<p class="hint" style="color:#c0392b">⚠️ Este link es una carpeta de Drive. Usá un link directo a la imagen (botón derecho → "Compartir" → "Copiar link" en el archivo).</p>' : (previewUrl ? `<img src="${previewUrl}" class="img-preview" alt="Preview" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><p class="hint" style="display:none;color:#c0392b">⚠️ No se pudo cargar la imagen. Verificá que sea un link directo a un archivo de imagen.</p>` : '<p class="hint">Pegá el link directo a una imagen (Google Drive, Imgur, etc.). Se mostrará una preview aquí.</p>')}
+        </div>
         ${createField('Link', item.Link, 'Link').outerHTML}
         <p class="hint" style="grid-column:1/-1;margin-top:4px">Podés pegar cualquier URL (web, noticia, video, etc.). El sitio abrirá el link en una nueva pestaña.</p>
         ${createField('Destacada', item.Destacada, 'Destacada', 'boolean').outerHTML}
       </div>
       <div class="actions"><button class="btn btn-danger delete-btn">🗑 Eliminar</button></div>
     `;
+    // Live preview on input
+    const imgInput = card.querySelector('input[data-key="ImagenURL"]');
+    const previewWrap = card.querySelector('.img-preview-wrap');
+    if (imgInput && previewWrap) {
+      imgInput.addEventListener('input', () => {
+        const url = normalizeImageUrl(imgInput.value);
+        const folder = String(imgInput.value || '').includes('/folders/');
+        if (folder) {
+          previewWrap.innerHTML = '<p class="hint" style="color:#c0392b">⚠️ Este link es una carpeta de Drive. Usá un link directo a la imagen (botón derecho → "Compartir" → "Copiar link" en el archivo).</p>';
+        } else if (url) {
+          previewWrap.innerHTML = `<img src="${url}" class="img-preview" alt="Preview" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><p class="hint" style="display:none;color:#c0392b">⚠️ No se pudo cargar la imagen. Verificá que sea un link directo a un archivo de imagen.</p>`;
+        } else {
+          previewWrap.innerHTML = '<p class="hint">Pegá el link directo a una imagen (Google Drive, Imgur, etc.). Se mostrará una preview aquí.</p>';
+        }
+      });
+    }
     card.querySelector('.delete-btn').addEventListener('click', () => {
       state.data.noticias.splice(idx, 1);
       renderNoticias();
