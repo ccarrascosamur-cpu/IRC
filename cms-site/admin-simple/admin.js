@@ -87,7 +87,7 @@ function showEditor() {
 
 /* ─── Carga de datos (desde Worker que lee GitHub) ───────────────── */
 async function loadLocalData() {
-  const files = ['fixture', 'posiciones', 'noticias', 'stats', 'config', 'jugadores', 'galeria', 'institucion'];
+  const files = ['fixture', 'posiciones', 'noticias', 'stats', 'config', 'jugadores', 'galeria', 'institucion', 'sponsors'];
   for (const key of files) {
     try {
       const res = await fetch(`/api/data/${key}.json`);
@@ -464,6 +464,52 @@ document.getElementById('addDirectorioBtn').addEventListener('click', () => {
   renderInstitucion();
 });
 
+function renderSponsors() {
+  const list = document.getElementById('sponsorsList');
+  list.innerHTML = '';
+  (state.data.sponsors || []).forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'item-card';
+    const previewUrl = normalizeImageUrl(item.ImagenURL || '');
+    card.innerHTML = `
+      <h4>${item.Nombre || `Sponsor #${idx + 1}`}</h4>
+      <div class="form-grid">
+        ${createField('Nombre', item.Nombre, 'Nombre').outerHTML}
+        ${createField('Imagen URL', item.ImagenURL, 'ImagenURL').outerHTML}
+        <div class="img-preview-wrap" style="grid-column:1/-1">
+          ${previewUrl ? `<img src="${previewUrl}" class="img-preview" alt="Preview" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><p class="hint" style="display:none;color:#c0392b">⚠️ No se pudo cargar la imagen.</p>` : '<p class="hint">Se mostrará una preview de la imagen aquí.</p>'}
+        </div>
+      </div>
+      <div class="actions"><button class="btn btn-danger delete-btn">🗑 Eliminar</button></div>
+    `;
+    const imgInput = card.querySelector('input[data-key="ImagenURL"]');
+    const previewWrap = card.querySelector('.img-preview-wrap');
+    if (imgInput && previewWrap) {
+      imgInput.addEventListener('input', () => {
+        const url = normalizeImageUrl(imgInput.value);
+        if (url) {
+          previewWrap.innerHTML = `<img src="${url}" class="img-preview" alt="Preview" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><p class="hint" style="display:none;color:#c0392b">⚠️ No se pudo cargar la imagen.</p>`;
+        } else {
+          previewWrap.innerHTML = '<p class="hint">Se mostrará una preview de la imagen aquí.</p>';
+        }
+      });
+    }
+    card.querySelector('.delete-btn').addEventListener('click', () => {
+      state.data.sponsors.splice(idx, 1);
+      renderSponsors();
+    });
+    list.appendChild(card);
+  });
+}
+
+document.getElementById('addSponsorBtn').addEventListener('click', () => {
+  state.data.sponsors.push({
+    Nombre: 'Nuevo sponsor',
+    ImagenURL: ''
+  });
+  renderSponsors();
+});
+
 function renderConfig() {
   const container = document.getElementById('configForm');
   container.innerHTML = '';
@@ -489,6 +535,7 @@ function collectData() {
   state.data.staff = Array.from(document.querySelectorAll('#staffList .item-card')).map(getCardData);
   state.data.jugadores = Array.from(document.querySelectorAll('#jugadoresList .item-card')).map(getCardData);
   state.data.galeria = Array.from(document.querySelectorAll('#galeriaList .item-card')).map(getCardData);
+  state.data.sponsors = Array.from(document.querySelectorAll('#sponsorsList .item-card')).map(getCardData);
   state.data.directorio = Array.from(document.querySelectorAll('#directorioList .item-card')).map(getCardData);
 
   const statsObj = {};
@@ -558,7 +605,7 @@ async function saveAll() {
   els.saveAllBtn.disabled = true;
 
   try {
-    for (const key of ['fixture', 'posiciones', 'noticias', 'stats', 'jugadores', 'galeria', 'institucion', 'config']) {
+    for (const key of ['fixture', 'posiciones', 'noticias', 'stats', 'jugadores', 'galeria', 'institucion', 'sponsors', 'config']) {
       console.log('[Admin] Guardando:', key);
       await saveFile(key);
       console.log('[Admin] OK:', key);
@@ -584,6 +631,7 @@ async function initEditor() {
   renderPlantel();
   renderGaleria();
   renderInstitucion();
+  renderSponsors();
   renderConfig();
   els.saveAllBtn.addEventListener('click', saveAll);
   els.logoutBtn.addEventListener('click', logout);
