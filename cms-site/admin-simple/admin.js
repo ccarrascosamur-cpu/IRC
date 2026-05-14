@@ -324,6 +324,7 @@ function renderPlantel() {
   headCoachForm.innerHTML = '';
   headCoachForm.appendChild(createField('Head Coach: nombre', coach.Nombre || '', 'Nombre'));
   headCoachForm.appendChild(createField('Head Coach: cargo', coach.Cargo || 'Head Coach', 'Cargo'));
+  headCoachForm.appendChild(createField('Head Coach: foto URL', coach.FotoURL || '', 'FotoURL'));
 
   staffList.innerHTML = '';
   (state.data.staff || []).forEach((item, idx) => {
@@ -335,6 +336,7 @@ function renderPlantel() {
         ${createField('Nombre', item.Nombre, 'Nombre').outerHTML}
         ${createField('Cargo', item.Cargo, 'Cargo').outerHTML}
         ${createField('Color', item.Color, 'Color').outerHTML}
+        ${createField('Foto URL', item.FotoURL, 'FotoURL').outerHTML}
       </div>
       <div class="actions"><button class="btn btn-danger delete-btn">🗑 Eliminar</button></div>
     `;
@@ -372,7 +374,8 @@ document.getElementById('addStaffBtn').addEventListener('click', () => {
   state.data.staff.push({
     Nombre: 'Nuevo staff',
     Cargo: 'Cargo',
-    Color: '#c49b00'
+    Color: '#c49b00',
+    FotoURL: ''
   });
   renderPlantel();
 });

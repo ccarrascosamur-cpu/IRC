@@ -460,11 +460,12 @@ function renderPlantel(data) {
     const coachSubtitle = headCoach.Nombre && headCoach.Nombre !== headCoach.Cargo
       ? (headCoach.Cargo || 'Head Coach')
       : '';
+    const coachFoto = normalizeImageUrl(headCoach.FotoURL || '');
     const coachCard = document.createElement('article');
     coachCard.className = 'player-card reveal';
     coachCard.style.setProperty('--av-color', '#c49b00');
     coachCard.innerHTML = `
-      <div class="player-avatar">HC</div>
+      ${coachFoto ? `<div class="player-avatar" style="background-image:url('${coachFoto}');background-size:cover;background-position:center;color:transparent">HC</div>` : `<div class="player-avatar">HC</div>`}
       <div class="player-info">
         <div class="player-name">${coachTitle}</div>
         ${coachSubtitle ? `<div class="player-pos">${coachSubtitle}</div>` : ''}
@@ -487,12 +488,13 @@ function renderPlantel(data) {
     const staffSubtitle = member.Nombre && member.Nombre !== member.Cargo
       ? (member.Cargo || '')
       : '';
+    const staffFoto = normalizeImageUrl(member.FotoURL || '');
 
     const card = document.createElement('article');
     card.className = 'player-card reveal';
     card.style.setProperty('--av-color', member.Color || '#8d6e00');
     card.innerHTML = `
-      <div class="player-avatar">${initials || 'ST'}</div>
+      ${staffFoto ? `<div class="player-avatar" style="background-image:url('${staffFoto}');background-size:cover;background-position:center;color:transparent">${initials || 'ST'}</div>` : `<div class="player-avatar">${initials || 'ST'}</div>`}
       <div class="player-info">
         <div class="player-name">${staffTitle}</div>
         ${staffSubtitle ? `<div class="player-pos">${staffSubtitle}</div>` : ''}
