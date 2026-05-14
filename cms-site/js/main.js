@@ -463,7 +463,7 @@ function renderPlantel(data) {
       ? (headCoach.Cargo || 'Head Coach')
       : '';
     const coachRawFoto = headCoach.FotoURL || '';
-    const coachFoto = coachRawFoto ? normalizeImageUrl(coachRawFoto) : '';
+    const coachFoto = coachRawFoto && coachRawFoto !== 'undefined' ? normalizeImageUrl(coachRawFoto) : '';
     const coachCard = document.createElement('article');
     coachCard.className = 'player-card reveal';
     coachCard.style.setProperty('--av-color', '#c49b00');
@@ -492,7 +492,7 @@ function renderPlantel(data) {
       ? (member.Cargo || '')
       : '';
     const staffRawFoto = member.FotoURL || '';
-    const staffFoto = staffRawFoto ? normalizeImageUrl(staffRawFoto) : '';
+    const staffFoto = staffRawFoto && staffRawFoto !== 'undefined' ? normalizeImageUrl(staffRawFoto) : '';
 
     const card = document.createElement('article');
     card.className = 'player-card reveal';
@@ -517,7 +517,7 @@ function renderPlantel(data) {
       .toUpperCase();
 
     const rawFoto = player.FotoURL || player.fotoURL || player.fotourl || '';
-    const fotoUrl = rawFoto ? normalizeImageUrl(rawFoto) : '';
+    const fotoUrl = rawFoto && rawFoto !== 'undefined' ? normalizeImageUrl(rawFoto) : '';
 
     const card = document.createElement('article');
     card.className = 'player-card reveal';
