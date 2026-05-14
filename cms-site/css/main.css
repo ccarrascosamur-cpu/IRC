@@ -1603,61 +1603,55 @@ code {
     display: none;
   }
   .standings-table tbody tr {
-    display: block;
-    margin-bottom: .75rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: .6rem;
     background: #1a1a1a;
     border-radius: var(--radius);
     border: 1px solid rgba(132,32,33,.25);
     overflow: hidden;
     position: relative;
+    padding: .7rem 1rem;
   }
   .standings-table tbody tr:last-child {
     margin-bottom: 0;
   }
   .standings-table td {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: .55rem 1rem;
-    border-bottom: 1px solid rgba(255,255,255,.04);
-    text-align: right;
+    display: block;
+    padding: 0;
+    border: none;
+    text-align: inherit;
     font-size: .9rem;
     width: auto;
     min-width: 0;
     white-space: normal;
   }
   .standings-table td::before {
-    content: attr(data-label);
-    font-family: var(--font-display);
-    font-size: .65rem;
-    font-weight: 700;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--gray);
+    display: none;
   }
   .standings-table td.col-pos {
-    justify-content: flex-start;
-    gap: .75rem;
-    background: rgba(132,32,33,.15);
-    border-bottom: 1px solid rgba(132,32,33,.25);
-  }
-  .standings-table td.col-pos::before {
-    content: 'Pos';
+    justify-self: start;
+    background: none;
+    border: none;
   }
   .standings-table td.col-team {
-    font-size: 1rem;
+    font-size: .95rem;
+    font-weight: 600;
+    justify-self: start;
   }
-  .standings-table td.col-team::before {
-    content: 'Equipo';
+  .standings-table td.col-pts {
+    justify-self: end;
   }
-  .standings-table .hide-mobile {
+  .standings-table td.col-pts .pts-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .standings-table .hide-mobile,
+  .standings-table td.col-num,
+  .standings-table td.col-team ~ td:not(.col-pts) {
     display: none !important;
-  }
-  .standings-table .col-pts {
-    border-bottom: none;
-  }
-  .standings-table .col-pts::before {
-    content: 'Pts';
   }
   .standings-table .highlight-row td:first-child::before {
     width: 100%;
@@ -1837,6 +1831,7 @@ code {
   .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
   .footer-brand { grid-column: span 1; }
   .footer-bottom { flex-direction: column; text-align: center; }
+  .footer { padding-bottom: 0; }
 
   .match-featured { border-radius: var(--radius); }
 

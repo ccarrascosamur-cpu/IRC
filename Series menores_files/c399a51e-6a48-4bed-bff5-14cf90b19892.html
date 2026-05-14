@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)blob:https://www.kimi.com/c399a51e-6a48-4bed-bff5-14cf90b19892 -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inglés Rugby Club - SERIES MENORES 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --irc-red: #E31E24;
+            --irc-dark-red: #B91C1C;
+            --irc-yellow: #FACC15;
+            --irc-gray: #6B7280;
+            --irc-dark: #1F2937;
+            --irc-light: #F9FAFB;
+            --irc-white: #FFFFFF;
+            --irc-black: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--irc-light);
+            color: var(--irc-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--irc-white);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, var(--irc-red) 0%, var(--irc-dark-red) 50%, var(--irc-black) 100%);
+            color: white;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: var(--irc-yellow);
+            opacity: 0.1;
+            border-radius: 50%;
+            transform: rotate(45deg);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 span {
+            color: var(--irc-yellow);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            font-weight: 300;
+            margin-bottom: 32px;
+            max-width: 600px;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,0,0,0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .hero-meta-item i {
+            color: var(--irc-yellow);
+        }
+
+        /* SECTIONS */
+        .section {
+            padding: 48px 40px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--irc-red), var(--irc-dark-red));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--irc-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-subtitle {
+            color: var(--irc-gray);
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        /* ABOUT */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        .about-text {
+            font-size: 1rem;
+            color: #374151;
+            line-height: 1.8;
+        }
+
+        .about-text p {
+            margin-bottom: 16px;
+        }
+
+        .about-highlight {
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            border-left: 4px solid var(--irc-yellow);
+            padding: 20px 24px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .about-highlight strong {
+            color: var(--irc-dark);
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .stat-card {
+            background: var(--irc-light);
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .stat-number {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--irc-red);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--irc-gray);
+            margin-top: 4px;
+        }
+
+        /* CATEGORIES */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .category-card {
+            background: var(--irc-white);
+            border: 2px solid #E5E7EB;
+            border-radius: 16px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .category-card:hover {
+            border-color: var(--irc-red);
+            box-shadow: 0 10px 40px rgba(227, 30, 36, 0.1);
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--irc-red), var(--irc-yellow));
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: var(--irc-red);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .category-badge.yellow {
+            background: var(--irc-yellow);
+            color: var(--irc-dark);
+        }
+
+        .category-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--irc-dark);
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            font-size: 0.95rem;
+            color: #4B5563;
+        }
+
+        .category-list li i {
+            color: var(--irc-red);
+            font-size: 0.8rem;
+        }
+
+        /* TRAINING */
+        .training-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .training-card {
+            background: linear-gradient(135deg, var(--irc-light), white);
+            border: 1px solid #E5E7EB;
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .training-card.featured {
+            background: linear-gradient(135deg, var(--irc-red), var(--irc-dark-red));
+            color: white;
+            border: none;
+        }
+
+        .training-card.featured .training-label,
+        .training-card.featured .training-value {
+            color: white;
+        }
+
+        .training-age {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .training-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .training-detail i {
+            color: var(--irc-red);
+            margin-top: 3px;
+            font-size: 0.9rem;
+        }
+
+        .training-card.featured .training-detail i {
+            color: var(--irc-yellow);
+        }
+
+        .training-label {
+            font-size: 0.8rem;
+            color: var(--irc-gray);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .training-value {
+            font-size: 0.95rem;
+            color: var(--irc-dark);
+            font-weight: 500;
+        }
+
+        .training-note {
+            grid-column: 1 / -1;
+            background: #FEF3C7;
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: #92400E;
+        }
+
+        .training-note i {
+            color: var(--irc-yellow);
+            font-size: 1.2rem;
+        }
+
+        /* FIXTURE */
+        .fixture-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .fixture-tab {
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: 2px solid #E5E7EB;
+            background: white;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--irc-gray);
+        }
+
+        .fixture-tab.active {
+            background: var(--irc-red);
+            color: white;
+            border-color: var(--irc-red);
+        }
+
+        .fixture-tab:hover {
+            border-color: var(--irc-red);
+            color: var(--irc-red);
+        }
+
+        .fixture-content {
+            background: var(--irc-light);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .fixture-empty {
+            color: var(--irc-gray);
+            font-size: 1rem;
+        }
+
+        .fixture-empty i {
+            font-size: 2.5rem;
+            color: #D1D5DB;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .fixture-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .fixture-info-item {
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #E5E7EB;
+        }
+
+        .fixture-info-item i {
+            color: var(--irc-red);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .fixture-info-item h4 {
+            font-size: 0.85rem;
+            color: var(--irc-gray);
+            margin-bottom: 4px;
+        }
+
+        .fixture-info-item p {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--irc-dark);
+        }
+
+        /* PAYMENTS */
+        .payments-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .payment-card {
+            background: var(--irc-white);
+            border: 2px solid #E5E7EB;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .payment-header {
+            background: linear-gradient(135deg, var(--irc-red), var(--irc-dark-red));
+            color: white;
+            padding: 20px 24px;
+        }
+
+        .payment-header h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .payment-body {
+            padding: 24px;
+        }
+
+        .payment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .payment-item:last-child {
+            border-bottom: none;
+        }
+
+        .payment-item-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: #4B5563;
+        }
+
+        .payment-item-label i {
+            color: var(--irc-red);
+            width: 20px;
+        }
+
+        .payment-item-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--irc-dark);
+        }
+
+        .payment-item-value.highlight {
+            color: var(--irc-red);
+        }
+
+        .payment-deadline {
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--irc-dark-red);
+        }
+
+        .payment-deadline i {
+            color: var(--irc-red);
+        }
+
+        .bank-info {
+            background: var(--irc-light);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 24px;
+            grid-column: 1 / -1;
+        }
+
+        .bank-info h4 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bank-info h4 i {
+            color: var(--irc-red);
+        }
+
+        .bank-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .bank-detail {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid #E5E7EB;
+        }
+
+        .bank-detail-label {
+            font-size: 0.75rem;
+            color: var(--irc-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .bank-detail-value {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--irc-dark);
+            word-break: break-all;
+        }
+
+        /* STAFF */
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .staff-card {
+            background: var(--irc-white);
+            border: 1px solid #E5E7EB;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .staff-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            border-color: var(--irc-red);
+        }
+
+        .staff-avatar {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--irc-red), var(--irc-dark-red));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .staff-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--irc-dark);
+            margin-bottom: 4px;
+        }
+
+        .staff-role {
+            font-size: 0.85rem;
+            color: var(--irc-gray);
+        }
+
+        .staff-category {
+            display: inline-block;
+            background: var(--irc-light);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--irc-red);
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--irc-black);
+            color: white;
+            padding: 48px 40px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .footer-logo span {
+            color: var(--irc-yellow);
+        }
+
+        .footer-tagline {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .social-btn {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .social-btn:hover {
+            background: var(--irc-red);
+            transform: translateY(-3px);
+        }
+
+        .footer-contact {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .footer-contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .footer-contact-item i {
+            color: var(--irc-yellow);
+            font-size: 1.2rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 24px;
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        .footer-hashtag {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            color: var(--irc-yellow);
+            margin-top: 16px;
+            letter-spacing: 2px;
+        }
+
+        /* PRINT BUTTON */
+        .floating-actions {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .fab {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .fab-primary {
+            background: linear-gradient(135deg, var(--irc-red), var(--irc-dark-red));
+        }
+
+        .fab-secondary {
+            background: var(--irc-dark);
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .fab-tooltip {
+            position: absolute;
+            right: 70px;
+            background: var(--irc-dark);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .fab:hover .fab-tooltip {
+            opacity: 1;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 40px 24px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section {
+                padding: 32px 24px;
+            }
+
+            .about-grid,
+            .categories-grid,
+            .payments-grid,
+            .training-grid,
+            .staff-grid,
+            .fixture-info,
+            .bank-details,
+            .footer-contact {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .floating-actions {
+                bottom: 16px;
+                right: 16px;
+            }
+        }
+
+        @media print {
+            .floating-actions {
+                display: none !important;
+            }
+
+            .page {
+                box-shadow: none;
+                max-width: 100%;
+            }
+
+            body {
+                background: white;
+            }
+
+            .section {
+                break-inside: avoid;
+            }
+
+            .hero {
+                break-after: avoid;
+            }
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+    </style>
+<!--<base target="_blank">--><base href="." target="_blank">
+</head>
+<body>
+    <div class="page">
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-badge">
+                <i class="fas fa-bolt"></i>
+                Temporada 2026
+            </div>
+            <h1>SERIES <span>MENORES</span></h1>
+            <p class="hero-subtitle">Inglés Rugby Club — Información oficial para padres y apoderados sobre la temporada 2026 de nuestro club.</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Marzo 2026</span>
+                </div>
+                <div class="hero-meta-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Rancagua, Chile</span>
+                </div>
+                <div class="hero-meta-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>ARUSA 2026</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section class="section animate-in">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <div>
+                    <h2 class="section-title">¿Quiénes Somos?</h2>
+                    <p class="section-subtitle">Nuestra historia y valores</p>
+                </div>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-text">
+                    <p><strong>Inglés Rugby Club (IRC)</strong> nace en <strong>2016</strong> de la mano de apoderados y ex alumnos del colegio Instituto Inglés de Rancagua. Hemos construido un programa de rugby sólido que involucra a jugadores de todas las edades y habilidades.</p>
+
+                    <p>IRC cuenta con una <strong>cancha de medidas oficiales de la World Rugby</strong>, ubicada en Rancagua, sexta región. A través de sus categorías —escuelita, juveniles, adulta y seniors— hemos sembrado e inculcado valores como la pasión, el trabajo en equipo y el respeto en nuestra comunidad.</p>
+
+                    <div class="about-highlight">
+                        <strong>"La Escuelita del Rayo"</strong> inició a través de Zoom en 2020 en respuesta a la pandemia, ofreciendo clases de rugby en línea y posteriormente presenciales en Rancagua. Actualmente contamos con todas las categorías, donde el foco está en crear <strong>buenos rugbistas... pero, sobre todo, buenas personas.</strong>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">2016</div>
+                        <div class="stat-label">Año de Fundación</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3°</div>
+                        <div class="stat-label">División ARUSA 2026</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">6+</div>
+                        <div class="stat-label">Categorías Activas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">🏆</div>
+                        <div class="stat-label">Campeón 2025</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FORMAT 2026 -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div>
+                    <h2 class="section-title">Formato 2026</h2>
+                    <p class="section-subtitle">Dos categorías con entrenamientos y competencias independientes</p>
+                </div>
+            </div>
+
+            <div class="categories-grid">
+                <div class="category-card">
+                    <span class="category-badge">Infantiles</span>
+                    <h3 class="category-title">M8, M10 y M12</h3>
+                    <ul class="category-list">
+                        <li><i class="fas fa-check-circle"></i> Festivales ARUSA</li>
+                        <li><i class="fas fa-check-circle"></i> Rugby formativo enfocado en enseñar las bases del rugby</li>
+                        <li><i class="fas fa-check-circle"></i> Valores propios del deporte</li>
+                        <li><i class="fas fa-check-circle"></i> Desarrollo integral del jugador</li>
+                    </ul>
+                </div>
+
+                <div class="category-card">
+                    <span class="category-badge yellow">Juveniles</span>
+                    <h3 class="category-title">M14, M16 y M18</h3>
+                    <ul class="category-list">
+                        <li><i class="fas fa-check-circle"></i> Campeonato 2da División ARUSA</li>
+                        <li><i class="fas fa-check-circle"></i> En conjunto con Lagartos Rugby Club</li>
+                        <li><i class="fas fa-check-circle"></i> Privilegiar la competencia</li>
+                        <li><i class="fas fa-check-circle"></i> Desarrollo como jugadores y personas</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRAINING -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <div>
+                    <h2 class="section-title">Entrenamientos</h2>
+                    <p class="section-subtitle">Duración: 1:30 horas por sesión</p>
+                </div>
+            </div>
+
+            <div class="training-grid">
+                <div class="training-card featured">
+                    <div class="training-age">M8, M10 y M12</div>
+                    <div class="training-detail">
+                        <i class="fas fa-calendar"></i>
+                        <div>
+                            <div class="training-label">Días</div>
+                            <div class="training-value">Sábados a las 10:00 AM</div>
+                        </div>
+                    </div>
+                    <div class="training-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <div class="training-label">Ubicación</div>
+                            <div class="training-value">Cancha IRC, El Rabanal, Rancagua</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="training-card">
+                    <div class="training-age">M14 y M16</div>
+                    <div class="training-detail">
+                        <i class="fas fa-calendar"></i>
+                        <div>
+                            <div class="training-label">Días</div>
+                            <div class="training-value">Martes y Viernes 17:00</div>
+                        </div>
+                    </div>
+                    <div class="training-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <div class="training-label">Ubicación</div>
+                            <div class="training-value">Cancha Lagartos, Rengo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="training-card">
+                    <div class="training-age">M18</div>
+                    <div class="training-detail">
+                        <i class="fas fa-calendar"></i>
+                        <div>
+                            <div class="training-label">Días</div>
+                            <div class="training-value">Martes y Viernes 18:30</div>
+                        </div>
+                    </div>
+                    <div class="training-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <div class="training-label">Ubicación</div>
+                            <div class="training-value">Cancha Lagartos, Rengo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="training-note">
+                    <i class="fas fa-info-circle"></i>
+                    <span><strong>Nota:</strong> M14, M16 y M18 pueden entrenar igual los días sábados en la cancha de IRC si así lo desean.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- FIXTURE -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div>
+                    <h2 class="section-title">Fixture 2026</h2>
+                    <p class="section-subtitle">Calendario de competencias ARUSA</p>
+                </div>
+            </div>
+
+            <div class="fixture-tabs">
+                <button class="fixture-tab active" onclick="showFixture(&#39;infantiles&#39;)">M8-M10-M12</button>
+                <button class="fixture-tab" onclick="showFixture(&#39;m14&#39;)">M14</button>
+                <button class="fixture-tab" onclick="showFixture(&#39;m16&#39;)">M16</button>
+                <button class="fixture-tab" onclick="showFixture(&#39;m18&#39;)">M18</button>
+            </div>
+
+            <div class="fixture-content" id="fixture-infantiles">
+                <div class="fixture-empty">
+                    <i class="fas fa-rugby-ball"></i>
+                    <p><strong>Festivales ARUSA en Santiago</strong></p>
+                    <p style="margin-top: 8px; font-size: 0.9rem;">El fixture específico será confirmado por ARUSA durante la temporada.</p>
+                </div>
+                <div class="fixture-info">
+                    <div class="fixture-info-item">
+                        <i class="fas fa-users"></i>
+                        <h4>Quorum</h4>
+                        <p>Sujeto a confirmación</p>
+                    </div>
+                    <div class="fixture-info-item">
+                        <i class="fas fa-clock"></i>
+                        <h4>Cierre</h4>
+                        <p>Miércoles previo</p>
+                    </div>
+                    <div class="fixture-info-item">
+                        <i class="fas fa-map"></i>
+                        <h4>Regionales</h4>
+                        <p>Hay más festivales</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fixture-content" id="fixture-m14" style="display:none;">
+                <div class="fixture-empty">
+                    <i class="fas fa-rugby-ball"></i>
+                    <p><strong>Campeonato 2da División ARUSA</strong></p>
+                    <p style="margin-top: 8px; font-size: 0.9rem;">En conjunto con Lagartos Rugby Club. Fixture por confirmar.</p>
+                </div>
+            </div>
+
+            <div class="fixture-content" id="fixture-m16" style="display:none;">
+                <div class="fixture-empty">
+                    <i class="fas fa-rugby-ball"></i>
+                    <p><strong>Campeonato 2da División ARUSA</strong></p>
+                    <p style="margin-top: 8px; font-size: 0.9rem;">En conjunto con Lagartos Rugby Club. Fixture por confirmar.</p>
+                </div>
+            </div>
+
+            <div class="fixture-content" id="fixture-m18" style="display:none;">
+                <div class="fixture-empty">
+                    <i class="fas fa-rugby-ball"></i>
+                    <p><strong>Campeonato 2da División ARUSA</strong></p>
+                    <p style="margin-top: 8px; font-size: 0.9rem;">En conjunto con Lagartos Rugby Club. Fixture por confirmar.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAYMENTS -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <div>
+                    <h2 class="section-title">Cuotas y Pagos</h2>
+                    <p class="section-subtitle">Información de pagos 2026</p>
+                </div>
+            </div>
+
+            <div class="payments-grid">
+                <div class="payment-card">
+                    <div class="payment-header">
+                        <h3><i class="fas fa-child"></i> Infantiles — M8, M10, M12</h3>
+                    </div>
+                    <div class="payment-body">
+                        <div class="payment-item">
+                            <span class="payment-item-label">
+                                <i class="fas fa-money-bill-wave"></i>
+                                Cuota Mensual
+                            </span>
+                            <span class="payment-item-value">$20.000</span>
+                        </div>
+                        <div class="payment-item">
+                            <span class="payment-item-label">
+                                <i class="fas fa-id-card"></i>
+                                Licencia ARUSA
+                            </span>
+                            <span class="payment-item-value highlight">$24.000</span>
+                        </div>
+                        <div class="payment-deadline">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>Fecha límite licencia: <strong>12 de abril</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-card">
+                    <div class="payment-header">
+                        <h3><i class="fas fa-user-graduate"></i> Juveniles — M14, M16, M18</h3>
+                    </div>
+                    <div class="payment-body">
+                        <div class="payment-item">
+                            <span class="payment-item-label">
+                                <i class="fas fa-money-bill-wave"></i>
+                                Cuota Mensual
+                            </span>
+                            <span class="payment-item-value">$20.000</span>
+                        </div>
+                        <div class="payment-item">
+                            <span class="payment-item-label">
+                                <i class="fas fa-id-card"></i>
+                                Licencia ARUSA
+                            </span>
+                            <span class="payment-item-value highlight">$26.000</span>
+                        </div>
+                        <div class="payment-item">
+                            <span class="payment-item-label">
+                                <i class="fas fa-shield-alt"></i>
+                                Seguro ARUSA
+                            </span>
+                            <span class="payment-item-value highlight">$26.000</span>
+                        </div>
+                        <div class="payment-item">
+                            <span class="payment-item-label">
+                                <i class="fas fa-file-medical"></i>
+                                Apto Médico
+                            </span>
+                            <span class="payment-item-value">Según Fonasa/Isapre</span>
+                        </div>
+                        <div class="payment-deadline">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>Fecha límite: <strong>12 de abril</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bank-info">
+                    <h4><i class="fas fa-university"></i> Datos de Transferencia</h4>
+                    <div class="bank-details">
+                        <div class="bank-detail">
+                            <div class="bank-detail-label">Titular</div>
+                            <div class="bank-detail-value">Club Inglés Rugby Club</div>
+                        </div>
+                        <div class="bank-detail">
+                            <div class="bank-detail-label">RUT</div>
+                            <div class="bank-detail-value">65.146.734-9</div>
+                        </div>
+                        <div class="bank-detail">
+                            <div class="bank-detail-label">Banco</div>
+                            <div class="bank-detail-value">BICE</div>
+                        </div>
+                        <div class="bank-detail">
+                            <div class="bank-detail-label">Cuenta</div>
+                            <div class="bank-detail-value">Cta. Cte.</div>
+                        </div>
+                        <div class="bank-detail">
+                            <div class="bank-detail-label">N° Cuenta</div>
+                            <div class="bank-detail-value">17.008.404</div>
+                        </div>
+                        <div class="bank-detail">
+                            <div class="bank-detail-label">Email</div>
+                            <div class="bank-detail-value">inglesrugbyclub@gmail.com</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STAFF -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div>
+                    <h2 class="section-title">Staff Técnico</h2>
+                    <p class="section-subtitle">Entrenadores temporada 2026</p>
+                </div>
+            </div>
+
+            <div class="staff-grid">
+                <div class="staff-card">
+                    <div class="staff-avatar">DC</div>
+                    <div class="staff-name">Diego Cuevas</div>
+                    <div class="staff-role">Entrenador Infantiles</div>
+                    <span class="staff-category">M8 - M10 - M12</span>
+                </div>
+
+                <div class="staff-card">
+                    <div class="staff-avatar">CM</div>
+                    <div class="staff-name">Clemente Mauro</div>
+                    <div class="staff-role">Entrenador Infantiles</div>
+                    <span class="staff-category">M8 - M10 - M12</span>
+                </div>
+
+                <div class="staff-card">
+                    <div class="staff-avatar">IH</div>
+                    <div class="staff-name">Ignacio Henríquez</div>
+                    <div class="staff-role">Entrenador Infantiles</div>
+                    <span class="staff-category">M8 - M10 - M12</span>
+                </div>
+
+                <div class="staff-card">
+                    <div class="staff-avatar">MH</div>
+                    <div class="staff-name">Miguel Huerta</div>
+                    <div class="staff-role">Entrenador Juveniles</div>
+                    <span class="staff-category">M14 - M16 - M18</span>
+                </div>
+
+                <div class="staff-card">
+                    <div class="staff-avatar">MH</div>
+                    <div class="staff-name">Matías Hernández</div>
+                    <div class="staff-role">Entrenador Juveniles</div>
+                    <span class="staff-category">M14 - M16 - M18</span>
+                </div>
+
+                <div class="staff-card">
+                    <div class="staff-avatar">IH</div>
+                    <div class="staff-name">Ignacio Henríquez</div>
+                    <div class="staff-role">Entrenador Juveniles</div>
+                    <span class="staff-category">M14 - M16 - M18</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-logo">INGLÉS <span>RUGBY</span> CLUB</div>
+            <p class="footer-tagline">Más que un club, una familia</p>
+
+            <div class="footer-social">
+                <a href="blob:https://www.kimi.com/c399a51e-6a48-4bed-bff5-14cf90b19892#" class="social-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="blob:https://www.kimi.com/c399a51e-6a48-4bed-bff5-14cf90b19892#" class="social-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="blob:https://www.kimi.com/c399a51e-6a48-4bed-bff5-14cf90b19892#" class="social-btn" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:inglesrugbyclub@gmail.com" class="social-btn" title="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+
+            <div class="footer-contact">
+                <div class="footer-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Cancha IRC<br>El Rabanal, Rancagua</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>inglesrugbyclub<br>@gmail.com</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>ARUSA 2026<br>Tercera División</span>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Inglés Rugby Club. Todos los derechos reservados.</p>
+                <p class="footer-hashtag">#DALERAYO</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Floating Actions -->
+    <div class="floating-actions">
+        <button class="fab fab-secondary" onclick="window.scrollTo({top: 0, behavior: &#39;smooth&#39;})" title="Volver arriba">
+            <i class="fas fa-arrow-up"></i>
+            <span class="fab-tooltip">Volver arriba</span>
+        </button>
+        <button class="fab fab-primary" onclick="window.print()" title="Descargar PDF">
+            <i class="fas fa-file-pdf"></i>
+            <span class="fab-tooltip">Descargar PDF</span>
+        </button>
+    </div>
+
+    <script>
+        function showFixture(category) {
+            // Hide all
+            document.querySelectorAll('.fixture-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.fixture-tab').forEach(el => el.classList.remove('active'));
+
+            // Show selected
+            document.getElementById('fixture-' + category).style.display = 'block';
+            event.target.classList.add('active');
+        }
+
+        // Add animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+</body></html>

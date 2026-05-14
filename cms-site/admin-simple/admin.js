@@ -247,6 +247,7 @@ function renderNoticias() {
         ${createField('Resumen', item.Resumen, 'Resumen').outerHTML}
         ${createField('Imagen URL', item.ImagenURL, 'ImagenURL').outerHTML}
         ${createField('Link', item.Link, 'Link').outerHTML}
+        <p class="hint" style="grid-column:1/-1;margin-top:4px">Podés pegar cualquier URL (web, noticia, video, etc.). El sitio abrirá el link en una nueva pestaña.</p>
         ${createField('Destacada', item.Destacada, 'Destacada', 'boolean').outerHTML}
       </div>
       <div class="actions"><button class="btn btn-danger delete-btn">🗑 Eliminar</button></div>
@@ -317,6 +318,7 @@ function renderPlantel() {
         ${createField('Número', item.Numero, 'Numero', 'number').outerHTML}
         ${createField('Posición', item.Posicion, 'Posicion').outerHTML}
         ${createField('Color', item.Color, 'Color').outerHTML}
+        ${createField('Foto URL', item.FotoURL, 'FotoURL').outerHTML}
       </div>
       <div class="actions"><button class="btn btn-danger delete-btn">🗑 Eliminar</button></div>
     `;
@@ -342,7 +344,8 @@ document.getElementById('addJugadorBtn').addEventListener('click', () => {
     Nombre: 'Nuevo jugador',
     Numero: (state.data.jugadores?.length || 0) + 1,
     Posicion: '',
-    Color: '#842021'
+    Color: '#842021',
+    FotoURL: ''
   });
   renderPlantel();
 });

@@ -510,11 +510,13 @@ function renderPlantel(data) {
       .join('')
       .toUpperCase();
 
+    const fotoUrl = normalizeImageUrl(player.FotoURL || player.fotoURL || player.fotourl || '');
+
     const card = document.createElement('article');
     card.className = 'player-card reveal';
     card.style.setProperty('--av-color', player.Color || '#842021');
     card.innerHTML = `
-      <div class="player-avatar">${initials || '?'}</div>
+      ${fotoUrl ? `<div class="player-avatar" style="background-image:url('${fotoUrl}');background-size:cover;background-position:center;color:transparent">${initials || '?'}</div>` : `<div class="player-avatar">${initials || '?'}</div>`}
       <div class="player-num">#${player.Numero ?? ''}</div>
       <div class="player-info">
         <div class="player-name">${player.Nombre || 'Sin nombre'}</div>
