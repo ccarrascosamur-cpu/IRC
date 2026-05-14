@@ -263,7 +263,8 @@ function renderNoticias() {
       <div class="form-grid">
         ${createField('Fecha', item.Fecha, 'Fecha').outerHTML}
         ${createField('Título', item.Titulo, 'Titulo').outerHTML}
-        ${createField('Resumen', item.Resumen, 'Resumen').outerHTML}
+        ${createField('Noticia', item.Resumen, 'Resumen', 'textarea').outerHTML}
+        <p class="hint" style="grid-column:1/-1;margin-top:-4px">Máximo 600 caracteres recomendados para un buen diseño en las tarjetas.</p>
         ${createField('Imagen URL', item.ImagenURL, 'ImagenURL').outerHTML}
         <div class="img-preview-wrap" style="grid-column:1/-1">
           ${isFolder ? '<p class="hint" style="color:#c0392b">⚠️ Este link es una carpeta de Drive. Usá un link directo a la imagen (botón derecho → "Compartir" → "Copiar link" en el archivo).</p>' : (previewUrl ? `<img src="${previewUrl}" class="img-preview" alt="Preview" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><p class="hint" style="display:none;color:#c0392b">⚠️ No se pudo cargar la imagen. Verificá que sea un link directo a un archivo de imagen.</p>` : '<p class="hint">Pegá el link directo a una imagen (Google Drive, Imgur, etc.). Se mostrará una preview aquí.</p>')}

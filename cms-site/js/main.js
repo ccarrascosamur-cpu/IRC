@@ -44,6 +44,12 @@ function normalizeImageUrl(value) {
   return str;
 }
 
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
 /* ─── Helpers: formatear fechas/horas ────────────────────────────── */
 function formatSheetTime(value) {
   if (!value) return '15:30';
@@ -424,13 +430,19 @@ function renderNoticias(data) {
     if (destacada && i === 0) card.classList.add('featured');
     card.style.setProperty('--delay', `${i * 0.1}s`);
 
+    const MAX_CHARS = 600;
+    const needsTruncate = resumen.length > MAX_CHARS;
+    const displayText = needsTruncate ? resumen.slice(0, MAX_CHARS) + '…' : resumen;
+    const cardId = `news-card-${i}`;
+
     card.innerHTML = `
       ${imagen ? `<div class="news-image" style="background-image: url('${imagen}')"></div>` : ''}
       <div class="news-body">
         <span class="news-date">${fecha}</span>
         <h3 class="news-title">${titulo}</h3>
-        <p class="news-excerpt">${resumen}</p>
-        <a href="${link}" class="news-link" ${link !== '#' ? 'target="_blank"' : ''}>Leer más</a>
+        <p class="news-excerpt" id="${cardId}-text">${displayText}</p>
+        ${needsTruncate ? `<button class="news-expand" data-target="${cardId}-text" data-full="${escapeHtml(resumen)}" data-short="${escapeHtml(displayText)}">Ver más</button>` : ''}
+        ${link && link !== '#' ? `<a href="${link}" class="news-link" target="_blank" rel="noopener">🔗 Ver fuente</a>` : ''}
       </div>
     `;
 
@@ -441,6 +453,25 @@ function renderNoticias(data) {
   grid.style.display = 'grid';
 
   grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Expand/collapse news text
+  grid.querySelectorAll('.news-expand').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.target;
+      const p = document.getElementById(targetId);
+      if (!p) return;
+      const isExpanded = btn.dataset.expanded === 'true';
+      if (isExpanded) {
+        p.textContent = btn.dataset.short;
+        btn.textContent = 'Ver más';
+        btn.dataset.expanded = 'false';
+      } else {
+        p.textContent = btn.dataset.full;
+        btn.textContent = 'Ver menos';
+        btn.dataset.expanded = 'true';
+      }
+    });
+  });
 }
 
 /* ─── Render Plantel ─────────────────────────────────────────────── */
