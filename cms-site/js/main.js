@@ -87,7 +87,8 @@ async function loadData() {
     config: 'api/data/config.json',
     jugadores: 'api/data/jugadores.json',
     galeria: 'api/data/galeria.json',
-    institucion: 'api/data/institucion.json'
+    institucion: 'api/data/institucion.json',
+    sponsors: 'api/data/sponsors.json'
   };
 
   const data = {};
@@ -137,6 +138,7 @@ function renderAll(data) {
   renderPlantel(data);
   renderGaleria(data);
   renderInstitucion(data);
+  renderSponsors(data);
 }
 
 /* ─── Render Stats ───────────────────────────────────────────────── */
@@ -530,6 +532,31 @@ function renderPlantel(data) {
 
   staffGrid.querySelectorAll('.reveal').forEach(el => io.observe(el));
   grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
+}
+
+/* ─── Render Sponsors ────────────────────────────────────────────── */
+function renderSponsors(data) {
+  const row = document.getElementById('sponsorsRow');
+  if (!row) return;
+
+  const sponsors = data?.sponsors || [];
+  row.innerHTML = '';
+
+  if (!sponsors.length) {
+    row.innerHTML = '<p class="hint" style="color:#888">Próximamente sponsors...</p>';
+    return;
+  }
+
+  sponsors.forEach((item) => {
+    const img = document.createElement('img');
+    img.className = 'sponsor-logo reveal';
+    img.src = normalizeImageUrl(item.ImagenURL || '');
+    img.alt = item.Nombre || 'Sponsor';
+    img.loading = 'lazy';
+    row.appendChild(img);
+  });
+
+  row.querySelectorAll('.reveal').forEach(el => io.observe(el));
 }
 
 /* ─── Render Galería ─────────────────────────────────────────────── */

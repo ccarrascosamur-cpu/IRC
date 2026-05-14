@@ -1176,8 +1176,9 @@ code {
 
 /* ═══ SPONSORS ═══════════════════════════════════════════════════════ */
 .sponsors {
-  background: var(--dark);
+  background: var(--white);
   padding: 3.5rem 0;
+  border-top: 1px solid var(--gray-light);
 }
 
 .sponsors-header { text-align: center; margin-bottom: 2rem; }
@@ -1188,7 +1189,7 @@ code {
   font-weight: 700;
   letter-spacing: .25em;
   text-transform: uppercase;
-  color: var(--gray);
+  color: #888;
 }
 
 .sponsors-row {
@@ -1200,26 +1201,24 @@ code {
 }
 
 .sponsor-logo {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 900;
-  letter-spacing: .1em;
-  color: rgba(188,186,189,.3);
-  padding: .75rem 1.5rem;
-  border: 1px solid rgba(188,186,189,.15);
-  border-radius: 6px;
+  height: 60px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: .7;
   transition: all .3s;
   cursor: default;
 }
-.sponsor-logo:hover { color: var(--white); border-color: rgba(255,223,1,.3); }
+.sponsor-logo:hover { filter: grayscale(0%); opacity: 1; }
 
 .sponsor-note {
   text-align: center;
   margin-top: 1.75rem;
-  color: var(--gray);
+  color: #888;
   font-size: .85rem;
 }
-.sponsor-note a { color: var(--gold); text-decoration: underline; }
+.sponsor-note a { color: var(--red); text-decoration: underline; }
 
 /* ═══ FOOTER ══════════════════════════════════════════════════════════ */
 .footer {
@@ -1312,6 +1311,8 @@ code {
 }
 .footer-bottom p { font-size: .8rem; color: rgba(188,186,189,.35); }
 .footer-credit { font-size: .78rem !important; }
+.footer-credit a { color: rgba(188,186,189,.35); text-decoration: none; transition: color .2s; }
+.footer-credit a:hover { color: var(--white); }
 
 /* ═══ WHATSAPP FLOAT ════════════════════════════════════════════════ */
 .whatsapp-float {
