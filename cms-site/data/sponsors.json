@@ -9,14 +9,6 @@
       "ImagenURL": ""
     },
     {
-      "Nombre": "Nuevo sponsor",
-      "ImagenURL": ""
-    },
-    {
-      "Nombre": "Nuevo sponsor",
-      "ImagenURL": ""
-    },
-    {
       "Nombre": "ECO GREENHOUSE",
       "ImagenURL": ""
     },
@@ -26,6 +18,10 @@
     },
     {
       "Nombre": "BRODIR",
+      "ImagenURL": ""
+    },
+    {
+      "Nombre": "SERVICIOS C.I.L",
       "ImagenURL": ""
     }
   ]
