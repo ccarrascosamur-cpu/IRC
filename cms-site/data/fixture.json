@@ -53,12 +53,12 @@
       "Hora": "13:00",
       "Localidad": "Visita",
       "Rival": "Mano Rugby",
-      "IRC_Score": "",
-      "Rival_Score": "",
-      "Estado": "proximo",
+      "IRC_Score": "43",
+      "Rival_Score": "46",
+      "Estado": "jugado ",
       "Cancha": "Estadio Juan Antonio Ríos",
       "Direccion": "",
-      "EsDestacado": true
+      "EsDestacado": false
     },
     {
       "DiaSemana": "SAB",
@@ -73,7 +73,7 @@
       "Estado": "proximo",
       "Cancha": "Cancha IRC",
       "Direccion": "",
-      "EsDestacado": false
+      "EsDestacado": true
     },
     {
       "DiaSemana": "SAB",
