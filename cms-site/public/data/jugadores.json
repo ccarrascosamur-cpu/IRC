@@ -1,0 +1,387 @@
+{
+  "jugadores": [
+    {
+      "Nombre": "Alvaro Pismante",
+      "Numero": 1,
+      "Posicion": "Pilar",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Matias Delgado",
+      "Numero": 2,
+      "Posicion": "Hooker",
+      "Color": "#5e1617",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Jaime Avila ",
+      "Numero": 3,
+      "Posicion": "Pilar",
+      "Color": "#3a0e0e",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Pier gillio ",
+      "Numero": 4,
+      "Posicion": "2da Línea",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Claudio Ubilla ",
+      "Numero": 5,
+      "Posicion": "2da Línea",
+      "Color": "#6b1a1a",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Sergio Cuevas ",
+      "Numero": 6,
+      "Posicion": "Ala",
+      "Color": "#4a1212",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Juan Rivero",
+      "Numero": 7,
+      "Posicion": "Ala",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Jose Nualart ",
+      "Numero": 8,
+      "Posicion": "Número 8",
+      "Color": "#5e1617",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Pablo Arce ",
+      "Numero": 9,
+      "Posicion": "Medio Scrum",
+      "Color": "#3a0e0e",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Maximiliano Leveque",
+      "Numero": 10,
+      "Posicion": "Apertura",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Juan Becerra ",
+      "Numero": 11,
+      "Posicion": "Wing",
+      "Color": "#6b1a1a",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Simon Jaraquemada",
+      "Numero": 12,
+      "Posicion": "Centro",
+      "Color": "#4a1212",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Joaquin Melendez ",
+      "Numero": 13,
+      "Posicion": "Centro",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Ignacio Henriquez ",
+      "Numero": 14,
+      "Posicion": "Wing",
+      "Color": "#5e1617",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Cristian Osorio",
+      "Numero": 15,
+      "Posicion": "Full Back",
+      "Color": "#3a0e0e",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Matias Hernandez ",
+      "Numero": 16,
+      "Posicion": "Pilar ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Vicente Rios ",
+      "Numero": 17,
+      "Posicion": "Hooker",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Jose Rubilar ",
+      "Numero": 18,
+      "Posicion": "Pilar ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Diego Cuevas ",
+      "Numero": 19,
+      "Posicion": "Ala ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Clemente Mauro ",
+      "Numero": 20,
+      "Posicion": "Medio Scrum",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Hugo lucero",
+      "Numero": 21,
+      "Posicion": "Ala",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Matias Zuñiga",
+      "Numero": 22,
+      "Posicion": "Centro/Wing",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Nicolas Guelfenbein",
+      "Numero": 23,
+      "Posicion": "Fly/Fullback",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Ismael Quintana ",
+      "Numero": 24,
+      "Posicion": "Pilar",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Benjamin Castillo",
+      "Numero": 25,
+      "Posicion": "Hooker/pilar",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Francisco Barrera",
+      "Numero": 26,
+      "Posicion": "Pilar",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Alvaro Castillo ",
+      "Numero": 27,
+      "Posicion": "Segunda Linea ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Joaquin Angulo",
+      "Numero": 28,
+      "Posicion": "Segunda Linea",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Julian Orueta ",
+      "Numero": 29,
+      "Posicion": "Ala",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Martin Arraño ",
+      "Numero": 30,
+      "Posicion": "Tercera linea/Segunda Linea",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Joaquin Camacho ",
+      "Numero": 31,
+      "Posicion": "No 8",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Santiago Iglesias",
+      "Numero": 32,
+      "Posicion": "Medio Scrum",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Nicolas Guitart ",
+      "Numero": 33,
+      "Posicion": "Fly ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Cristopher Tapia ",
+      "Numero": 34,
+      "Posicion": "Wing",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Cristobal Tello",
+      "Numero": 35,
+      "Posicion": "Primer Centro ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Yerko Schuffenegher ",
+      "Numero": 36,
+      "Posicion": "segundo centro ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Vicente Nuñez",
+      "Numero": 37,
+      "Posicion": "wing ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Gonzalo Zamora",
+      "Numero": 38,
+      "Posicion": "Full Back",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Dante Millan",
+      "Numero": 39,
+      "Posicion": "Pilar/Hooker",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Agustin Perez ",
+      "Numero": 40,
+      "Posicion": "Hooker/Tercera Linea",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Sebastian Caceres ",
+      "Numero": 41,
+      "Posicion": "Hooker",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Max Paolo ",
+      "Numero": 42,
+      "Posicion": "Tercera Linea ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Alejandro Morales ",
+      "Numero": 43,
+      "Posicion": "Segunda Linea ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "David Montenegro ",
+      "Numero": 44,
+      "Posicion": "Tercera Linea ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Nicolas Reyes ",
+      "Numero": 45,
+      "Posicion": "Pilar ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Nicolas Acosta",
+      "Numero": 46,
+      "Posicion": "Segunda Linea ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Benjamin Urizar",
+      "Numero": 47,
+      "Posicion": "Segundo Centro ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Emiliano Zuñiga",
+      "Numero": 48,
+      "Posicion": "Wing",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Damian Casanova",
+      "Numero": 49,
+      "Posicion": "Hooker/tercera linea",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Carlos Zamora ",
+      "Numero": 50,
+      "Posicion": "Primer Centro ",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Dante Massardo ",
+      "Numero": 51,
+      "Posicion": "Juvenil",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Bastian Caro ",
+      "Numero": 52,
+      "Posicion": "Segunda Linea",
+      "Color": "#842021",
+      "FotoURL": "undefined"
+    }
+  ],
+  "headCoach": {
+    "Nombre": "Guillermo Ramos ",
+    "Cargo": "Head Coach",
+    "FotoURL": ""
+  },
+  "staff": [
+    {
+      "Nombre": "Francisca Martinez ",
+      "Cargo": "Kinesiologa",
+      "Color": "#c49b00",
+      "FotoURL": "undefined"
+    },
+    {
+      "Nombre": "Clemente Mauro",
+      "Cargo": "P.F",
+      "Color": "#c49b00",
+      "FotoURL": "undefined"
+    }
+  ]
+}

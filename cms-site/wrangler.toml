@@ -3,9 +3,9 @@ main = "worker/index.js"
 compatibility_date = "2024-01-01"
 
 [assets]
-directory = "."
+directory = "./public"
 not_found_handling = "single-page-application"
 
 # Secrets (usá wrangler secret put):
-# wrangler secret put GITHUB_CLIENT_ID
-# wrangler secret put GITHUB_CLIENT_SECRET
+# wrangler secret put GITHUB_TOKEN
+# wrangler secret put ADMIN_PASSWORD
