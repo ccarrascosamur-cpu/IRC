@@ -2,13 +2,11 @@ name = "irc"
 main = "cms-site/worker/index.js"
 compatibility_date = "2024-01-01"
 
-[[unsafe.bindings]]
-name = "ASSETS"
-type = "assets"
-
-[unsafe.bindings.assets]
+[assets]
 directory = "./cms-site/public"
 not_found_handling = "single-page-application"
+run_worker_first = true
+binding = "ASSETS"
 
 # Secrets (usá wrangler secret put):
 # wrangler secret put GITHUB_TOKEN
