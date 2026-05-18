@@ -1,5 +1,5 @@
 name = "irc"
-main = "worker/index.js"
+main = "cms-site/worker/index.js"
 compatibility_date = "2024-01-01"
 
 [[unsafe.bindings]]
@@ -7,7 +7,7 @@ name = "ASSETS"
 type = "assets"
 
 [unsafe.bindings.assets]
-directory = "./public"
+directory = "./cms-site/public"
 not_found_handling = "single-page-application"
 
 # Secrets (usá wrangler secret put):
