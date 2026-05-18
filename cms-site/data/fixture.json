@@ -58,7 +58,7 @@
       "Estado": "jugado ",
       "Cancha": "Estadio Juan Antonio Ríos",
       "Direccion": "",
-      "EsDestacado": true
+      "EsDestacado": false
     },
     {
       "DiaSemana": "SAB",
@@ -73,7 +73,7 @@
       "Estado": "proximo",
       "Cancha": "Cancha IRC",
       "Direccion": "",
-      "EsDestacado": false
+      "EsDestacado": true
     },
     {
       "DiaSemana": "SAB",
