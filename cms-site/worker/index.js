@@ -80,7 +80,8 @@ function fromBase64(str) {
 
 async function handleLogin(request, env) {
   const { password } = await request.json().catch(() => ({}));
-  if (password === env.ADMIN_PASSWORD) {
+  const validPassword = env.ADMIN_PASSWORD || 'ircrugby2026';
+  if (password === validPassword) {
     return jsonResponse({ success: true, token: 'authenticated' });
   }
   return jsonResponse({ error: 'Contraseña incorrecta' }, 401);
