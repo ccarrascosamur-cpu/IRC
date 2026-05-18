@@ -1,7 +1,5 @@
 /**
  * Cloudflare Worker — Sitio web + API de guardado + Login
- * 
- * Lee y escribe datos directamente en GitHub via API para evitar caché.
  */
 
 const REPO = 'ccarrascosamur-cpu/IRC';
@@ -13,15 +11,21 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
+    console.log('[Worker] Request:', path, 'Method:', request.method);
+
     if (request.method === 'OPTIONS') {
       return new Response(null, {
         status: 204,
         headers: {
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
           'Access-Control-Allow-Headers': 'Content-Type',
         },
       });
+    }
+
+    if (path === '/api/test') {
+      return jsonResponse({ success: true, message: 'Worker is running', path });
     }
 
     if (path === '/api/login' && request.method === 'POST') {
@@ -32,13 +36,16 @@ export default {
       return handleSave(request, env);
     }
 
-    // Datos JSON: servir desde GitHub API (siempre actualizados, sin caché)
     const dataMatch = path.match(/^\/api\/data\/(\w+)\.json$/);
     if (dataMatch) {
       return serveJson(dataMatch[1], env);
     }
 
-    return env.ASSETS.fetch(request);
+    if (env.ASSETS) {
+      return env.ASSETS.fetch(request);
+    }
+    
+    return new Response('Not found - Worker running but no ASSETS binding', { status: 404 });
   },
 };
 
