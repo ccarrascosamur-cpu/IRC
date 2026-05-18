@@ -7,6 +7,8 @@ let state = {
   isLoggedIn: sessionStorage.getItem('irc_admin_auth') === 'true'
 };
 
+const API_BASE = 'https://irc.ccarrascosamur.workers.dev';
+
 const MONTHS_ES = {
   ENE: '01', FEB: '02', MAR: '03', ABR: '04', MAY: '05', JUN: '06',
   JUL: '07', AGO: '08', SEP: '09', OCT: '10', NOV: '11', DIC: '12'
@@ -55,7 +57,7 @@ async function login() {
   if (!password) return;
 
   try {
-    const res = await fetch('/api/login', {
+    const res = await fetch(`${API_BASE}/api/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password })
@@ -90,7 +92,7 @@ async function loadLocalData() {
   const files = ['fixture', 'posiciones', 'noticias', 'stats', 'config', 'jugadores', 'galeria', 'institucion', 'sponsors'];
   for (const key of files) {
     try {
-      const res = await fetch(`/api/data/${key}.json`);
+      const res = await fetch(`${API_BASE}/api/data/${key}.json`);
       const raw = await res.json();
       if (key === 'jugadores') {
         state.data.jugadores = raw.jugadores || [];
@@ -591,7 +593,7 @@ async function saveFile(key) {
   }
   const content = JSON.stringify(wrapper, null, 2);
 
-  const res = await fetch('/api/save', {
+  const res = await fetch(`${API_BASE}/api/save`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ key, content })
