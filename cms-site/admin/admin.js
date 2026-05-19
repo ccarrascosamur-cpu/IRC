@@ -215,7 +215,12 @@ document.getElementById('addFixtureBtn').addEventListener('click', () => {
 function renderPosiciones() {
   const list = document.getElementById('posicionesList');
   list.innerHTML = '';
-  (state.data.posiciones || []).forEach((item, idx) => {
+  state.data.posiciones = (state.data.posiciones || []).sort((a, b) => {
+    const posA = Number(a?.Posicion ?? Number.MAX_SAFE_INTEGER);
+    const posB = Number(b?.Posicion ?? Number.MAX_SAFE_INTEGER);
+    return posA - posB;
+  });
+  state.data.posiciones.forEach((item, idx) => {
     const card = document.createElement('div');
     card.className = 'item-card';
     card.innerHTML = `
@@ -538,7 +543,13 @@ function collectData() {
   state.data.fixture = sortFixtureMatches(
     Array.from(document.querySelectorAll('#fixtureList .item-card')).map(getCardData)
   );
-  state.data.posiciones = Array.from(document.querySelectorAll('#posicionesList .item-card')).map(getCardData);
+  state.data.posiciones = Array.from(document.querySelectorAll('#posicionesList .item-card'))
+    .map(getCardData)
+    .sort((a, b) => {
+      const posA = Number(a?.Posicion ?? Number.MAX_SAFE_INTEGER);
+      const posB = Number(b?.Posicion ?? Number.MAX_SAFE_INTEGER);
+      return posA - posB;
+    });
   state.data.noticias = Array.from(document.querySelectorAll('#noticiasList .item-card')).map(getCardData);
   state.data.staff = Array.from(document.querySelectorAll('#staffList .item-card')).map(getCardData);
   state.data.jugadores = Array.from(document.querySelectorAll('#jugadoresList .item-card')).map(getCardData);

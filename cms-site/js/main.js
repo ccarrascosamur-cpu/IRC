@@ -275,7 +275,11 @@ function renderProximo(data) {
 
 /* ─── Render Posiciones ──────────────────────────────────────────── */
 function renderPosiciones(data) {
-  const posiciones = data?.posiciones || [];
+  const posiciones = [...(data?.posiciones || [])].sort((a, b) => {
+    const posA = Number(a?.Posicion ?? a?.posicion ?? Number.MAX_SAFE_INTEGER);
+    const posB = Number(b?.Posicion ?? b?.posicion ?? Number.MAX_SAFE_INTEGER);
+    return posA - posB;
+  });
   const loading = document.getElementById('standingsLoading');
   const table = document.getElementById('standingsTable');
   const tbody = document.getElementById('standingsBody');
