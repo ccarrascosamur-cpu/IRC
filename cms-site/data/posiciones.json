@@ -37,18 +37,6 @@
       "Pts": 11
     },
     {
-      "Posicion": 5,
-      "Equipo": "IRC",
-      "PJ": 4,
-      "PG": 1,
-      "PE": 0,
-      "PP": 3,
-      "PF": 153,
-      "PC": 157,
-      "Dif": -4,
-      "Pts": 9
-    },
-    {
       "Posicion": 4,
       "Equipo": "Mano Rugby",
       "PJ": 4,
@@ -59,6 +47,18 @@
       "PC": 146,
       "Dif": -43,
       "Pts": 11
+    },
+    {
+      "Posicion": 5,
+      "Equipo": "IRC",
+      "PJ": 4,
+      "PG": 1,
+      "PE": 0,
+      "PP": 3,
+      "PF": 153,
+      "PC": 157,
+      "Dif": -4,
+      "Pts": 9
     },
     {
       "Posicion": 6,
