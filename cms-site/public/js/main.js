@@ -85,16 +85,17 @@ function formatSheetDate(value) {
 
 /* ─── Carga de datos locales (JSON) ──────────────────────────────── */
 async function loadData() {
+  const nocache = `?t=${Date.now()}`;
   const files = {
-    posiciones: 'api/data/posiciones.json',
-    fixture: 'api/data/fixture.json',
-    stats: 'api/data/stats.json',
-    noticias: 'api/data/noticias.json',
-    config: 'api/data/config.json',
-    jugadores: 'api/data/jugadores.json',
-    galeria: 'api/data/galeria.json',
-    institucion: 'api/data/institucion.json',
-    sponsors: 'api/data/sponsors.json'
+    posiciones: 'api/data/posiciones.json' + nocache,
+    fixture: 'api/data/fixture.json' + nocache,
+    stats: 'api/data/stats.json' + nocache,
+    noticias: 'api/data/noticias.json' + nocache,
+    config: 'api/data/config.json' + nocache,
+    jugadores: 'api/data/jugadores.json' + nocache,
+    galeria: 'api/data/galeria.json' + nocache,
+    institucion: 'api/data/institucion.json' + nocache,
+    sponsors: 'api/data/sponsors.json' + nocache
   };
 
   const data = {};
@@ -232,7 +233,7 @@ function renderProximo(data) {
   let partido = fixture.find(p => p.EsDestacado === true || p.EsDestacado === 'TRUE');
   if (!partido) {
     partido = fixture.find(p => {
-      const est = String(p.Estado || '').toLowerCase();
+      const est = String(p.Estado || '').trim().toLowerCase();
       return est === 'proximo';
     });
   }
@@ -349,13 +350,13 @@ function renderFixture(data) {
 
   grid.innerHTML = '';
 
-  fixture.forEach(match => {
+  fixture.forEach((match, index) => {
     const diaSemana = match.DiaSemana || 'SAB';
     const diaNum = match.DiaNum || '00';
     const mes = match.Mes || 'MES';
     const localidad = String(match.Localidad || 'local').toLowerCase();
     const rival = match.Rival || 'Rival';
-    const estado = String(match.Estado || 'proximo').toLowerCase();
+    const estado = String(match.Estado || 'proximo').trim().toLowerCase();
     const ircScore = match.IRC_Score;
     const rivalScore = match.Rival_Score;
     const hora = formatSheetTime(match.Hora) || '15:30';
@@ -363,6 +364,9 @@ function renderFixture(data) {
 
     const card = document.createElement('div');
     card.className = `match-card ${estado === 'jugado' ? (ircScore > rivalScore ? 'win' : ircScore < rivalScore ? 'loss' : 'draw') : 'upcoming'} ${isNext ? 'next' : ''}`;
+
+    // Limitar a 6 partidos visibles inicialmente
+    if (index >= 6) card.classList.add('collapsed');
     card.dataset.localidad = localidad === 'visita' ? 'visita' : 'local';
 
     let resultHtml = '';
@@ -399,6 +403,22 @@ function renderFixture(data) {
 
     grid.appendChild(card);
   });
+
+  // Botón "Ver más" si hay más de 6 partidos
+  if (fixture.length > 6) {
+    const btnWrap = document.createElement('div');
+    btnWrap.className = 'fixture-expand-wrap';
+    btnWrap.innerHTML = `<button class="btn btn-outline fixture-expand-btn" id="fixtureExpandBtn">Ver más partidos (${fixture.length - 6}) ↓</button>`;
+    grid.parentNode.insertBefore(btnWrap, grid.nextSibling);
+
+    document.getElementById('fixtureExpandBtn').addEventListener('click', function () {
+      grid.querySelectorAll('.match-card.collapsed').forEach(c => {
+        c.classList.remove('collapsed');
+        c.classList.add('revealed');
+      });
+      this.style.display = 'none';
+    });
+  }
 
   loading.style.display = 'none';
   grid.style.display = 'grid';
