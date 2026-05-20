@@ -1,1 +1,16 @@
-[object Object]
+{
+  "config": {
+    "whatsapp_num": "56968768280",
+    "email": "inglesrugbyclub@gmail.com",
+    "direccion": "Cancha IRC",
+    "entrenamiento_dias": "Martes y Jueves",
+    "entrenamiento_horario": "20:00 h",
+    "cancha_nombre": "Cancha IRC",
+    "maps_url": "https://maps.google.com",
+    "cal_summary": "Ingles Rugby Club vs",
+    "cal_description": "Partido de rugby. �Vamos IRC!",
+    "mensualidad_url": "",
+    "mensualidad_label": "",
+    "hero_video_url": "https://vimeo.com/1194117423"
+  }
+}
