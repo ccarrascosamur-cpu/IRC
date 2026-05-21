@@ -132,6 +132,8 @@ async function handleSave(request, env) {
 
     const shaData = await shaRes.json();
 
+    const contentStr = typeof content === 'string' ? content : JSON.stringify(content, null, 2);
+
     const saveRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`, {
       method: 'PUT',
       headers: {
@@ -142,7 +144,7 @@ async function handleSave(request, env) {
       },
       body: JSON.stringify({
         message: `Actualiza ${key} desde panel de admin`,
-        content: toBase64(content),
+        content: toBase64(contentStr),
         sha: shaData.sha,
         branch: BRANCH
       })

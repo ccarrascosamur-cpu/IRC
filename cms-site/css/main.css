@@ -305,22 +305,51 @@ code {
     );
 }
 
+.hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero-video-wrap iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 56.25vw; /* 16:9 aspect ratio */
+  min-height: 100vh;
+  min-width: 177.78vh; /* 16:9 aspect ratio */
+  transform: translate(-50%, -50%);
+  border: none;
+  pointer-events: none;
+}
+
+.hero-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image:
+    repeating-linear-gradient(
+      -55deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,.018) 40px,
+      rgba(255,255,255,.018) 42px
+    );
+}
+
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(10,3,3,.9) 0%, transparent 60%);
+  z-index: 2;
+  background:
+    linear-gradient(to top, rgba(10,3,3,.9) 0%, transparent 60%),
+    radial-gradient(ellipse at 25% 60%, rgba(132,32,33,.75) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 20%, rgba(255,223,1,.07) 0%, transparent 45%);
 }
 
-.hero-rugby-shape {
-  position: absolute;
-  right: 5%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: min(45vw, 500px);
-  color: var(--white);
-  opacity: .4;
-  pointer-events: none;
-}
+
 
 .hero-content {
   position: relative;

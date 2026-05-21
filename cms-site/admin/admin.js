@@ -532,7 +532,8 @@ function renderConfig() {
     ['entrenamiento_dias', 'Días entrenamiento'], ['entrenamiento_horario', 'Horario entrenamiento'],
     ['cancha_nombre', 'Nombre cancha'], ['maps_url', 'URL Google Maps'],
     ['cal_summary', 'Calendario título'], ['cal_description', 'Calendario descripción'],
-    ['mensualidad_url', 'URL mensualidad'], ['mensualidad_label', 'Texto link mensualidad']
+    ['mensualidad_url', 'URL mensualidad'], ['mensualidad_label', 'Texto link mensualidad'],
+    ['hero_video_url', 'URL video banner (Vimeo)']
   ].forEach(([key, label]) => {
     container.appendChild(createField(label, item[key] || '', key));
   });

@@ -208,6 +208,20 @@ function renderConfig(data) {
   const mapsLink = document.getElementById('proxMapsLink');
   if (mapsLink) mapsLink.href = maps;
 
+  // Hero video
+  const heroVideo = document.getElementById('heroVideo');
+  if (heroVideo) {
+    const videoUrl = cfg.hero_video_url || '';
+    if (videoUrl) {
+      const embedUrl = videoUrl.includes('?')
+        ? videoUrl + '&autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0&controls=0&background=1'
+        : videoUrl + '?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0&controls=0&background=1';
+      heroVideo.src = embedUrl;
+    } else {
+      heroVideo.src = '';
+    }
+  }
+
   const mensualidadLink = document.getElementById('footerMensualidad');
   const mensualidadUrl = cfg.mensualidad_url || '';
   const mensualidadLabel = cfg.mensualidad_label || 'Pagar mensualidad';
@@ -223,6 +237,30 @@ function renderConfig(data) {
       mensualidadLink.style.display = 'none';
     }
   }
+
+  /* ─── Hero video ───────────────────────────────────────────────── */
+  const heroVideo = document.getElementById('heroVideo');
+  if (heroVideo) {
+    const videoUrl = cfg.hero_video_url || '';
+    if (videoUrl) {
+      const vimeoId = extractVimeoId(videoUrl);
+      if (vimeoId) {
+        heroVideo.src = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&muted=1&loop=1&background=1&title=0&byline=0&portrait=0&controls=0`;
+      } else {
+        heroVideo.src = videoUrl;
+      }
+      heroVideo.style.display = '';
+    } else {
+      heroVideo.src = '';
+      heroVideo.style.display = 'none';
+    }
+  }
+}
+
+function extractVimeoId(url) {
+  if (!url) return '';
+  const m = String(url).match(/vimeo\.com\/(\d+)/);
+  return m ? m[1] : '';
 }
 
 /* ─── Render Próximo Partido ─────────────────────────────────────── */
