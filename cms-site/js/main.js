@@ -732,24 +732,51 @@ function renderInstitucion(data) {
 const navbar = document.getElementById('navbar');
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileMenuClose = document.getElementById('mobileMenuClose');
 
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 40);
 }, { passive: true });
 
+function openMobileMenu() {
+  hamburger.classList.add('open');
+  if (mobileMenu) mobileMenu.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+  hamburger.classList.remove('open');
+  if (mobileMenu) mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  navLinks.classList.toggle('open');
-  document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+  if (mobileMenu && mobileMenu.classList.contains('open')) {
+    closeMobileMenu();
+  } else {
+    openMobileMenu();
+  }
 });
 
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('open');
-    navLinks.classList.remove('open');
-    document.body.style.overflow = '';
+if (mobileMenuClose) {
+  mobileMenuClose.addEventListener('click', closeMobileMenu);
+}
+
+if (mobileMenu) {
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
   });
-});
+}
+
+if (navLinks) {
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+}
 
 /* ─── Intersection Observer: reveal on scroll ────────────────────── */
 const io = new IntersectionObserver(
