@@ -276,13 +276,16 @@ function renderProximo(data) {
 
   const badge = rival.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
 
+  const isLocal = String(localidad).toLowerCase() === 'local';
+
   document.getElementById('proxDiaSemana').textContent = diaSemana;
   document.getElementById('proxDiaNum').textContent = diaNum;
   document.getElementById('proxMes').textContent = `${mes} ${ano}`;
   document.getElementById('proxHora').textContent = `${hora} h`;
   document.getElementById('proxRivalBadge').textContent = badge;
   document.getElementById('proxRival').textContent = rival;
-  document.getElementById('proxLocalidad').textContent = localidad.toUpperCase();
+  document.getElementById('proxLocalidad').textContent = isLocal ? 'VISITANTE' : 'LOCAL';
+  document.getElementById('proxHomeTag').textContent = isLocal ? 'LOCAL' : 'VISITANTE';
   document.getElementById('proxCancha').textContent = `${cancha}${direccion ? ' · ' + direccion : ''}`;
   document.getElementById('proxInfoExtra').textContent = `${hora} h — Entrada libre y gratuita`;
 
