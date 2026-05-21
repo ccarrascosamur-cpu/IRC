@@ -286,10 +286,6 @@ code {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse at 25% 60%, rgba(132,32,33,.75) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 20%, rgba(255,223,1,.07) 0%, transparent 45%),
-    linear-gradient(160deg, #0d0505 0%, #1a0808 45%, #111 100%);
 }
 
 .hero-pattern {
@@ -310,6 +306,10 @@ code {
   inset: 0;
   z-index: 0;
   overflow: hidden;
+  background:
+    radial-gradient(ellipse at 25% 60%, rgba(132,32,33,.75) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 20%, rgba(255,223,1,.07) 0%, transparent 45%),
+    linear-gradient(160deg, #0d0505 0%, #1a0808 45%, #111 100%);
 }
 
 .hero-video-wrap iframe {
