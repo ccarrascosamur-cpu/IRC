@@ -10,8 +10,14 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const path = url.pathname;
+    const canonicalHost = 'inglesrugbyclub.cl';
 
     console.log('[Worker] Request:', path, 'Method:', request.method);
+
+    if (url.hostname === `www.${canonicalHost}`) {
+      url.hostname = canonicalHost;
+      return Response.redirect(url.toString(), 301);
+    }
 
     if (request.method === 'OPTIONS') {
       return new Response(null, {
