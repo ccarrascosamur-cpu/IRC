@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "irc",
+  "compatibility_date": "2026-05-18",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "cms-site"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
